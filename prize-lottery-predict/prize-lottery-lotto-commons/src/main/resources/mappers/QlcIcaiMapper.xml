@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.QlcIcaiMapper">
+
+    <resultMap id="QlcICaiDataMap" type="com.prize.lottery.po.qlc.QlcIcaiPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="master_id" property="masterId"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="red1" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r1" property="data"/>
+            <result column="hit_r1" property="hitData"/>
+            <result column="r1_hit" property="dataHit"/>
+        </association>
+        <association property="red2" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r2" property="data"/>
+            <result column="hit_r2" property="hitData"/>
+            <result column="r2_hit" property="dataHit"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r3" property="data"/>
+            <result column="hit_r3" property="hitData"/>
+            <result column="r3_hit" property="dataHit"/>
+        </association>
+        <association property="red12" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r12" property="data"/>
+            <result column="hit_r12" property="hitData"/>
+            <result column="r12_hit" property="dataHit"/>
+        </association>
+        <association property="red18" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r18" property="data"/>
+            <result column="hit_r18" property="hitData"/>
+            <result column="r18_hit" property="dataHit"/>
+        </association>
+        <association property="red22" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r22" property="data"/>
+            <result column="hit_r22" property="hitData"/>
+            <result column="r22_hit" property="dataHit"/>
+        </association>
+        <association property="kill3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k3" property="data"/>
+            <result column="hit_k3" property="hitData"/>
+            <result column="k3_hit" property="dataHit"/>
+        </association>
+        <association property="kill6" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k6" property="data"/>
+            <result column="hit_k6" property="hitData"/>
+            <result column="k6_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="QlcICaiHistoryMap" type="com.prize.lottery.vo.qlc.QlcIcaiHistoryVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="master_id" property="masterId"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="red" property="red"/>
+        <result column="blue" property="blue"/>
+        <association property="red1" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r1" property="data"/>
+            <result column="hit_r1" property="hitData"/>
+            <result column="r1_hit" property="dataHit"/>
+        </association>
+        <association property="red2" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r2" property="data"/>
+            <result column="hit_r2" property="hitData"/>
+            <result column="r2_hit" property="dataHit"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r3" property="data"/>
+            <result column="hit_r3" property="hitData"/>
+            <result column="r3_hit" property="dataHit"/>
+        </association>
+        <association property="red12" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r12" property="data"/>
+            <result column="hit_r12" property="hitData"/>
+            <result column="r12_hit" property="dataHit"/>
+        </association>
+        <association property="red18" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r18" property="data"/>
+            <result column="hit_r18" property="hitData"/>
+            <result column="r18_hit" property="dataHit"/>
+        </association>
+        <association property="red22" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r22" property="data"/>
+            <result column="hit_r22" property="hitData"/>
+            <result column="r22_hit" property="dataHit"/>
+        </association>
+        <association property="kill3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k3" property="data"/>
+            <result column="hit_k3" property="hitData"/>
+            <result column="k3_hit" property="dataHit"/>
+        </association>
+        <association property="kill6" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k6" property="data"/>
+            <result column="hit_k6" property="hitData"/>
+            <result column="k6_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="ICaiRankedDataMap" type="com.prize.lottery.vo.ICaiRankedDataVo">
+        <id column="id" property="id"/>
+        <result column="rank" property="rank"/>
+        <result column="period" property="period"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+        </association>
+        <association property="data" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="data" property="data"/>
+            <result column="data_hit" property="dataHit"/>
+            <result column="hit_data" property="hitData"/>
+        </association>
+        <association property="neRate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="ne_count" property="count"/>
+            <result column="ne_rate" property="rate"/>
+            <result column="ne_hit" property="series"/>
+        </association>
+        <association property="meRate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="me_count" property="count"/>
+            <result column="me_rate" property="rate"/>
+            <result column="me_hit" property="series"/>
+        </association>
+        <association property="hiRate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hi_count" property="count"/>
+            <result column="hi_rate" property="rate"/>
+            <result column="hi_hit" property="series"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="QlcCensusMap" type="com.prize.lottery.po.qlc.QlcLottoCensusPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="level" property="level"/>
+        <result column="channel" property="channel"/>
+        <result column="census" property="census"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="SchemaRenewMasterMap" type="com.prize.lottery.vo.SchemaRenewMasterVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="QlcICaiHitVoMap" type="com.prize.lottery.vo.qlc.QlcICaiHitVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="r2_hit" property="red2"/>
+        <result column="r3_hit" property="red3"/>
+        <result column="r12_hit" property="red12"/>
+        <result column="r18_hit" property="red18"/>
+        <result column="r22_hit" property="red22"/>
+        <result column="k3_hit" property="kill3"/>
+    </resultMap>
+
+    <resultMap id="QlcMasterCountMap" type="com.prize.lottery.vo.qlc.QlcMasterCountVo">
+        <id column="master_id" property="masterId"/>
+        <result column="name" property="name"/>
+        <result column="counts" property="counts"/>
+    </resultMap>
+
+    <insert id="addQlcICai" parameterType="com.prize.lottery.po.qlc.QlcIcaiPo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert
+        ignore into qlc_icai(period,
+                                    master_id,
+                                    r1,
+                                    r2,
+                                    r3,
+                                    r12,
+                                    r18,
+                                    r22,
+                                    k3,
+                                    k6,
+                                    gmt_create
+                                   )
+        values (
+        #{period},
+        #{masterId},
+        #{red1.data},
+        #{red2.data},
+        #{red3.data},
+        #{red12.data},
+        #{red18.data},
+        #{red22.data},
+        #{kill3.data},
+        #{kill6.data},
+        current_time
+        )
+    </insert>
+
+    <update id="editQlcICaiList" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update qlc_icai
+            set
+            hit_r1=#{item.red1.hitData},r1_hit=#{item.red1.dataHit},
+            hit_r2=#{item.red2.hitData},r2_hit=#{item.red2.dataHit},
+            hit_r3=#{item.red3.hitData},r3_hit=#{item.red3.dataHit},
+            hit_r12=#{item.red12.hitData},r12_hit=#{item.red12.dataHit},
+            hit_r18=#{item.red18.hitData},r18_hit=#{item.red18.dataHit},
+            hit_r22=#{item.red22.hitData},r22_hit=#{item.red22.dataHit},
+            hit_k3=#{item.kill3.hitData},k3_hit=#{item.kill3.dataHit},
+            hit_k6=#{item.kill6.hitData},k6_hit=#{item.kill6.dataHit},
+            calc_time=current_time
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <sql id="qlcICaiSql">
+        id
+        ,master_id,period,r1,r2,r3,r12,r18,r22,k3,k6,gmt_create
+    </sql>
+
+    <sql id="qlcHitInfoSql">
+        id
+        ,master_id,period,r1_hit,r2_hit,r3_hit,r12_hit,r18_hit,r22_hit,k3_hit,k6_hit,calc_time
+    </sql>
+
+    <sql id="qlcHitDetailSql">
+        id
+        ,master_id,period,
+        r1_hit,hit_r1,
+        r2_hit,hit_r2,
+        r3_hit,hit_r3,
+        r12_hit,hit_r12,
+        r18_hit,hit_r18,
+        r22_hit,hit_r22,
+        k3_hit,hit_k3,
+        k6_hit,hit_k6,
+        calc_time
+    </sql>
+
+    <select id="getQlcICaiDataById" parameterType="java.lang.Long" resultMap="QlcICaiDataMap">
+        select
+        <include refid="qlcICaiSql"/>
+        from qlc_icai
+        where id=#{id}
+    </select>
+
+    <select id="getQlcICaiData" resultMap="QlcICaiDataMap">
+        select
+        <include refid="qlcICaiSql"/>
+        from
+        qlc_icai
+        where
+        master_id=#{period}
+        and
+        period=#{period}
+    </select>
+
+    <select id="getAllQlcICaiDatas" parameterType="java.lang.String" resultMap="QlcICaiDataMap">
+        select
+        <include refid="qlcICaiSql"/>
+        from qlc_icai
+        where period=#{period}
+    </select>
+
+    <select id="getAllUnCalcDatas" parameterType="java.lang.String" resultMap="QlcICaiDataMap">
+        select
+        <include refid="qlcICaiSql"/>
+        from qlc_icai
+        where period=#{period}
+        and calc_time is null
+    </select>
+
+    <select id="hasQlcICaiData" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            qlc_icai
+        where
+            period = #{period}
+    </select>
+
+    <select id="latestQlcICaiPeriod" resultType="com.prize.lottery.value.Period">
+        select
+            period,
+            if(calc_time is null, 0, 1) as calculated
+        from
+            qlc_icai
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+    <select id="latestQlcMasterPeriod" parameterType="java.lang.String"
+            resultType="com.prize.lottery.value.Period">
+        select
+            period,
+            if(calc_time is null, 0, 1) as calculated
+        from
+            qlc_icai
+        where
+            master_id = #{masterId}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="hasQlcPeriodOpenCalc" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            qlc_icai
+                        where
+                              period = #{period}
+                          and calc_time is not null
+                        limit 1 ), 0)
+    </select>
+
+    <select id="getUnCalculatedPeriods" parameterType="java.lang.String" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            qlc_icai
+        where
+              period &lt;= #{before}
+          and calc_time is null
+        order by
+            period
+    </select>
+
+    <select id="getIncrUnCalculatedPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            qlc_icai
+        where
+            calc_time is null
+        order by
+            period asc
+    </select>
+
+    <select id="getIncrUnCalcRatePeriods" resultType="java.lang.String">
+        select distinct
+            qi.period
+        from
+            qlc_icai qi
+                left join qlc_master_rate qrate on qi.master_id = qrate.master_id and qi.period = qrate.period
+        where
+              qi.calc_time is not null
+          and qrate.id is null
+    </select>
+
+    <select id="getUnCalcRatePeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            qlc_icai
+        where
+              calc_time is not null
+          and period not in (
+                                select distinct
+                                    period
+                                from
+                                    qlc_master_rate
+                                order by
+                                    period asc
+                            )
+        order by
+            period asc
+    </select>
+
+    <select id="getIncrUnCalcRateMasters" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            qi.master_id
+        from
+            qlc_icai qi
+                left join qlc_master_rate qrate on qi.master_id = qrate.master_id and qi.period = qrate.period
+        where
+              qi.calc_time is not null
+          and qi.period = #{period}
+          and qrate.id is null
+    </select>
+
+    <select id="hasQlcMasterOpenCalc" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            qlc_icai
+        where
+              period = #{period}
+          and master_id = #{masterId}
+          and calc_time is not null
+    </select>
+
+    <select id="getQlcMasterIdsByPeriod" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            master_id
+        from
+            qlc_icai
+        where
+            period = #{period}
+    </select>
+
+    <select id="getUnCalcDataPeriods" parameterType="java.lang.String" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            qlc_icai
+        where
+              period &lt;= #{period}
+          and calc_time is null
+        order by
+            period asc
+    </select>
+
+    <select id="getQlcHighRateDatas" resultMap="QlcICaiDataMap">
+        select
+            qi.id,
+            qi.master_id,
+            qi.period,
+            qi.${type}
+        from
+            qlc_icai qi,
+            qlc_master_rate qm
+        where
+              qi.period = #{period}
+          and qi.master_id = qm.master_id
+          and qm.period = #{last}
+          and qm.${type}_me_rate &gt;= #{rate}
+    </select>
+
+    <select id="getMasterForecasts" resultMap="QlcICaiDataMap">
+        select
+        id, period, master_id, r1, hit_r1, r1_hit, r2, hit_r2, r2_hit, r3, hit_r3, r3_hit, r12, hit_r12, r12_hit, r18,
+        hit_r18, r18_hit, r22, hit_r22, r22_hit, k3, hit_k3, k3_hit, k6, hit_k6, k6_hit, calc_time, gmt_create
+        from
+        qlc_icai
+        where period=#{period}
+        and master_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </select>
+
+    <select id="getQlcHotMasterDatas" resultMap="QlcICaiDataMap">
+        select
+        <include refid="qlcICaiSql"/>
+        from
+        qlc_icai
+        where
+        period=#{period}
+        and
+        master_id in(
+        select
+        master_id
+        from
+        qlc_master_rank qm
+        where
+        qm.period=#{last}
+        and
+        qm.hot=1
+        order by `rank` desc
+        )
+    </select>
+
+    <select id="getQlcHotMasters" resultType="java.lang.String">
+        select
+            qm.master_id
+        from
+            qlc_master_rank qm,
+            (
+                select
+                    count(1) as amount,
+                    master_id
+                from
+                    qlc_master_rank
+                where
+                      is_vip = 1
+                  and period &lt;= #{last}
+                  and period &gt;= #{start}
+                group by
+                    master_id
+            ) lm
+        where
+              qm.period = #{period}
+          and qm.is_vip = 1
+          and lm.master_id = qm.master_id
+          and lm.amount &gt;= #{throttle}
+    </select>
+
+    <update id="extractQlcHotMasters">
+        update qlc_master_rank
+        set
+        hot=1
+        where
+        period=#{period}
+        and master_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </update>
+
+    <select id="getQlcVipItemsDatas" resultMap="QlcICaiDataMap">
+        select
+            qi.id,
+            qi.period,
+            qi.master_id,
+            qi.${type},
+            qmr.${type}_rank `rank`
+        from
+            qlc_icai qi,
+            qlc_master_rank qmr
+        where
+              qi.period = #{period}
+          and qi.master_id = qmr.master_id
+          and qmr.period = #{last}
+          and qmr.is_vip = 1
+        order by
+            `rank` asc
+    </select>
+
+    <select id="getQlcVipMasterDatas" resultMap="QlcICaiDataMap">
+        select
+            qi.id,
+            qi.period,
+            qi.master_id,
+            qi.r1,
+            qi.r2,
+            qi.r3,
+            qi.r12,
+            qi.r18,
+            qi.r22,
+            qi.k3,
+            qi.k6
+        from
+            qlc_icai qi,
+            qlc_master_rank qmr
+        where
+              qi.period = #{period}
+          and qmr.period = #{last}
+          and qi.master_id = qmr.master_id
+          and qmr.is_vip = 1
+        order by
+            qmr.rank desc
+    </select>
+
+    <select id="getAllQlcRankedDatas" resultMap="ICaiRankedDataMap">
+        select
+            qi.id,
+            qi.period,
+            qi.master_id,
+            qi.${type}         data,
+            qrank.${type}_rank `rank`
+        from
+            qlc_icai qi,
+            qlc_master_rank qrank
+        where
+              qi.period = #{period}
+          and qi.master_id = qrank.master_id
+          and qrank.period = #{last}
+        order by
+            `rank` asc
+    </select>
+
+    <select id="getLimitQlcRankedDatas" resultMap="ICaiRankedDataMap">
+        select
+            qi.id,
+            qi.period,
+            qi.master_id,
+            qi.${type}         data,
+            qrank.${type}_rank `rank`
+        from
+            qlc_icai qi,
+            qlc_master_rank qrank
+        where
+              qi.period = #{period}
+          and qi.master_id = qrank.master_id
+          and qrank.period = #{last}
+        order by
+            `rank` asc
+            limit #{limit}
+    </select>
+
+    <select id="getQlcComparedDatas" resultMap="ICaiRankedDataMap">
+        select
+            qi.id,
+            qi.period,
+            qi.master_id,
+            qi.period,
+            mi.name,
+            qi.${type}             data,
+            qi.hit_${type}         hit_data,
+            qrate.${type}_ne_count ne_count,
+            qrate.${type}_ne_hit   ne_hit,
+            qrate.${type}_ne_rate  ne_rate,
+            qrate.${type}_me_count me_count,
+            qrate.${type}_me_hit   me_hit,
+            qrate.${type}_me_rate  me_rate,
+            qrate.${type}_hi_count hi_count,
+            qrate.${type}_hi_hit   hi_hit,
+            qrate.${type}_hi_rate  hi_rate,
+            qrank.${type}_rank     `rank`
+        from
+            qlc_icai qi,
+            master_info mi,
+            qlc_master_rate qrate,
+            qlc_master_rank qrank
+        where
+              qi.period = #{period}
+          and qi.master_id = qrate.master_id
+          and qi.master_id = qrank.master_id
+          and qrate.period = #{last}
+          and qrank.period = #{last}
+          and qi.master_id = mi.seq
+        order by
+            `rank` asc
+            limit #{limit}
+    </select>
+
+    <select id="getQlcRankedDatas" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="ICaiRankedDataMap">
+        select
+            qi.id,
+            qi.period,
+            qi.master_id,
+            mi.name,
+            qrank.is_vip,
+            qrank.hot,
+            qi.${condition.type}             data,
+            qi.${condition.type}_hit         data_hit,
+            qi.hit_${condition.type}         hit_data,
+            qrate.${condition.type}_ne_count ne_count,
+            qrate.${condition.type}_ne_hit   ne_hit,
+            qrate.${condition.type}_ne_rate  ne_rate,
+            qrate.${condition.type}_me_count me_count,
+            qrate.${condition.type}_me_hit   me_hit,
+            qrate.${condition.type}_me_rate  me_rate,
+            qrate.${condition.type}_hi_count hi_count,
+            qrate.${condition.type}_hi_hit   hi_hit,
+            qrate.${condition.type}_hi_rate  hi_rate,
+            qrank.${condition.type}_rank     `rank`
+        from
+            qlc_icai qi,
+            master_info mi,
+            qlc_master_rate qrate,
+            qlc_master_rank qrank
+        where
+              qi.period = #{condition.period}
+          and qi.master_id = qrate.master_id
+          and qi.master_id = qrank.master_id
+          and qrate.period = #{condition.last}
+          and qrank.period = #{condition.last}
+          and qi.master_id = mi.seq
+        order by
+            `rank` asc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countQlcRankedDatas" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            qlc_icai qi,
+            qlc_master_rate qm
+        where
+              qi.period = #{condition.period}
+          and qm.period = #{condition.last}
+          and qi.master_id = qm.master_id
+    </select>
+
+    <select id="getQlcICaiHitsBefore" resultMap="QlcICaiDataMap">
+        select
+        <include refid="qlcHitInfoSql"/>
+        from
+        qlc_icai
+        where
+        master_id=#{masterId}
+        and
+        period &lt;=#{period}
+        order by period desc
+        limit #{limit}
+    </select>
+
+    <select id="getQlcICaiHitsByPeriod" parameterType="java.lang.String" resultMap="QlcICaiDataMap">
+        select
+        <include refid="qlcHitInfoSql"/>
+        from
+        qlc_icai
+        where
+        period=#{period}
+    </select>
+
+    <select id="getHistoryQlcForecasts" resultMap="QlcICaiHistoryMap">
+        select icai.*,
+        li.red,
+        li.blue
+        from (
+        select
+        <include refid="qlcHitDetailSql"/>
+        from
+        qlc_icai
+        where
+        master_id=#{masterId}
+        and
+        period &lt;=#{period}
+        order by period desc
+        limit #{limit}
+        ) icai
+        left join lottery_info li on li.period=icai.period and li.type='qlc'
+    </select>
+
+    <select id="getMasterQlcICaiDetail" resultMap="QlcICaiDataMap">
+        select
+        <include refid="qlcHitDetailSql"/>,
+        IF(calc_time is null,r1,'') as r1,
+        IF(calc_time is null,r2,'') as r2,
+        IF(calc_time is null,r3,'') as r3,
+        IF(calc_time is null,r12,'') as r12,
+        IF(calc_time is null,r18,'') as r18,
+        IF(calc_time is null,r22,'') as r22,
+        IF(calc_time is null,k3,'') as k3,
+        IF(calc_time is null,k6,'') as k6
+        from
+        qlc_icai
+        where
+        master_id=#{masterId}
+        and
+        period=#{period}
+    </select>
+
+    <select id="getQlcICaiListByMasters" resultMap="QlcICaiDataMap">
+        select
+        <include refid="qlcHitDetailSql"/>,
+        IF(calc_time is null,r1,'') as r1,
+        IF(calc_time is null,r2,'') as r2,
+        IF(calc_time is null,r3,'') as r3,
+        IF(calc_time is null,r12,'') as r12,
+        IF(calc_time is null,r18,'') as r18,
+        IF(calc_time is null,r22,'') as r22,
+        IF(calc_time is null,k3,'') as k3,
+        IF(calc_time is null,k6,'') as k6
+        from
+        qlc_icai
+        where
+        period=#{period}
+        and master_id in
+        <foreach collection="masters" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </select>
+
+    <insert id="addQlcCensuses" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        qlc_census(period,`type`,channel,census,gmt_create,`level`)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},
+            #{item.type},
+            #{item.channel},
+            #{item.census},
+            current_time,
+            <choose>
+                <when test="item.level!=null">
+                    #{item.level}
+                </when>
+                <otherwise>
+                    0
+                </otherwise>
+            </choose>
+            )
+        </foreach>
+        on duplicate key update
+        census=values(census)
+    </insert>
+
+
+    <select id="getTypedQlcCensusList" resultMap="QlcCensusMap">
+        select
+            id,
+            period,
+            type,
+            level,
+            channel,
+            census,
+            gmt_create
+        from
+            qlc_census
+        where
+              period = #{period}
+          and type = #{type}
+        order by
+            channel,
+            level
+    </select>
+
+    <select id="getChannelQlcCensusList" resultMap="QlcCensusMap">
+        select
+            id,
+            period,
+            type,
+            channel,
+            level,
+            census,
+            gmt_create
+        from
+            qlc_census
+        where
+              period = #{period}
+          and type = #{type}
+          and channel = #{channel}
+        order by
+            level
+    </select>
+
+    <select id="getTypeLeveledCensusList" resultMap="QlcCensusMap">
+        select
+            id,
+            period,
+            type,
+            level,
+            channel,
+            census,
+            gmt_create
+        from
+            qlc_census
+        where
+              period = #{period}
+          and type = #{type}
+          and level = #{level}
+        order by
+            id
+    </select>
+
+    <select id="latestQlcCensusPeriod" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select
+            period
+        from
+            qlc_census
+        where
+            type = #{type}
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+    <select id="getQlcSchemaRenewMasters" resultMap="SchemaRenewMasterMap">
+        select
+            qi.master_id,
+            mi.name,
+            mi.avatar,
+            qi.period
+        from
+            qlc_icai qi,
+            qlc_master_rank qrank,
+            master_info mi
+        where
+              qi.period = #{period}
+          and qi.master_id = qrank.master_id
+          and qrank.period = #{last}
+          and mi.seq = qi.master_id
+          and qi.calc_time is null
+        order by
+            qrank.rank asc
+            limit #{limit}
+    </select>
+
+    <select id="getQlcLast10HitList" resultMap="QlcICaiHitVoMap">
+        select
+            master_id,
+            period,
+            r2_hit,
+            r3_hit,
+            r12_hit,
+            r18_hit,
+            r22_hit,
+            k3_hit
+        from
+            qlc_icai
+        where
+              master_id = #{masterId}
+          and period &lt;= #{period}
+        order by
+            period desc limit 10
+    </select>
+
+    <select id="getNoneDataMasters" parameterType="java.lang.String"
+            resultType="com.prize.lottery.po.master.MasterLotteryPo">
+        select
+            ml.id        as id,
+            ml.master_id as masterId,
+            ml.source_id as sourceId,
+            ml.source    as source,
+            ml.type      as type
+        from
+            master_lottery ml
+                left join qlc_icai qi on qi.master_id = ml.master_id and qi.period = #{period}
+        where
+              ml.type = 'qlc'
+          and qi.id is null
+        order by
+            ml.master_id asc limit 280
+    </select>
+
+    <select id="getAllNoneDataMasters" parameterType="java.lang.String"
+            resultType="com.prize.lottery.po.master.MasterLotteryPo">
+        select
+            ml.id        as id,
+            ml.master_id as masterId,
+            ml.source_id as sourceId,
+            ml.source    as source,
+            ml.type      as type
+        from
+            master_lottery ml
+                left join qlc_icai qi on qi.master_id = ml.master_id and qi.period = #{period}
+        where
+              ml.type = 'qlc'
+          and qi.id is null
+        order by
+            ml.master_id asc
+    </select>
+
+    <delete id="delDataList" parameterType="java.util.List">
+        delete
+        from qlc_icai
+        where master_id in
+        <foreach collection="list" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+    <select id="getHitMasterCounts" resultMap="QlcMasterCountMap">
+        select
+            fm.master_id,
+            fm.counts,
+            mi.name
+        from
+            (
+                select
+                    master_id,
+                    count(period) as counts
+                from
+                    qlc_icai
+                where
+                      ${channel}_hit &gt;= #{throttle}
+                  and period &lt; #{period}
+                group by
+                    master_id
+                order by
+                    counts desc
+                    limit #{limit}
+            ) fm
+                inner join master_info mi on mi.seq = fm.master_id
+        order by
+            fm.counts desc
+    </select>
+
+</mapper>

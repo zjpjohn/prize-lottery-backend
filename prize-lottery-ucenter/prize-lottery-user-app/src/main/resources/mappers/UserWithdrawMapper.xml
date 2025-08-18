@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.UserWithdrawMapper">
+
+    <resultMap id="UserWithdrawMap" type="com.prize.lottery.infrast.persist.po.UserWithdrawPo">
+        <id column="id" property="id"/>
+        <result column="seq_no" property="seqNo"/>
+        <result column="trans_no" property="transNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="withdraw" property="withdraw"/>
+        <result column="money" property="money"/>
+        <result column="channel" property="channel"/>
+        <result column="state" property="state"/>
+        <result column="message" property="message"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addUserWithdraw" parameterType="com.prize.lottery.infrast.persist.po.UserWithdrawPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into user_withdraw(seq_no,
+                                  user_id,
+                                  withdraw,
+                                  money,
+                                  channel,
+                                  state,
+                                  gmt_create,
+                                  gmt_modify
+                                 )
+        values (#{seqNo},
+                #{userId},
+                #{withdraw},
+                #{money},
+                #{channel},
+                #{state},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editUserWithdraw" parameterType="com.prize.lottery.infrast.persist.po.UserWithdrawPo">
+        update user_withdraw
+        set
+        <if test="transNo!=null">
+            trans_no=#{transNo},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="message!=null">
+            message=#{message},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getWithdrawById" parameterType="java.lang.Long" resultMap="UserWithdrawMap">
+        select
+            id,
+            seq_no,
+            trans_no,
+            user_id,
+            withdraw,
+            money,
+            channel,
+            state,
+            message,
+            gmt_create
+        from
+            user_withdraw
+        where
+            id = #{id}
+    </select>
+
+    <select id="getWithdrawBySeqNo" parameterType="java.lang.String" resultMap="UserWithdrawMap">
+        select
+            id,
+            seq_no,
+            trans_no,
+            user_id,
+            withdraw,
+            money,
+            channel,
+            state,
+            message,
+            gmt_create
+        from
+            user_withdraw
+        where
+            seq_no = #{seqNo}
+    </select>
+
+    <select id="latestWithdraw" parameterType="java.lang.Long" resultMap="UserWithdrawMap">
+        select
+            id,
+            seq_no,
+            trans_no,
+            user_id,
+            withdraw,
+            money,
+            channel,
+            state,
+            message,
+            gmt_create
+        from
+            user_withdraw
+        where
+            user_id = #{userId}
+        order by
+            gmt_create desc limit 1
+    </select>
+
+    <select id="getUserWithdrawList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="UserWithdrawMap">
+        select
+        id, seq_no, trans_no, user_id, withdraw, money, channel, state, message, gmt_create, gmt_modify
+        from
+        user_withdraw
+        <where>
+            <if test="condition.seqNo!=null">
+                and seq_no=#{condition.seqNo}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countUserWithdraws" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        user_withdraw
+        <where>
+            <if test="condition.seqNo!=null">
+                and seq_no=#{condition.seqNo}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+    </select>
+
+</mapper>

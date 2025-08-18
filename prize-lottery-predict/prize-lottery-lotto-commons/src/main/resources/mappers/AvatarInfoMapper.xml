@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.AvatarInfoMapper">
+
+    <resultMap id="AvatarInfoMap" type="com.prize.lottery.po.master.AvatarInfoPo">
+        <id column="id" property="id"/>
+        <result column="name" property="key"/>
+        <result column="uri" property="uri"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="addAvatarList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        avatar_info(`name`,uri,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.key},#{item.uri},current_time)
+        </foreach>
+    </insert>
+
+    <update id="editAvatarInfo" parameterType="com.prize.lottery.po.master.AvatarInfoPo">
+        update avatar_info
+        set
+        <if test="key!=null">
+            `name`=#{key},
+        </if>
+        <if test="uri!=null">
+            uri=#{uri},
+        </if>
+        where id=#{id}
+    </update>
+
+    <delete id="removeAvatarInfo" parameterType="java.lang.Long">
+        delete
+        from
+            avatar_info
+        where
+            id = #{id}
+    </delete>
+
+    <select id="getAvatarInfoById" parameterType="java.lang.Long" resultMap="AvatarInfoMap">
+        select
+            id,
+            `name`,
+            uri
+        from
+            avatar_info
+        where
+            id = #{id}
+    </select>
+
+    <select id="getAvatarImages" resultType="java.lang.String">
+        select
+            uri
+        from
+            avatar_info
+    </select>
+
+    <select id="getRandomAvatars" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select
+            ai.uri
+        from
+            avatar_info ai,
+            (
+                select
+                    max(id) a_max,
+                    min(id) a_min
+                from
+                    avatar_info
+            ) amm
+        where
+            ai.id &gt;= (amm.a_max - amm.a_min) * rand() + amm.a_min
+        order by
+            ai.id
+            limit #{limit}
+    </select>
+
+    <select id="getAvatarList" parameterType="com.cloud.arch.page.PageCondition" resultMap="AvatarInfoMap">
+        select
+            id,
+            `name`,
+            uri,
+            gmt_create
+        from
+            avatar_info
+        order by
+            gmt_create desc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countAvatarList" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            avatar_info
+    </select>
+
+</mapper>

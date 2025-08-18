@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.QlcRecommendMapper">
+
+    <resultMap id="QlcRecommendMap" type="com.prize.lottery.po.qlc.QlcRecommendPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="red1" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r1" property="data"/>
+            <result column="hit_r1" property="hitData"/>
+            <result column="r1_hit" property="dataHit"/>
+        </association>
+        <association property="red2" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r2" property="data"/>
+            <result column="hit_r2" property="hitData"/>
+            <result column="r2_hit" property="dataHit"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r3" property="data"/>
+            <result column="hit_r3" property="hitData"/>
+            <result column="r3_hit" property="dataHit"/>
+        </association>
+        <association property="red12" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r12" property="data"/>
+            <result column="hit_r12" property="hitData"/>
+            <result column="r12_hit" property="dataHit"/>
+        </association>
+        <association property="red18" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r18" property="data"/>
+            <result column="hit_r18" property="hitData"/>
+            <result column="r18_hit" property="dataHit"/>
+        </association>
+        <association property="red22" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r22" property="data"/>
+            <result column="hit_r22" property="hitData"/>
+            <result column="r22_hit" property="dataHit"/>
+        </association>
+        <association property="kill3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k3" property="data"/>
+            <result column="hit_k3" property="hitData"/>
+            <result column="k3_hit" property="dataHit"/>
+        </association>
+        <association property="kill6" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k6" property="data"/>
+            <result column="hit_k6" property="hitData"/>
+            <result column="k6_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <insert id="addQlcRecommend" parameterType="com.prize.lottery.po.qlc.QlcRecommendPo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into qlc_recommned(period,
+                                  r1,
+                                  r2,
+                                  r3,
+                                  r12,
+                                  r18,
+                                  r22,
+                                  k3,
+                                  k6,
+                                  gmt_create
+                                 )
+        values (#{period},
+                #{red1.data},
+                #{red2.data},
+                #{red3.data},
+                #{red12.data},
+                #{red18.data},
+                #{red22.data},
+                #{kill3.data},
+                #{kill6.data},
+                current_time
+               ) on duplicate key
+        update
+            r1=
+        values (r1), r2=
+        values (r2), r3=
+        values (r3), r12=
+        values (r12), r18=
+        values (r18), r22=
+        values (r22), k3=
+        values (k3), k6=
+        values (k6)
+    </insert>
+
+    <update id="editQlcRecommend" parameterType="com.prize.lottery.po.qlc.QlcRecommendPo">
+        update qlc_recommend
+        set
+            hit_r1=#{red1.hitData},
+            r1_hit=#{red1.dataHit},
+            hit_r2=#{red2.hitData},
+            r2_hit=#{red2.dataHit},
+            hit_r3=#{red3.hitData},
+            r3_hit=#{red3.dataHit},
+            hit_r12=#{red12.hitData},
+            r12_hit=#{red12.dataHit},
+            hit_r18=#{red18.hitData},
+            r18_hit=#{red18.dataHit},
+            hit_r22=#{red22.hitData},
+            r22_hit=#{red22.dataHit},
+            hit_k3=#{kill3.hitData},
+            k3_hit=#{kill3.dataHit},
+            hit_k6=#{kill6.hitData},
+            k6_hit=#{kill6.dataHit},
+            calc_time=current_time
+        where
+            id = #{id}
+    </update>
+
+
+    <sql id="recommendSql">
+        id
+        ,period,r1,r2,r3,
+        r12,r18,r22,
+        k3,k6,gmt_create
+    </sql>
+
+    <sql id="recommendHitSql">
+        id
+        ,period,
+        hit_r1,r1_hit,
+        hit_r2,r2_hit,
+        hit_r3,r3_hit,
+        hit_r12,r12_hit,
+        hit_r18,r18_hit,
+        hit_r22,r22_hit,
+        hit_k3,k3_hit,
+        hit_k6,k6_hit,
+        calc_time
+    </sql>
+
+    <select id="getQlcRecommendByPeriod" parameterType="java.lang.String" resultMap="QlcRecommendMap">
+        select
+        <include refid="recommendSql"/>
+        from qlc_recommend
+        where period=#{period}
+    </select>
+
+    <select id="getQlcRecommendHitByPeriod" parameterType="java.lang.String" resultMap="QlcRecommendMap">
+        select
+        <include refid="recommendHitSql"/>
+        from qlc_recommend
+        where period=#{period}
+    </select>
+
+    <select id="getQlcRecommendList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="QlcRecommendMap">
+        select
+        <include refid="recommendHitSql"/>,
+        IF(calc_time is null,r1,'') as r1,
+        IF(calc_time is null,r2,'') as r2,
+        IF(calc_time is null,r3,'') as r3,
+        IF(calc_time is null,r12,'') as r12,
+        IF(calc_time is null,r18,'') as r18,
+        IF(calc_time is null,r22,'') as r22,
+        IF(calc_time is null,k3,'') as k3,
+        IF(calc_time is null,k6,'') as k6
+        from qlc_recommend
+        <where>
+            <if test="condition.period!=null">
+                period=#{condition.period}
+            </if>
+            <if test="condition.opened!=null">
+                calc_time is not null
+            </if>
+        </where>
+        order by period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countQlcRecommendList" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from qlc_recommend
+        <where>
+            <if test="condition.period!=null">
+                period=#{condition.period}
+            </if>
+            <if test="condition.opened!=null">
+                calc_time is not null
+            </if>
+        </where>
+    </select>
+
+    <select id="latestQlcRecommendPeriod" resultType="com.prize.lottery.value.Period">
+        select
+            period,
+            if(calc_time is null, 0, 1) calculated
+        from
+            qlc_recommend
+        order by
+            period desc limit 1
+    </select>
+
+</mapper>

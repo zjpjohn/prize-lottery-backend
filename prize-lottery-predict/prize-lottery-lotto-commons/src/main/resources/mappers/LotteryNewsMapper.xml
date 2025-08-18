@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.LotteryNewsMapper">
+
+    <resultMap id="LotteryNewsMap" type="com.prize.lottery.po.lottery.LotteryNewsPo">
+        <id column="id" property="id"/>
+        <result column="seq" property="seq"/>
+        <result column="title" property="title"/>
+        <result column="source" property="source"/>
+        <result column="header" property="header"/>
+        <result column="type" property="type"/>
+        <result column="author" property="author"/>
+        <result column="summary" property="summary"/>
+        <result column="content" property="content"/>
+        <result column="browse" property="browse"/>
+        <result column="homed" property="homed"/>
+        <result column="browse" property="browse"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addLotteryNews" parameterType="com.prize.lottery.po.lottery.LotteryNewsPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        lottery_news(
+        seq,
+        sha,
+        title,
+        source,
+        header,
+        <if test="type!=null">
+            type,
+        </if>
+        summary,
+        content,
+        gmt_create,
+        gmt_modify)
+        values
+        (
+        #{seq},
+        #{sha},
+        #{title},
+        #{source},
+        #{header},
+        <if test="type!=null">
+            #{type},
+        </if>
+        #{summary},
+        #{content},
+        #{gmtCreate},
+        current_time)
+    </insert>
+
+    <update id="editLotteryNews" parameterType="com.prize.lottery.po.lottery.LotteryNewsPo">
+        update lottery_news
+        set
+        <if test="homed!=null">
+            homed=#{homed},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="browse!=null">
+            browse=browse+#{browse}
+        </if>
+        where id=#{id}
+    </update>
+
+    <sql id="lotteryNewsSql">
+        id
+        ,seq,title,source,header,type,author,summary,browse,homed,browse,state,gmt_create
+    </sql>
+
+    <select id="hasLotteryNews" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            lottery_news limit 1 ),0);
+    </select>
+
+    <select id="getLotteryNewsById" parameterType="java.lang.Long" resultMap="LotteryNewsMap">
+        select
+            id,
+            seq,
+            source,
+            type,
+            homed,
+            browse,
+            state
+        from
+            lottery_news
+        where
+            id = #{id}
+    </select>
+
+    <select id="getLotteryNews" parameterType="java.lang.String" resultMap="LotteryNewsMap">
+        select
+        <include refid="lotteryNewsSql"/>,content
+        from lottery_news
+        where seq=#{seq}
+    </select>
+
+    <select id="getLotteryNewsList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LotteryNewsMap">
+        select
+        <include refid="lotteryNewsSql"/>
+        from lottery_news
+        <where>
+            <if test="condition.valid!=null">
+                state &gt;= 1
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.homed!=null">
+                and homed=#{condition.homed}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.source!=null">
+                and source=#{condition.source}
+            </if>
+        </where>
+        order by state desc, gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countLotteryNews" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from lottery_news
+        <where>
+            <if test="condition.valid!=null">
+                state &gt;= 1
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.homed!=null">
+                and homed=#{condition.homed}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.source!=null">
+                and source=#{condition.source}
+            </if>
+        </where>
+    </select>
+
+    <select id="getGroupedTopNewsList" resultMap="LotteryNewsMap">
+        select
+            id,
+            seq,
+            type,
+            title,
+            header,
+            summary,
+            gmt_modify
+        from
+            lottery_news ln
+        where
+            ln.type!=''
+        and ln.header !=''
+        and (
+                select
+                    count(1)
+                from
+                    lottery_news lnn
+                where
+                    lnn.type=ln.type
+                and lnn.id &gt;ln.id
+            )&lt;=5
+        order by
+            gmt_create desc
+    </select>
+
+</mapper>

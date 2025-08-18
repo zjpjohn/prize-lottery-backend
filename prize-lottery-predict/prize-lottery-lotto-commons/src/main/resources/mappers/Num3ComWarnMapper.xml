@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Num3ComWarnMapper">
+
+    <resultMap id="Num3ComWarnMap" type="com.prize.lottery.po.lottery.Num3ComWarningPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="dan" property="dan"/>
+        <result column="kill" property="kill"/>
+        <result column="two_ma" property="twoMa"/>
+        <result column="zu6" property="zu6"/>
+        <result column="zu3" property="zu3"/>
+        <result column="kua_list" property="kuaList"/>
+        <result column="sum_list" property="sumList"/>
+        <result column="hit" property="hit"/>
+        <result column="version" property="version"/>
+        <result column="edits" property="edits"/>
+        <result column="edit_time" property="editTime"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addNum3ComWarn" parameterType="com.prize.lottery.po.lottery.Num3ComWarningPo">
+        insert into num3_com_warning(id,
+        type,
+        period,
+        dan,
+        `kill`,
+        two_ma,
+        zu6,
+        zu3,
+        kua_list,
+        sum_list,
+        <if test="hit!=null">
+            hit,
+        </if>
+        <if test="calcTime!=null">
+            calc_time,
+        </if>
+        version,
+        gmt_create,
+        gmt_modify
+        )
+        VALUES (#{id},
+        #{type},
+        #{period},
+        #{dan},
+        #{kill},
+        #{twoMa},
+        #{zu6},
+        #{zu3},
+        #{kuaList},
+        #{sumList},
+        <if test="hit!=null">
+            #{hit},
+        </if>
+        <if test="calcTime!=null">
+            #{calcTime},
+        </if>
+        1,
+        current_time,
+        current_time
+        )
+    </insert>
+
+    <update id="editNum3ComWarn" parameterType="com.prize.lottery.po.lottery.Num3ComWarningPo">
+        update num3_com_warning
+        set
+        <if test="dan!=null">
+            dan=#{dan},
+        </if>
+        <if test="kill!=null">
+            `kill`=#{kill},
+        </if>
+        <if test="twoMa!=null">
+            two_ma=#{twoMa},
+        </if>
+        <if test="zu6!=null">
+            zu6=#{zu6},
+        </if>
+        <if test="zu3!=null">
+            zu3=#{zu3},
+        </if>
+        <if test="kuaList!=null">
+            kua_list=#{kuaList},
+        </if>
+        <if test="sumList!=null">
+            sum_list=#{sumList},
+        </if>
+        <if test="hit!=null">
+            hit=#{hit},
+        </if>
+        <if test="edits!=null">
+            edits=#{edits},
+        </if>
+        <if test="editTime!=null">
+            edit_time=#{editTime},
+        </if>
+        <if test="calcTime!=null">
+            calc_time=#{calcTime},
+        </if>
+        version=version+1,
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getNum3ComWarnById" parameterType="java.lang.Long" resultMap="Num3ComWarnMap">
+        select
+            id,
+            type,
+            period,
+            dan,
+            `kill`,
+            two_ma,
+            zu6,
+            zu3,
+            kua_list,
+            sum_list,
+            hit,
+            version,
+            edits,
+            edit_time,
+            calc_time,
+            gmt_create,
+            gmt_modify
+        from
+            num3_com_warning
+        where
+            id = #{id}
+    </select>
+
+    <select id="getNum3ComWarnByUk" resultMap="Num3ComWarnMap">
+        select
+            id,
+            type,
+            period,
+            dan,
+            `kill`,
+            two_ma,
+            zu6,
+            zu3,
+            kua_list,
+            sum_list,
+            hit,
+            version,
+            edits,
+            edit_time,
+            calc_time,
+            gmt_create,
+            gmt_modify
+        from
+            num3_com_warning
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getNum3ComWarnList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Num3ComWarnMap">
+        select
+        id,
+        type,
+        period,
+        dan,
+        `kill`,
+        two_ma,
+        zu6,
+        zu3,
+        kua_list,
+        sum_list,
+        hit,
+        version,
+        edits,
+        edit_time,
+        calc_time,
+        gmt_create,
+        gmt_modify
+        from
+        num3_com_warning
+        where
+        type = #{condition.type}
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+        <if test="condition.hit!=null">
+            and hit=#{condition.hit}
+        </if>
+        order by period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countNum3ComWarns" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        num3_com_warning
+        where
+        type = #{condition.type}
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+        <if test="condition.hit!=null">
+            and hit=#{condition.hit}
+        </if>
+    </select>
+
+    <select id="latestWarnPeriod" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            num3_com_warning
+        where
+            type = #{type}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="comWarnPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            num3_com_warning
+        where
+            type = #{type}
+        order by
+            period desc limit 20
+    </select>
+
+</mapper>

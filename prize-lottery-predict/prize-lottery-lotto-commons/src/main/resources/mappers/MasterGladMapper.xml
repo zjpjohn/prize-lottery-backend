@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.MasterGladMapper">
+
+    <resultMap id="MasterGladMap" type="com.prize.lottery.po.master.MasterGladPo">
+        <id column="id" property="id"/>
+        <result column="master_id" property="masterId"/>
+        <result column="lottery" property="lottery"/>
+        <result column="period" property="period"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="MasterGladVoMap" type="com.prize.lottery.vo.MasterGladVo">
+        <id column="id" property="id"/>
+        <result column="lottery" property="lottery"/>
+        <result column="period" property="period"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <insert id="addMasterGladList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        master_glad_info(master_id,lottery,period,content,type,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.masterId},#{item.lottery},#{item.period},#{item.content},#{item.type},current_time)
+        </foreach>
+    </insert>
+
+    <delete id="removeBeforeTime" parameterType="java.time.LocalDateTime">
+        delete
+        from
+            master_glad_info
+        where
+            gmt_create &lt;= #{time}
+    </delete>
+
+    <select id="getMasterGlad" parameterType="java.lang.Long" resultMap="MasterGladMap">
+        select
+            id,
+            master_id,
+            lottery,
+            period,
+            content,
+            type,
+            gmt_create
+        from
+            master_glad_info
+        where
+            id = #{id}
+    </select>
+
+    <select id="getMasterGladList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="MasterGladVoMap">
+        select
+        mgi.id,
+        mgi.lottery,
+        mgi.period,
+        mgi.content,
+        mgi.type,
+        mgi.gmt_create,
+        mgi.master_id,
+        mi.name,
+        mi.avatar
+        from
+        master_glad_info mgi ,
+        master_info mi
+        where
+        mgi.master_id=mi.seq
+        <if test="condition.period!=null">
+            and mgi.period=#{period}
+        </if>
+        <if test="condition.lottery!=null">
+            and mgi.lottery=#{condition.lottery}
+        </if>
+        <if test="condition.type!=null">
+            and mgi.type=#{condition.type}
+        </if>
+        order by mgi.gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countMasterGlads" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        master_glad_info
+        <where>
+            <if test="condition.period!=null">
+                and period=#{period}
+            </if>
+            <if test="condition.lottery!=null">
+                and lottery=#{condition.lottery}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+        </where>
+    </select>
+
+</mapper>

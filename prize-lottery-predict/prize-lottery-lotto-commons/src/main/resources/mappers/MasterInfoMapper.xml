@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.MasterInfoMapper">
+
+    <resultMap id="MasterInfoMap" type="com.prize.lottery.po.master.MasterInfoPo">
+        <id column="id" property="id"/>
+        <result column="seq" property="seq"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="avatar" property="avatar"/>
+        <result column="source" property="source"/>
+        <result column="source_id" property="sourceId"/>
+        <result column="enable" property="enable"/>
+        <result column="browse" property="browse"/>
+        <result column="subscribe" property="subscribe"/>
+        <result column="searches" property="searches"/>
+        <result column="description" property="description"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="MasterValueMap" type="com.prize.lottery.value.MasterValue">
+        <id column="seq" property="masterId"/>
+        <result column="name" property="name"/>
+        <result column="avatar" property="avatar"/>
+        <result column="browse" property="browse"/>
+        <result column="subscribe" property="subscribe"/>
+        <result column="searches" property="searches"/>
+    </resultMap>
+
+    <resultMap id="MasterLotteryMap" type="com.prize.lottery.po.master.MasterLotteryPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="master_id" property="masterId"/>
+        <result column="source" property="source"/>
+        <result column="source_id" property="sourceId"/>
+        <result column="level" property="level"/>
+        <result column="latest" property="latest"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="MasterBrowseMap" type="com.prize.lottery.po.master.MasterBrowsePo">
+        <id column="id" property="id"/>
+        <result column="seq_no" property="seqNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="source" property="source"/>
+        <result column="source_id" property="sourceId"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="MasterSubscribeMap" type="com.prize.lottery.po.master.MasterSubscribePo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="master_id" property="masterId"/>
+        <result column="type" property="type"/>
+        <result column="trace" property="trace"/>
+        <result column="trace_zh" property="traceZh"/>
+        <result column="special" property="special"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="MasterFocusMap" type="com.prize.lottery.po.master.MasterFocusPo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="master_id" property="masterId"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="MasterInfoVoMap" type="com.prize.lottery.vo.MasterInfoVo" extends="MasterInfoMap">
+        <result column="type" property="type"/>
+        <result column="level" property="level"/>
+        <result column="browse" property="browse"/>
+        <result column="latest" property="latest"/>
+    </resultMap>
+
+    <resultMap id="MasterSubscribeVoMap" type="com.prize.lottery.vo.MasterSubscribeVo">
+        <id column="id" property="id"/>
+        <result column="master_id" property="masterId"/>
+        <result column="channel" property="channel"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="latest" property="latest"/>
+        <result column="trace" property="trace"/>
+        <result column="trace_zh" property="traceZh"/>
+        <result column="special" property="special"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+            <result column="browse" property="browse"/>
+            <result column="subscribe" property="subscribe"/>
+            <result column="searches" property="searches"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="MasterFocusVoMap" type="com.prize.lottery.vo.MasterFocusVo">
+        <id column="id" property="id"/>
+        <result column="master_id" property="masterId"/>
+        <result column="user_id" property="userId"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+            <result column="browse" property="browse"/>
+            <result column="subscribe" property="subscribe"/>
+            <result column="searches" property="searches"/>
+        </association>
+        <collection property="lotteries" ofType="com.prize.lottery.vo.MasterFocusVo$LotteryTime">
+            <id column="type" property="lottery"/>
+            <result column="latest" property="period"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="RecommendMasterVoMap" type="com.prize.lottery.vo.RecommendMasterVo">
+        <id column="master_id" property="masterId"/>
+        <result column="type" property="type"/>
+        <result column="series" property="series"/>
+        <result column="hit_rate" property="hitRate"/>
+        <result column="hit_count" property="hitCount"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="BrowseRecordMap" type="com.prize.lottery.vo.BrowseRecordVo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="source" property="source"/>
+        <result column="source_id" property="sourceId"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <insert id="addMasterInfo" parameterType="com.prize.lottery.po.master.MasterInfoPo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into
+        master_info(seq,
+        `name`,
+        phone,
+        avatar,
+        source,
+        state,
+        enable,
+        <if test="address!=null">
+            address,
+        </if>
+        <if test="description!=null">
+            description,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values (#{seq},
+        #{name},
+        #{phone},
+        #{avatar},
+        #{source},
+        #{state},
+        #{enable},
+        <if test="address!=null">
+            #{address},
+        </if>
+        <if test="description!=null">
+            #{description},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <insert id="addMasterList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        master_info(seq,`name`,avatar,source,source_id,state,enable,gmt_create,gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.seq},
+            #{item.name},
+            #{item.avatar},
+            #{item.source},
+            #{item.sourceId},
+            #{item.state},
+            #{item.enable},
+            current_time,
+            current_time
+            )
+        </foreach>
+    </insert>
+
+    <update id="editMasterInfo" parameterType="com.prize.lottery.po.master.MasterInfoPo">
+        update master_info
+        set
+        <if test="name!=null">
+            `name`=#{name},
+        </if>
+        <if test="phone!=null">
+            phone=#{phone},
+        </if>
+        <if test="address!=null">
+            address=#{address},
+        </if>
+        <if test="avatar!=null">
+            avatar=#{avatar},
+        </if>
+        <if test="description!=null">
+            description=#{description},
+        </if>
+        <if test="browse!=null">
+            browse=browse+#{browse},
+        </if>
+        <if test="subscribe!=null">
+            subscribe=subscribe+#{subscribe},
+        </if>
+        <if test="searches!=null">
+            searches=searches+#{searches},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="enable!=null">
+            enable=#{enable},
+        </if>
+        gmt_modify=current_time
+        where id=#{id}
+    </update>
+
+    <update id="editMasterInfoList" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update master_info
+            set
+            <if test="item.name!=null">
+                `name`=#{item.name},
+            </if>
+            <if test="item.phone!=null">
+                phone=#{item.phone},
+            </if>
+            <if test="item.address!=null">
+                address=#{item.address},
+            </if>
+            <if test="item.avatar!=null">
+                avatar=#{item.avatar},
+            </if>
+            <if test="item.description!=null">
+                description=#{item.description},
+            </if>
+            <if test="item.state!=null">
+                state=#{item.state},
+            </if>
+            <if test="item.enable!=null">
+                enable=#{item.enable},
+            </if>
+            gmt_modify=current_time
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <update id="accumBatchMasters" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update master_info
+            set
+            <if test="item.searches!=null">
+                searches=searches+#{item.searches},
+            </if>
+            <if test="item.browse!=null">
+                browse=browse+#{item.browse},
+            </if>
+            <if test="item.subscribe!=null">
+                subscribe=if(subscribe&lt;-#{item.subscribe},0,subscribe+#{item.subscribe}),
+            </if>
+            gmt_modify=current_time
+            where seq=#{item.seq}
+        </foreach>
+    </update>
+
+    <sql id="masterInfoSql">
+        id
+        ,seq,`name`,phone,avatar,`source`,source_id,browse,subscribe,searches,state,`enable`
+    </sql>
+
+    <select id="getMasterInfoById" parameterType="java.lang.Long" resultMap="MasterInfoMap">
+        select
+        <include refid="masterInfoSql"/>
+        from master_info
+        where id=#{id}
+    </select>
+
+    <select id="hasMasterInfo" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select
+                           1
+                       from
+                           master_info limit 1 ), 0)
+    </select>
+    <select id="hasTypeMasterInfo" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select
+                           1
+                       from
+                           master_lottery
+                       where
+                           type = #{type}
+                       limit 1 ), 0)
+    </select>
+
+    <select id="getMasterValue" parameterType="java.lang.String" resultMap="MasterValueMap">
+        select
+            seq,
+            name,
+            avatar
+        from
+            master_info
+        where
+            seq = #{masterId}
+    </select>
+
+    <select id="getMasterInfoByPhone" parameterType="java.lang.String" resultMap="MasterInfoMap">
+        select
+        <include refid="masterInfoSql"/>
+        from master_info
+        where phone=#{phone}
+    </select>
+
+    <select id="getMasterInfoBySeq" resultMap="MasterInfoMap">
+        select
+        <include refid="masterInfoSql"/>
+        <if test="detail">
+            ,address
+            ,description
+            ,gmt_create
+        </if>
+        from master_info
+        where seq=#{seq}
+    </select>
+
+    <select id="matchMasterListByName" resultMap="MasterInfoMap">
+        select
+            seq,
+            name
+        from
+            master_info
+        where
+              name like concat('%', #{name}, '%')
+          and source = 1
+        order by
+            seq
+            limit #{limit}
+    </select>
+
+    <select id="getMastersLikeName" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="MasterInfoMap">
+        select
+            seq,
+            name
+        from
+            master_info
+        where
+              name like concat('%', #{condition.name}, '%')
+          and source = 1
+        order by
+            seq
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countMastersLikeName" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_info
+        where
+              name like concat('%', #{condition.name}, '%')
+          and source = 1
+    </select>
+
+    <select id="getHotMasterList" parameterType="java.lang.Integer" resultMap="MasterInfoMap">
+        select
+            seq,
+            name,
+            avatar,
+            browse,
+            searches,
+            subscribe
+        from
+            master_info
+        order by
+            searches desc,
+            browse desc,
+            subscribe desc
+            limit
+            #{limit}
+    </select>
+
+    <select id="getMasterInfoList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="MasterInfoVoMap">
+        select
+        mi.id,
+        mi.seq,
+        mi.name,
+        mi.phone,
+        mi.avatar,
+        mi.source,
+        mi.source_id,
+        mi.state,
+        mi.enable,
+        mi.address,
+        mi.browse,
+        mi.subscribe,
+        mi.searches,
+        <if test="condition.type!=null">
+            ml.type,
+            ml.level,
+            ml.latest,
+        </if>
+        mi.gmt_create
+        from
+        <if test="condition.type!=null">
+            master_lottery ml,
+        </if>
+        master_info mi
+        <where>
+            <if test="condition.source!=null">
+                mi.source=#{condition.source}
+            </if>
+            <if test="condition.state!=null">
+                and mi.state=#{condition.state}
+            </if>
+            <if test="condition.phone!=null">
+                and mi.phone=#{condition.phone}
+            </if>
+            <if test="condition.type!=null">
+                and ml.type=#{condition.type}
+                and ml.master_id=mi.seq
+            </if>
+        </where>
+        order by mi.gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countMasterInfos" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        <if test="condition.type!=null">
+            master_lottery ml,
+        </if>
+        master_info mi
+        <where>
+            <if test="condition.source!=null">
+                mi.source=#{condition.source}
+            </if>
+            <if test="condition.state!=null">
+                and mi.state=#{condition.state}
+            </if>
+            <if test="condition.phone!=null">
+                and mi.phone=#{condition.phone}
+            </if>
+            <if test="condition.type!=null">
+                and ml.type=#{condition.type}
+                and ml.master_id=mi.seq
+            </if>
+        </where>
+    </select>
+
+    <insert id="addMasterLotteries" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        master_lottery(`type`,
+        master_id,
+        source_id,
+        source,
+        `level`,
+        gmt_create,
+        gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.masterId},
+            #{item.sourceId},
+            #{item.source},
+            #{item.level},
+            current_time,
+            current_time)
+        </foreach>
+    </insert>
+
+    <insert id="saveMasterLottery" parameterType="com.prize.lottery.po.master.MasterLotteryPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        master_lottery(`type`,
+        master_id,
+        source_id,
+        source,
+        <if test="level!=null">
+            `level`,
+        </if>
+        <if test="latest!=null">
+            latest,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values (
+        #{type},
+        #{masterId},
+        #{sourceId},
+        #{source},
+        <if test="level!=null">
+            #{level},
+        </if>
+        <if test="latest!=null">
+            #{latest},
+        </if>
+        current_time,
+        current_time)
+        on duplicate key update
+        <if test="level!=null">
+            `level`=values('level'),
+        </if>
+        <if test="latest!=null">
+            latest=values(latest),
+        </if>
+        gmt_modify=current_time
+    </insert>
+
+    <update id="editMasterLottery" parameterType="com.prize.lottery.po.master.MasterLotteryPo">
+        update master_lottery
+        set
+        <if test="latest!=null">
+            latest=#{latest},
+        </if>
+        gmt_modify=current_time
+        where
+        master_id=#{masterId}
+        and
+        `type`=#{type}
+    </update>
+
+    <update id="editMasterLotteries" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update master_lottery
+            set
+            <if test="item.latest!=null">
+                latest=#{item.latest},
+            </if>
+            gmt_modify=current_time
+            where
+            master_id=#{item.masterId}
+            and
+            `type`=#{item.type}
+        </foreach>
+    </update>
+
+
+    <update id="editMasterLatestPeriod" parameterType="com.prize.lottery.po.master.MasterLotteryPo">
+        update master_lottery
+        set
+            latest=#{latest},
+            gmt_modify=current_time
+        where
+              master_id = #{masterId}
+          and `type` = #{type}
+          and latest &lt; #{latest}
+    </update>
+
+    <sql id="masterLotterySql">
+        id
+        ,`type`,master_id,source_id,`source`,latest
+    </sql>
+
+    <select id="getMasterLotteryById" parameterType="java.lang.Long" resultMap="MasterLotteryMap">
+        select
+        <include refid="masterLotterySql"/>,`level`,gmt_create
+        from master_lottery
+        where id=#{id}
+    </select>
+
+    <select id="existMasterLottery" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_lottery
+        where
+              master_id = #{masterId}
+          and `type` = #{type}
+    </select>
+
+    <select id="getMasterLotteryByUk" resultMap="MasterLotteryMap">
+        select
+        <include refid="masterLotterySql"/>
+        from master_lottery
+        where master_id=#{masterId}
+        and `type`=#{type}
+    </select>
+
+    <select id="getSourceMasterLotteries" resultMap="MasterLotteryMap">
+        select
+        <include refid="masterLotterySql"/>
+        from master_lottery
+        where `type`=#{type}
+        and source=#{source}
+    </select>
+
+    <select id="getMasterEnabledLotteries" parameterType="java.lang.String" resultMap="MasterLotteryMap">
+        select
+        <include refid="masterLotterySql"/>,`level`
+        from master_lottery
+        where master_id=#{masterId}
+    </select>
+
+    <select id="getAllICaiMasters" resultMap="MasterInfoMap">
+        select
+            id,
+            seq,
+            source_id
+        from
+            master_info
+        where
+            source = 1
+    </select>
+
+    <insert id="addMasterBrowse" parameterType="com.prize.lottery.po.master.MasterBrowsePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert
+        ignore into master_browse(seq_no,
+                                         user_id,
+                                         `type`,
+                                         period,
+                                         source,
+                                         source_id,
+                                         gmt_create
+                                        )
+        values (
+        #{seqNo},
+        #{userId},
+        #{type},
+        #{period},
+        #{source},
+        #{sourceId},
+        current_time
+        )
+    </insert>
+
+    <select id="hasBrowsedMaster" parameterType="com.prize.lottery.po.master.MasterBrowsePo"
+            resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            master_browse
+                        where
+                              user_id = #{userId}
+                          and `type` = #{type}
+                          and period = #{period}
+                          and source = #{source}
+                          and source_id = #{sourceId}
+                        limit 1 )
+                , 0)
+    </select>
+
+    <select id="getLottoBrowseList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="MasterBrowseMap">
+        select
+        id,
+        seq_no,
+        user_id,
+        period,
+        type,
+        source,
+        source_id,
+        gmt_create
+        from
+        master_browse
+        where
+        period = #{condition.period}
+        and type = #{condition.type}
+        and source = #{condition.source}
+        <if test="condition.sourceId!=null">
+            and source_id=#{condition.sourceId}
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countLottoBrowses" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        master_browse
+        where
+        period = #{condition.period}
+        and type = #{condition.type}
+        and source = #{condition.source}
+        <if test="condition.sourceId!=null">
+            and source_id=#{condition.sourceId}
+        </if>
+    </select>
+
+    <insert id="addMasterSubscribe" parameterType="com.prize.lottery.po.master.MasterSubscribePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into master_subscribe(user_id,
+        master_id,
+        type,
+        <if test="trace!=null and trace!=''">
+            trace,
+        </if>
+        <if test="traceZh!=null and traceZh!=''">
+            trace_zh,
+        </if>
+        gmt_create,
+        gmt_modify
+        )
+        values (#{userId},
+        #{masterId},
+        #{type},
+        <if test="trace!=null and trace!=''">
+            #{trace},
+        </if>
+        <if test="traceZh!=null and traceZh!=''">
+            #{traceZh},
+        </if>
+        current_time,
+        current_time
+        )
+    </insert>
+
+    <insert id="addMasterSubscribes" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        master_subscribe(user_id,master_id,type,gmt_create,gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId},#{item.masterId},#{item.type},current_time,current_time)
+        </foreach>
+    </insert>
+
+    <update id="editMasterSubscribe" parameterType="com.prize.lottery.po.master.MasterSubscribePo">
+        update master_subscribe
+        set
+        <if test="trace!=null and trace!=''">
+            trace=#{trace},
+        </if>
+        <if test="traceZh!=null and traceZh!=''">
+            trace_zh=#{traceZh},
+        </if>
+        <if test="special!=null">
+            special=#{special},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <delete id="delMasterSubscribe" parameterType="java.lang.Long">
+        delete
+        from
+            master_subscribe
+        where
+            id = #{id}
+    </delete>
+
+    <sql id="subscribeSql">
+        id
+        ,user_id,master_id,`type`,trace,trace_zh,special,gmt_create
+    </sql>
+
+    <select id="getMasterSubscribeById" parameterType="java.lang.Long" resultMap="MasterSubscribeMap">
+        select
+        <include refid="subscribeSql"/>
+        from master_subscribe
+        where id=#{id}
+    </select>
+
+    <select id="getMasterSubscribeUk" resultMap="MasterSubscribeMap">
+        select
+        <include refid="subscribeSql"/>
+        from master_subscribe
+        where user_id=#{userId}
+        and master_id=#{masterId}
+        and type=#{type}
+    </select>
+
+    <select id="hasSubscribeMaster" parameterType="com.prize.lottery.po.master.MasterSubscribePo"
+            resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            master_subscribe
+                        where
+                              user_id = #{userId}
+                          and master_id = #{masterId}
+                          and type = #{type}
+                        limit 1 ), 0)
+    </select>
+
+    <select id="getSubscribeMastersList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="MasterSubscribeVoMap">
+        select
+            ms.id,
+            ms.master_id,
+            mi.name,
+            mi.avatar,
+            mi.browse,
+            mi.subscribe,
+            mi.searches,
+            ms.type       as `channel`,
+            ms.gmt_create,
+            ms.trace,
+            ms.trace_zh,
+            ms.special,
+            ml.latest,
+            ml.gmt_modify as modify_time
+        from
+            (
+                select
+                    id,
+                    master_id,
+                    type,
+                    trace,
+                    trace_zh,
+                    special,
+                    gmt_create
+                from
+                    master_subscribe
+                where
+                    user_id = #{condition.userId}
+                order by
+                    type desc,
+                    special desc,
+                    gmt_create desc
+                    limit
+                    #{offset},
+                    #{limit}
+            ) ms
+                inner join master_info mi on mi.seq = ms.master_id
+                inner join master_lottery ml on ml.master_id = ms.master_id and ml.type = ms.type
+    </select>
+
+    <select id="countSubscribeMasters" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_subscribe
+        where
+            user_id = #{condition.userId}
+    </select>
+
+    <insert id="addMasterFocus" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into master_focus(user_id,
+        master_id,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId},
+            #{item.masterId},
+            current_time)
+        </foreach>
+    </insert>
+
+    <delete id="removeMasterFocus" parameterType="java.lang.Long">
+        delete
+        from
+            master_focus
+        where
+            id = #{id}
+    </delete>
+
+    <select id="hasFocusMaster" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select 1 from master_focus where user_id = #{userId} and master_id = #{masterId} limit 1 ),
+                   0)
+    </select>
+
+    <select id="getFocusMaster" resultMap="MasterFocusMap">
+        select
+            id,
+            user_id,
+            master_id,
+            gmt_create
+        from
+            master_focus
+        where
+              user_id = #{userId}
+          and master_id = #{masterId}
+    </select>
+
+    <select id="getUserMasterFocusList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="MasterFocusVoMap">
+        select
+            mf.id,
+            mf.master_id,
+            mf.user_id,
+            mi.name,
+            mi.avatar,
+            mi.browse,
+            mi.subscribe,
+            mi.searches,
+            ml.type,
+            ml.latest
+        from
+            (
+                select
+                    id,
+                    user_id,
+                    master_id,
+                    gmt_create
+                from
+                    master_focus
+                where
+                    user_id = #{condition.userId}
+                order by
+                    gmt_create desc
+                    limit
+                    #{offset},
+                    #{limit}
+            ) mf
+                left join master_info mi on mf.master_id = mi.seq
+                left join master_lottery ml on ml.master_id = mf.master_id
+    </select>
+
+    <select id="countUserMasterFocus" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_focus
+        where
+            user_id = #{condition.userId}
+    </select>
+
+    <select id="getTypedRecommendMaster" resultMap="RecommendMasterVoMap">
+        select
+            mrank.master_id,
+            mrank.period,
+            mi.name,
+            mi.avatar,
+            mrank.rank,
+            #{type}                   type,
+            mrate.${channel}_hi_count hit_count,
+            mrate.${channel}_hi_hit   series,
+            mrate.${channel}_hi_rate  hit_rate
+        from
+            ${type}_master_rank mrank,
+            ${type}_master_rate mrate,
+            master_info mi
+        where
+              mrank.master_id = mrate.master_id
+          and mrank.period = mrate.period
+          and mi.seq = mrank.master_id
+        order by
+            mrank.period desc,
+            mrank.rank asc limit 1
+    </select>
+
+    <select id="getRecentBrowseRecords" resultMap="BrowseRecordMap">
+        select
+            mb.id,
+            mb.user_id,
+            mb.period,
+            mb.type,
+            mb.source,
+            mb.source_id,
+            mb.gmt_create,
+            mi.name,
+            mi.avatar,
+            mi.seq master_id
+        from
+            (
+                select
+                    id,
+                    user_id,
+                    period,
+                    type,
+                    source,
+                    source_id,
+                    gmt_create
+                from
+                    master_browse
+                where
+                      user_id = #{userId}
+                  and type = #{type}
+                  and source = 1
+                  and gmt_create &lt;= #{current}
+                  and gmt_create &gt; #{start}
+                order by
+                    gmt_create desc limit 8
+            ) mb
+                left join master_info mi on mi.seq = mb.source_id
+    </select>
+
+    <select id="countRecentBrowseRecords" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_browse
+        where
+              user_id = #{userId}
+          and type = #{type}
+          and source = 1
+          and gmt_create &lt;= #{current}
+          and gmt_create &gt; #{start}
+    </select>
+
+    <select id="getUserBrowseRecords" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="BrowseRecordMap">
+        select
+        mb.id,
+        mb.user_id,
+        mb.period,
+        mb.type,
+        mb.source,
+        mb.source_id,
+        mb.gmt_create,
+        mi.name,
+        mi.avatar,
+        mi.seq master_id
+        from
+        (
+        select
+        id,
+        user_id,
+        period,
+        type,
+        source,
+        source_id,
+        gmt_create
+        from
+        master_browse
+        where
+        user_id=#{condition.userId}
+        and gmt_create &lt;=#{condition.timestamp}
+        and gmt_create &gt;#{condition.start}
+        <if test="condition.type!=null">
+            and type=#{condition.type}
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+        ) mb
+        left join master_info mi on mi.seq=mb.source_id and mb.source=1
+    </select>
+
+    <select id="countUserBrowseRecords" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from
+        master_browse
+        where
+        user_id=#{condition.userId}
+        and gmt_create &lt;=#{condition.timestamp}
+        and gmt_create &gt;#{condition.start}
+        <if test="condition.type!=null">
+            and type=#{condition.type}
+        </if>
+    </select>
+
+    <select id="getUserForecastBrowses" resultMap="MasterBrowseMap">
+        select
+            id,
+            user_id,
+            period,
+            type,
+            source,
+            source_id
+        from
+            master_browse
+        where
+              user_id = #{userId}
+          and period = #{period}
+          and type = #{type}
+          and source = 1
+    </select>
+
+    <select id="masterBrowseAmount" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_browse
+        where
+              period = #{period}
+          and type = #{type}
+          and source = #{source}
+          and source_id = #{sourceId}
+    </select>
+
+    <select id="materBrowseSourceAmount" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_browse
+        where
+              type = #{type}
+          and source = #{source}
+    </select>
+
+    <select id="getExistTypeMasters" resultType="java.lang.String">
+        select
+        source_id
+        from
+        master_lottery
+        where
+        type = #{type}
+        and source_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </select>
+
+    <select id="getExistMasters" parameterType="java.util.List" resultMap="MasterInfoMap">
+        select
+        id, seq, name, phone, address, avatar, source, source_id, description, enable,
+        state, gmt_create
+        from master_info
+        where source_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </select>
+
+    <delete id="delMasterBrowses">
+        delete
+        from master_browse
+        where source=1
+        and type=#{type}
+        and source_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+    <delete id="delMasterSubscribes">
+        delete
+        from
+        master_subscribe
+        where
+        type = #{type}
+        and master_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+    <delete id="delLotteryMasters">
+        delete
+        from
+        master_lottery
+        where
+        type = #{type}
+        and master_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+    <insert id="addMasterEvicts" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into master_evict(type,
+        master_id,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},#{item.masterId},current_time)
+        </foreach>
+    </insert>
+
+    <select id="getMasterEvicts" resultType="com.prize.lottery.po.master.MasterEvictPo">
+        select
+            id,
+            type,
+            master_id  as masterId,
+            gmt_create as gmtCreate
+        from
+            master_evict
+        where
+            type = #{type}
+    </select>
+
+    <delete id="delMasterEvicts">
+        delete
+        from
+            master_evict
+        where
+            type = #{type}
+    </delete>
+
+    <select id="getAllMasterIds" resultType="java.lang.String">
+        select
+            seq
+        from
+            master_info
+    </select>
+
+    <select id="getTypeMasterIds" resultType="java.lang.String">
+        select
+            master_id
+        from
+            mastere_lottery
+        where
+            type = #{type}
+    </select>
+
+</mapper>

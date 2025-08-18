@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Fc3dComRecommendMapper">
+
+    <resultMap id="EarlyWarningMap" type="com.prize.lottery.po.fc3d.Fc3dEarlyWarningPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="warn" property="warn"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="Fc3dComRecommendMap" type="com.prize.lottery.po.fc3d.Fc3dComRecommendPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="zu6" property="zu6"/>
+        <result column="zu3" property="zu3"/>
+        <result column="type" property="type"/>
+        <result column="hit" property="hit"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="saveEarlyWarning" parameterType="com.prize.lottery.po.fc3d.Fc3dEarlyWarningPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        fc3d_early_warning(
+        period,type,warn,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.period},
+            #{item.type},
+            #{item.warn},
+            current_time)
+        </foreach>
+        on duplicate key update
+        warn=values(warn)
+    </insert>
+
+    <select id="getEarlyWarnings" parameterType="java.lang.String" resultMap="EarlyWarningMap">
+        select
+            id,
+            period,
+            type,
+            warn,
+            gmt_create
+        from
+            fc3d_early_warning
+        where
+            period = #{period}
+    </select>
+
+    <select id="getEarlyWarning" resultMap="EarlyWarningMap">
+        select
+            id,
+            period,
+            type,
+            warn,
+            gmt_create
+        from
+            fc3d_early_warning
+        where
+              period = #{period}
+          and type = #{warn}
+    </select>
+
+    <insert id="saveFc3dComRecommend" parameterType="com.prize.lottery.po.fc3d.Fc3dComRecommendPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        fc3d_com_recommend(
+        period,
+        zu6,
+        zu3,
+        <if test="type!=null">
+            type,
+        </if>
+        <if test="hit!=null">
+            hit,
+        </if>
+        <if test="calcTime!=null">
+            calc_time,
+        </if>
+        gmt_create)
+        values
+        (#{period},
+        #{zu6},
+        #{zu3},
+        <if test="type!=null">
+            #{type},
+        </if>
+        <if test="hit!=null">
+            #{hit},
+        </if>
+        <if test="calcTime!=null">
+            #{calcTime},
+        </if>
+        current_time)
+        on duplicate key update
+        <if test="type!=null">
+            type=values(type),
+        </if>
+        <if test="hit!=null">
+            hit=values(hit),
+        </if>
+        <if test="calcTime!=null">
+            calc_time=values(calc_time),
+        </if>
+        zu6=values(zu6),
+        zu3=values(zu3)
+    </insert>
+
+    <select id="latestRecommendPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            fc3d_com_recommend
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="fc3dRecommendPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            fc3d_com_recommend
+        order by
+            period desc
+        limit 20
+    </select>
+
+    <select id="latestComRecommend" resultMap="Fc3dComRecommendMap">
+        select
+            id,
+            period,
+            zu6,
+            zu3,
+            type,
+            hit,
+            calc_time,
+            gmt_create
+        from
+            fc3d_com_recommend
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="getRecommendHit" resultType="java.lang.String" resultMap="Fc3dComRecommendMap">
+        select
+            id,
+            period,
+            hit
+        from
+            fc3d_com_recommend
+        where
+            period = #{period}
+    </select>
+
+    <select id="getFc3dComRecommend" parameterType="java.lang.String" resultMap="Fc3dComRecommendMap">
+        select
+            id,
+            period,
+            zu6,
+            zu3,
+            type,
+            hit,
+            calc_time,
+            gmt_create
+        from
+            fc3d_com_recommend
+        where
+            period = #{period}
+    </select>
+
+    <select id="getFc3dComRecommends" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Fc3dComRecommendMap">
+        select
+        id,
+        period,
+        zu6,
+        zu3,
+        type,
+        hit,
+        calc_time,
+        gmt_create
+        from
+        fc3d_com_recommend
+        <where>
+            <if test="condition.hit!=null">
+                and hit=#{condition.hit}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+        </where>
+        order by `period` desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countFc3dComRecommends" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from
+        fc3d_com_recommend
+        <where>
+            <if test="condition.hit!=null">
+                and hit=#{condition.hit}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+        </where>
+    </select>
+
+</mapper>

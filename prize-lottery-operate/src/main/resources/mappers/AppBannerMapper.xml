@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.AppBannerMapper">
+
+    <resultMap id="AppBannerMap" type="com.prize.lottery.infrast.persist.po.AppBannerPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="page" property="page"/>
+        <result column="banner" property="banner"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addAppBanner" parameterType="com.prize.lottery.infrast.persist.po.AppBannerPo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into
+        app_banner(
+        app_no,
+        page,
+        banner,
+        state,
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values
+        (
+        #{appNo},
+        #{page},
+        #{banner},
+        #{state},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editAppBanner" parameterType="com.prize.lottery.infrast.persist.po.AppBannerPo">
+        update app_banner
+        set
+        <if test="banner!=null">
+            banner=#{banner},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where id=#{id}
+    </update>
+
+    <select id="getAppBannerById" parameterType="java.lang.Long" resultMap="AppBannerMap">
+        select
+            id,
+            app_no,
+            page,
+            banner,
+            state,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            app_banner
+        where
+            id = #{id}
+    </select>
+
+    <select id="getAppBannerByUk" resultMap="AppBannerMap">
+        select
+            id,
+            app_no,
+            page,
+            banner,
+            state,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            app_banner
+        where
+              app_no = #{appNo}
+          and page = #{page}
+    </select>
+
+    <select id="getAppBannerList" parameterType="com.cloud.arch.page.PageCondition" resultMap="AppBannerMap">
+        select
+        id,
+        app_no,
+        page,
+        banner,
+        state,
+        remark,
+        gmt_create,
+        gmt_modify
+        from
+        app_banner
+        where
+        app_no=#{condition.appNo}
+        <if test="condition.state!=null">
+            state=#{condition.state}
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAppBanners" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        app_banner
+        where
+        app_no=#{condition.appNo}
+        <if test="condition.state!=null">
+            state=#{condition.state}
+        </if>
+    </select>
+
+</mapper>

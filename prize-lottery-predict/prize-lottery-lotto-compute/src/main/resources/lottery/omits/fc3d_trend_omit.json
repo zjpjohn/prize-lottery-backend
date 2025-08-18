@@ -1,0 +1,124 @@
+{
+  "type" : "fc3d" ,
+  "period" : "2023202" ,
+  "formOmit" : {
+    "values" : [
+      {
+        "key" : "全顺" ,
+        "value" : 11
+      } ,
+      {
+        "key" : "半顺" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "杂六" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "对子" ,
+        "value" : 7
+      } ,
+      {
+        "key" : "豹子" ,
+        "value" : 26
+      }
+    ]
+  } ,
+  "ottOmit" : {
+    "values" : [
+      {
+        "key" : "00" ,
+        "value" : 7
+      } ,
+      {
+        "key" : "01" ,
+        "value" : 2
+      } ,
+      {
+        "key" : "02" ,
+        "value" : 3
+      } ,
+      {
+        "key" : "012" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "11" ,
+        "value" : 60
+      } ,
+      {
+        "key" : "12" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "22" ,
+        "value" : 26
+      }
+    ]
+  } ,
+  "modeOmit" : {
+    "values" : [
+      {
+        "key" : "凸上" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "凹下" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "上升" ,
+        "value" : 8
+      } ,
+      {
+        "key" : "下降" ,
+        "value" : 3
+      } ,
+      {
+        "key" : "平行" ,
+        "value" : 26
+      }
+    ]
+  } ,
+  "bsOmit" : {
+    "values" : [
+      {
+        "key" : "全小" ,
+        "value" : 2
+      } ,
+      {
+        "key" : "两小" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "两大" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "全大" ,
+        "value" : 5
+      }
+    ]
+  } ,
+  "oeOmit" : {
+    "values" : [
+      {
+        "key" : "全奇" ,
+        "value" : 15
+      } ,
+      {
+        "key" : "两奇" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "两偶" ,
+        "value" : 3
+      } ,
+      {
+        "key" : "全偶" ,
+        "value" : 0
+      }
+    ]
+  }
+}

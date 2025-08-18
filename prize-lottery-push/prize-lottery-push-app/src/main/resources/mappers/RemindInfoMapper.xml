@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.RemindInfoMapper">
+
+    <resultMap id="RemindInfoMap" type="com.prize.lottery.infrast.persist.po.RemindInfoPo">
+        <id column="id" property="id"/>
+        <result column="receiver_id" property="receiverId"/>
+        <result column="from_id" property="fromId"/>
+        <result column="from_name" property="fromName"/>
+        <result column="obj_id" property="objId"/>
+        <result column="obj_type" property="objType"/>
+        <result column="obj_action" property="objAction"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="channel" property="channel"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="RemindMailboxMap" type="com.prize.lottery.infrast.persist.po.RemindMailBoxPo">
+        <id column="id" property="id"/>
+        <result column="receiver_id" property="receiverId"/>
+        <result column="channel" property="channel"/>
+        <result column="remind_id" property="remindId"/>
+        <result column="latest_read" property="latestRead"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="addRemindInfo" parameterType="com.prize.lottery.infrast.persist.po.RemindInfoPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into mc_remind(receiver_id,
+                              from_id,
+                              from_name,
+                              obj_id,
+                              obj_type,
+                              obj_action,
+                              title,
+                              content,
+                              type,
+                              `channel`,
+                              gmt_create
+                             )
+        values (#{receiverId},
+                #{frmomId},
+                #{fromName},
+                #{objId},
+                #{objType},
+                #{objAction},
+                #{title},
+                #{content},
+                #{type},
+                #{channel},
+                current_time
+               )
+    </insert>
+
+    <insert id="addRemindMailbox" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into
+        mc_remind_mailbox (receiver_id,
+        `channel`,
+        remind_id,
+        latest_read,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.receiverId},
+            #{item.channel},
+            #{item.remindId},
+            #{item.latestRead},
+            current_time)
+        </foreach>
+        on duplicate key update
+        remind_id=values(remind_id),
+        latest_read=values(latest_read)
+    </insert>
+
+    <select id="getRemindList" parameterType="com.cloud.arch.page.PageCondition" resultMap="RemindInfoMap">
+        select
+        id,
+        receiver_id,
+        from_id,
+        from_name,
+        obj_id,
+        obj_type,
+        obj_action,
+        title,
+        content,
+        type,
+        `channel`,
+        gmt_create
+        from
+        mc_remind
+        <where>
+            <if test="condition.receiverId!=null">
+                and receiver_id=#{condition.receiverId}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.remindId!=null">
+                and id &gt;#{condition.remindId}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;=#{condition.end}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countReminds" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        mc_remind
+        <where>
+            <if test="condition.receiverId!=null">
+                and receiver_id=#{condition.receiverId}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.remindId!=null">
+                and id &gt;#{condition.remindId}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;=#{condition.end}
+            </if>
+        </where>
+    </select>
+
+    <select id="getRemindMailbox" resultMap="RemindMailboxMap">
+        select
+            id,
+            receiver_id,
+            `channel`,
+            remind_id,
+            latest_read,
+            gmt_create
+        from
+            mc_remind_mailbox
+        where
+              receiver_id = #{receiverId}
+          and `channel` = #{channel}
+    </select>
+
+    <select id="getRemindMailBoxList" resultMap="RemindMailboxMap">
+        select
+        id, receiver_id, channel, remind_id, latest_read, gmt_create
+        from
+        mc_remind_mailbox
+        where receiver_id=#{receiverId}
+        and `channel` in
+        <foreach collection="channels" item="channel" separator="," open="(" close=")">
+            #{channel}
+        </foreach>
+    </select>
+
+    <select id="getChannelLatestReminds" resultMap="RemindInfoMap">
+        select
+        id,
+        receiver_id,
+        from_id,
+        from_name,
+        obj_id,
+        obj_type,
+        obj_action,
+        title,
+        content,
+        type,
+        `channel`,
+        gmt_create
+        from
+        mc_remind
+        where
+        id in (
+        select
+        max(id)
+        from
+        mc_remind
+        where
+        receiver_id=#{receiverId}
+        and `channel` in
+        <foreach collection="channels" item="channel" separator="," open="(" close=")">
+            #{channel}
+        </foreach>
+        group by
+        channel
+        )
+    </select>
+</mapper>

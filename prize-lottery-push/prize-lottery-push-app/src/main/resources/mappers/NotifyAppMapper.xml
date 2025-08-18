@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.NotifyAppMapper">
+
+    <resultMap id="NotifyAppMap" type="com.prize.lottery.infrast.persist.po.NotifyAppPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="app_name" property="appName"/>
+        <result column="app_key" property="appKey"/>
+        <result column="platform" property="platform"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="NotifyDeviceMap" type="com.prize.lottery.infrast.persist.po.NotifyDevicePo">
+        <id column="id" property="id"/>
+        <result column="app_key" property="appKey"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="enable" property="enable"/>
+        <result column="user_id" property="userId"/>
+        <result column="phone" property="phone"/>
+        <result column="online_time" property="onlineTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="MetricsDeviceMap" type="com.prize.lottery.infrast.persist.po.MetricsDevicePo">
+        <id column="id" property="id"/>
+        <result column="app_key" property="appKey"/>
+        <result column="devices" property="devices"/>
+        <result column="increases" property="increases"/>
+        <result column="metrics_date" property="metricsDate"/>
+        <result column="latest_time" property="latestTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="DeviceMetricsVoMap" type="com.prize.lottery.infrast.persist.vo.DeviceMetricsVo">
+        <result column="yesterday_incr" property="yesterdayIncr"/>
+        <result column="yesterday_cnt" property="yesterdayCnt"/>
+        <result column="week_incr" property="weekIncr"/>
+        <result column="month_incr" property="monthIncr"/>
+        <result column="last_incr" property="lastIncr"/>
+        <result column="last_cnt" property="lastCnt"/>
+    </resultMap>
+
+    <insert id="addNotifyApp" parameterType="com.prize.lottery.infrast.persist.po.NotifyAppPo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into notify_app(app_no,
+                               app_name,
+                               app_key,
+                               platform,
+                               remark,
+                               gmt_create,
+                               gmt_modify
+                              )
+        values (#{appNo},
+                #{appName},
+                #{appKey},
+                #{platform},
+                #{remark},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editNotifyApp" parameterType="com.prize.lottery.infrast.persist.po.NotifyAppPo">
+        update notify_app
+        set
+        <if test="appNo!=null">
+            app_no=#{appNo},
+        </if>
+        <if test="appName!=null">
+            app_name=#{appName},
+        </if>
+        <if test="appKey!=null">
+            app_key=#{appKey},
+        </if>
+        <if test="platform!=null">
+            platform=#{platform},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getNotifyApp" parameterType="java.lang.Long" resultMap="NotifyAppMap">
+        select
+            id,
+            app_no,
+            app_name,
+            app_key,
+            platform,
+            remark,
+            gmt_create
+        from
+            notify_app
+        where
+            id = #{id}
+    </select>
+
+    <select id="getNotifyAppByKey" parameterType="java.lang.Long" resultMap="NotifyAppMap">
+        select
+            id,
+            app_no,
+            app_name,
+            app_key,
+            platform,
+            remark,
+            gmt_create
+        from
+            notify_app
+        where
+            app_key = #{appKey}
+    </select>
+
+    <select id="getNotifyAppByNo" parameterType="java.lang.String" resultMap="NotifyAppMap">
+        select
+            id,
+            app_no,
+            app_name,
+            app_key,
+            platform
+        from
+            notify_app
+        where
+            app_no = #{appNo}
+    </select>
+
+    <select id="getNotifyAppList" resultMap="NotifyAppMap">
+        select
+            id,
+            app_no,
+            app_name,
+            app_key,
+            platform,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            notify_app
+    </select>
+
+    <insert id="addNotifyDevice" parameterType="com.prize.lottery.infrast.persist.po.NotifyDevicePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        notify_device(
+        app_key,
+        device_id,
+        device_type,
+        enable,
+        <if test="userId!=null">
+            user_id,
+        </if>
+        <if test="phone!=null">
+            phone,
+        </if>
+        <if test="onlineTime!=null">
+            online_time,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values
+        (#{appKey},
+        #{deviceId},
+        #{deviceType},
+        #{enable},
+        <if test="userId!=null">
+            #{userId},
+        </if>
+        <if test="phone!=null">
+            #{phone},
+        </if>
+        <if test="onlineTime!=null">
+            #{onlineTime},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editNotifyDevice" parameterType="com.prize.lottery.infrast.persist.po.NotifyDevicePo">
+        update notify_device
+        set
+        <if test="enable!=null">
+            enable=#{enable},
+        </if>
+        <if test="userId!=null">
+            user_id=#{userId},
+        </if>
+        <if test="phone!=null">
+            phone=#{phone},
+        </if>
+        <if test="onlineTime!=null">
+            online_time=#{onlineTime},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getDeviceById" parameterType="java.lang.Long" resultMap="NotifyDeviceMap">
+        select
+            id,
+            app_key,
+            device_id,
+            device_type,
+            enable,
+            user_id,
+            phone,
+            online_time,
+            gmt_create
+        from
+            notify_device
+        where
+            id = #{id}
+    </select>
+
+    <select id="getDeviceByDeviceId" parameterType="java.lang.String" resultMap="NotifyDeviceMap">
+        select
+            id,
+            app_key,
+            device_id,
+            device_type,
+            enable,
+            user_id,
+            phone,
+            online_time,
+            gmt_create
+        from
+            notify_device
+        where
+            device_id = #{deviceId}
+    </select>
+
+    <select id="getNotifyDeviceList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="NotifyDeviceMap">
+        select id, app_key, device_id, device_type, enable, user_id, phone, online_time, gmt_create
+        from
+        notify_device
+        where app_key=#{condition.appKey}
+        <if test="condition.type!=null">
+            and device_type=#{condition.type}
+        </if>
+        <if test="condition.enable!=null">
+            and enable=#{condition.enable}
+        </if>
+        <if test="condition.start!=null and condition.end!=null">
+            and online_time between #{condition.start} and #{condition.end}
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countNotifyDevices" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        notify_device
+        where app_key=#{condition.appKey}
+        <if test="condition.type!=null">
+            and device_type=#{condition.type}
+        </if>
+        <if test="condition.enable!=null">
+            and enable=#{condition.enable}
+        </if>
+        <if test="condition.start!=null and condition.end!=null">
+            and online_time between #{condition.start} and #{condition.end}
+        </if>
+    </select>
+
+    <select id="getWithoutBindDevices" resultMap="NotifyDeviceMap">
+        select
+            nd.id,
+            nd.app_key,
+            nd.device_id,
+            nd.device_type,
+            nd.enable,
+            nd.user_id,
+            nd.phone
+        from
+            notify_device nd
+                left join notify_tag_bind ntb
+                          on nd.device_id = ntb.device_id and ntb.group_id = #{groupId} and ntb.app_key = #{appKey}
+        where
+            ntb.device_id is null
+        order by
+            nd.id asc
+            limit #{limit}
+    </select>
+
+    <insert id="addDeviceMetrics" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            insert into
+            metrics_device(
+            app_key,
+            <if test="item.devices!=null">
+                devices,
+            </if>
+            <if test="item.increases!=null">
+                increases,
+            </if>
+            metrics_date,
+            latest_time,
+            gmt_create)
+            values
+            (
+            #{item.appKey},
+            <if test="item.devices!=null">
+                #{item.devices},
+            </if>
+            <if test="item.increases!=null">
+                #{item.increases},
+            </if>
+            #{item.metricsDate},
+            current_time,
+            current_time)
+            on duplicate key update
+            <if test="item.devices!=null">
+                devices=values(devices),
+            </if>
+            <if test="item.increases!=null">
+                increases=values(increases),
+            </if>
+            latest_time=current_time
+        </foreach>
+    </insert>
+
+    <select id="getMetricsDevices" resultMap="MetricsDeviceMap">
+        select
+            id,
+            app_key,
+            devices,
+            increases,
+            metrics_date
+        from
+            metrics_device
+        where
+              app_key = #{appKey}
+          and metrics_date &gt;= #{startDay}
+          and metrics_date &lt; #{endDay}
+        order by
+            metrics_date
+    </select>
+
+    <select id="getDeviceMetricsVo" parameterType="java.lang.Long" resultMap="DeviceMetricsVoMap">
+        select
+            ifnull(sum(if(metrics_date = date_sub(current_date, interval 1 day), increases, 0)),
+                   0) as yesterday_incr,
+            ifnull(sum(if(metrics_date &gt;= date_sub(current_date, interval 7 day), increases, 0)),
+                   0) as week_incr,
+            ifnull(sum(if(metrics_date &gt;= date_sub(current_date, interval 30 day), increases, 0)),
+                   0) as month_incr,
+            ifnull(sum(if(metrics_date &lt; date_sub(current_date, interval 30 day)
+                              and metrics_date &gt;= date_sub(current_date, interval 60 day), devices, 0)),
+                   0) as last_incr
+        from
+            metrics_device
+        where
+            app_key = #{appKey}
+    </select>
+
+    <select id="getDeviceMetricsCnt" parameterType="java.lang.Long" resultMap="DeviceMetricsVoMap">
+        select
+            ifnull(
+                    (
+                        select
+                            devices
+                        from
+                            metrics_device
+                        where
+                              app_key = #{appKey}
+                          and metrics_date &gt;= date_sub(current_date, interval 30 day)
+                          and metrics_date &lt; current_date
+                        order by
+                            metrics_date desc
+                        limit 1 ),
+                    0
+                )                                 as yesterday_cnt,
+            ifnull(
+                    (
+                        select
+                            devices
+                        from
+                            metrics_device
+                        where
+                              app_key = #{appKey}
+                          and metrics_date &gt;= date_sub(current_date, interval 60 day)
+                          and metrics_date &lt; date_sub(current_date, interval 30 day)
+                        order by
+                            metrics_date desc
+                        limit 1 ),
+                    0
+                ) as last_cnt
+    </select>
+
+</mapper>

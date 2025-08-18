@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Pl3ComRecommendMapper">
+
+    <resultMap id="EarlyWarningMap" type="com.prize.lottery.po.pl3.Pl3EarlyWarningPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="warn" property="warn"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="Pl3ComRecommendMap" type="com.prize.lottery.po.pl3.Pl3ComRecommendPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="zu6" property="zu6"/>
+        <result column="zu3" property="zu3"/>
+        <result column="hit" property="hit"/>
+        <result column="type" property="type"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="saveEarlyWarning" parameterType="com.prize.lottery.po.fc3d.Fc3dEarlyWarningPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        pl3_early_warning(
+        period,type,warn,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.period},
+            #{item.type},
+            #{item.warn},
+            current_time)
+        </foreach>
+        on duplicate key update
+        warn=values(warn)
+    </insert>
+
+    <select id="getEarlyWarning" resultMap="EarlyWarningMap">
+        select
+            id,
+            period,
+            type,
+            warn,
+            gmt_create
+        from
+            pl3_early_warning
+        where
+              period = #{period}
+          and type = #{type}
+    </select>
+
+    <select id="getEarlyWarnings" parameterType="java.lang.String" resultMap="EarlyWarningMap">
+        select
+            id,
+            period,
+            type,
+            warn,
+            gmt_create
+        from
+            pl3_early_warning
+        where
+            period = #{period}
+    </select>
+
+    <insert id="saveComRecommend" parameterType="com.prize.lottery.po.pl3.Pl3ComRecommendPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        pl3_com_recommend(
+        period,
+        zu6,
+        zu3,
+        <if test="hit!=null">
+            hit,
+        </if>
+        <if test="type!=null">
+            type,
+        </if>
+        <if test="calcTime!=null">
+            calc_time,
+        </if>
+        gmt_create)
+        values
+        (#{period},
+        #{zu6},
+        #{zu3},
+        <if test="hit!=null">
+            #{hit},
+        </if>
+        <if test="type!=null">
+            #{type},
+        </if>
+        <if test="calcTime!=null">
+            #{calcTime},
+        </if>
+        current_time)
+        on duplicate key update
+        <if test="hit!=null">
+            hit=values(hit),
+        </if>
+        <if test="type!=null">
+            type=values(type),
+        </if>
+        <if test="calcTime!=null">
+            calc_time=values(calc_time),
+        </if>
+        zu6=values(zu6),
+        zu3=values(zu3)
+    </insert>
+
+    <select id="latestComRecommend" resultMap="Pl3ComRecommendMap">
+        select
+            id,
+            period,
+            zu6,
+            zu3,
+            hit,
+            type,
+            calc_time,
+            gmt_create
+        from
+            pl3_com_recommend
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getRecommendHit" resultType="java.lang.String" resultMap="Pl3ComRecommendMap">
+        select
+            id,
+            period,
+            hit
+        from
+            pl3_com_recommend
+        where
+            period = #{period}
+    </select>
+
+    <select id="getComRecommend" parameterType="java.lang.String" resultMap="Pl3ComRecommendMap">
+        select
+            id,
+            period,
+            zu6,
+            zu3,
+            hit,
+            type,
+            calc_time,
+            gmt_create
+        from
+            pl3_com_recommend
+        where
+            period = #{period}
+    </select>
+
+    <select id="getComRecommends" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Pl3ComRecommendMap">
+        select
+        id,
+        period,
+        zu6,
+        zu3,
+        hit,
+        type,
+        calc_time,
+        gmt_create
+        from
+        pl3_com_recommend
+        <where>
+            <if test="condition.hit!=null">
+                and hit=#{condition.hit}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+        </where>
+        order by `period` desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countComRecommends" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from pl3_com_recommend
+        <where>
+            <if test="condition.hit!=null">
+                and hit=#{condition.hit}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+        </where>
+    </select>
+
+    <select id="latestRecommendPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            pl3_com_recommend
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="latestRecommendPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            pl3_com_recommend
+        order by
+            period desc limit 20
+    </select>
+
+</mapper>

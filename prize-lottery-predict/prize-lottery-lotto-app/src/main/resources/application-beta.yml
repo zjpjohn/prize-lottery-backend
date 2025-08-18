@@ -1,0 +1,33 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - beta
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+      - optional:nacos:lottery-forecast-rule-${spring.profiles.active}.yml
+      - optional:nacos:lottery-share-period-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      username:
+      password:
+      config:
+        server-addr:
+        namespace:
+      discovery:
+        server-addr:
+        namespace:
+
+dubbo:
+  consumer:
+    check: true
+  registry:
+    username:
+    password:
+    address:
+    parameters:
+      namespace:
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

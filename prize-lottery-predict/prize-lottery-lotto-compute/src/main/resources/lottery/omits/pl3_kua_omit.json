@@ -1,0 +1,168 @@
+{
+  "type" : "pl3" ,
+  "period" : "2023202" ,
+  "baseOmit" : {
+    "values" : [
+      {
+        "key" : "0" ,
+        "value" : 193
+      } ,
+      {
+        "key" : "1" ,
+        "value" : 21
+      } ,
+      {
+        "key" : "2" ,
+        "value" : 16
+      } ,
+      {
+        "key" : "3" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "4" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "5" ,
+        "value" : 4
+      } ,
+      {
+        "key" : "6" ,
+        "value" : 12
+      } ,
+      {
+        "key" : "7" ,
+        "value" : 6
+      } ,
+      {
+        "key" : "8" ,
+        "value" : 7
+      } ,
+      {
+        "key" : "9" ,
+        "value" : 5
+      }
+    ]
+  } ,
+  "ampOmit" : {
+    "values" : [
+      {
+        "key" : "0" ,
+        "value" : 2
+      } ,
+      {
+        "key" : "1" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "2" ,
+        "value" : 5
+      } ,
+      {
+        "key" : "3" ,
+        "value" : 11
+      } ,
+      {
+        "key" : "4" ,
+        "value" : 4
+      } ,
+      {
+        "key" : "5" ,
+        "value" : 9
+      } ,
+      {
+        "key" : "6" ,
+        "value" : 41
+      } ,
+      {
+        "key" : "7" ,
+        "value" : 20
+      } ,
+      {
+        "key" : "8" ,
+        "value" : 192
+      } ,
+      {
+        "key" : "9" ,
+        "value" : 257
+      }
+    ]
+  } ,
+  "ampAmp" : {
+    "values" : [
+      {
+        "key" : "0" ,
+        "value" : 8
+      } ,
+      {
+        "key" : "1" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "2" ,
+        "value" : 3
+      } ,
+      {
+        "key" : "3" ,
+        "value" : 2
+      } ,
+      {
+        "key" : "4" ,
+        "value" : 7
+      } ,
+      {
+        "key" : "5" ,
+        "value" : 93
+      } ,
+      {
+        "key" : "6" ,
+        "value" : 19
+      } ,
+      {
+        "key" : "7" ,
+        "value" : 205
+      } ,
+      {
+        "key" : "8" ,
+        "value" : 190
+      } ,
+      {
+        "key" : "9" ,
+        "value" : 204
+      }
+    ]
+  } ,
+  "bmsOmit" : {
+    "values" : [
+      {
+        "key" : "小" ,
+        "value" : 5
+      } ,
+      {
+        "key" : "中" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "大" ,
+        "value" : 16
+      }
+    ]
+  } ,
+  "ottOmit" : {
+    "values" : [
+      {
+        "key" : "0" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "1" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "2" ,
+        "value" : 4
+      }
+    ]
+  }
+}

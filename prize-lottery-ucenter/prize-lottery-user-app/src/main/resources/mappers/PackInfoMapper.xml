@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.PackInfoMapper">
+
+    <resultMap id="PackInfoMap" type="com.prize.lottery.infrast.persist.po.PackInfoPo">
+        <id column="id" property="id"/>
+        <result column="seq_no" property="seqNo"/>
+        <result column="name" property="name"/>
+        <result column="remark" property="remark"/>
+        <result column="price" property="price"/>
+        <result column="discount" property="discount"/>
+        <result column="time_unit" property="timeUnit"/>
+        <result column="priority" property="priority"/>
+        <result column="on_trial" property="onTrial"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="PrivilegeMap" type="com.prize.lottery.infrast.persist.po.PackPrivilegePo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="icon" property="icon"/>
+        <result column="content" property="content"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="PackageTimeMap" type="com.prize.lottery.infrast.persist.vo.PackTimeMetricsVo">
+        <result column="yesterday_amt" property="yesterdayAmt"/>
+        <result column="yesterday_cnt" property="yesterdayCnt"/>
+        <result column="week_amt" property="weekAmt"/>
+        <result column="week_cnt" property="weekCnt"/>
+        <result column="month_amt" property="monthAmt"/>
+        <result column="month_cnt" property="monthCnt"/>
+        <result column="last_month_amt" property="lastMonthAmt"/>
+        <result column="last_month_cnt" property="lastMonthCnt"/>
+    </resultMap>
+
+    <insert id="addPackInfo" parameterType="com.prize.lottery.infrast.persist.po.PackInfoPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        pack_info(
+        seq_no,
+        name,
+        <if test="remark!=null">
+            remark,
+        </if>
+        price,
+        discount,
+        time_unit,
+        state,
+        priority,
+        on_trial,
+        gmt_create,
+        gmt_modify)
+        values
+        (#{seqNo},
+        #{name},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        #{price},
+        #{discount},
+        #{timeUnit},
+        #{state},
+        #{priority},
+        #{onTrial},
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editPackInfo" parameterType="com.prize.lottery.infrast.persist.po.PackInfoPo">
+        <if test="priority!=null and priority==1">
+            update pack_info
+            set priority=0,
+            gmt_modify=current_time
+            where priority=1;
+        </if>
+        <if test="onTrial!=null and onTrial==1">
+            update pack_info
+            set on_trial=0,
+            gmt_modify=current_time
+            where on_trial=1;
+        </if>
+        update pack_info
+        set
+        <if test="name!=null">
+            name=#{name},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        <if test="price!=null">
+            price=#{price},
+        </if>
+        <if test="discount!=null">
+            discount=#{discount},
+        </if>
+        <if test="timeUnit!=null">
+            time_unit=#{timeUnit},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="priority!=null">
+            priority=#{priority},
+        </if>
+        <if test="onTrial!=null">
+            on_trial=#{onTrial},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id};
+    </update>
+
+    <delete id="delPackInfo" parameterType="java.lang.String">
+        delete
+        from
+            pack_info
+        where
+            seq_no = #{packNo}
+    </delete>
+
+    <select id="existPackName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select
+                           1
+                       from
+                           pack_info
+                       where
+                           name = #{name}
+                       limit 1
+                   ), 0)
+    </select>
+
+    <select id="getPackInfoByNo" parameterType="java.lang.String" resultMap="PackInfoMap">
+        select
+            id,
+            seq_no,
+            name,
+            remark,
+            price,
+            discount,
+            time_unit,
+            state,
+            priority,
+            on_trial,
+            gmt_create
+        from
+            pack_info
+        where
+            seq_no = #{packNo}
+    </select>
+
+    <select id="getAllPackInfoList" resultMap="PackInfoMap">
+        select
+            id,
+            seq_no,
+            name,
+            remark,
+            price,
+            discount,
+            time_unit,
+            state,
+            priority,
+            on_trial,
+            gmt_create,
+            gmt_modify
+        from
+            pack_info
+    </select>
+
+    <select id="getUsingPackList" parameterType="java.lang.Boolean" resultMap="PackInfoMap">
+        select
+        id,
+        seq_no,
+        name,
+        remark,
+        price,
+        discount,
+        time_unit,
+        priority,
+        on_trial,
+        gmt_create
+        from
+        pack_info
+        where
+        state = 2
+        <if test="excludeTrial">
+            and on_trial=0
+        </if>
+    </select>
+
+    <insert id="addPrivilegeList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        pack_privilege(name,icon,content,sorted,gmt_create,gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.name},
+            #{item.icon},
+            #{item.content},
+            #{item.sorted},
+            current_time,
+            current_time)
+        </foreach>
+    </insert>
+
+    <update id="editPrivilegeList" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update pack_privilege
+            set
+            <if test="item.name!=null">
+                name=#{item.name},
+            </if>
+            <if test="item.icon!=null">
+                icon=#{item.icon},
+            </if>
+            <if test="item.content!=null">
+                content=#{item.content},
+            </if>
+            <if test="item.sorted!=null">
+                sorted=#{item.sorted},
+            </if>
+            gmt_modify=current_time
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <delete id="removePrivileges" parameterType="java.util.List">
+        delete
+        from pack_privilege
+        where id in
+        <foreach collection="idList" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getPackPrivileges" parameterType="java.lang.String" resultMap="PrivilegeMap">
+        select
+            id,
+            name,
+            icon,
+            content,
+            sorted,
+            gmt_create,
+            gmt_modify
+        from
+            pack_privilege
+        order by
+            sorted
+    </select>
+
+    <select id="countPackPrivileges" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            pack_privilege
+    </select>
+
+    <select id="getUserBuyPackList" parameterType="java.lang.Long" resultMap="PackInfoMap">
+        select
+            pi.id,
+            pi.seq_no,
+            pi.name,
+            pi.remark,
+            pi.price,
+            pi.discount,
+            pi.time_unit,
+            pi.priority,
+            pi.on_trial,
+            pi.state,
+            pi.gmt_create,
+            pi.gmt_modify
+        from
+            pack_info pi,
+            user_member_log uml
+        where
+              pi.seq_no = uml.pack_no
+          and uml.user_id = #{userId}
+    </select>
+
+    <select id="getPackTimeMetrics" parameterType="com.prize.lottery.infrast.persist.dto.MetricsTimeDto"
+            resultMap="PackageTimeMap">
+        select
+            ifnull(sum(if(date(gmt_create) = #{yesterday}, payed, 0)), 0)     as yesterday_amt,
+            count(if(date(gmt_create) = #{yesterday}, 1, null))               as yesterday_cnt,
+            ifnull(sum(if(date(gmt_create) &gt;= #{weekStart}, payed, 0)), 0) as week_amt,
+            count(if(date(gmt_create) &gt;= #{weekStart}, 1, null))           as week_cnt,
+            ifnull(sum(if(date(gmt_create) &gt;= #{monthStart}, payed, 0)),
+                   0)                                                         as month_amt,
+            count(if(date(gmt_create) &gt;= #{monthStart}, 1, null))          as month_cnt,
+            ifnull(sum(if(date(gmt_create) &gt;= #{lastStart} and date(gmt_create) &lt; #{monthStart}, payed, 0)),
+                   0)                                                         as last_month_amt,
+            count(if(date(gmt_create) &gt;= #{lastStart} and date(gmt_create) &lt; #{monthStart}, 1,
+                     null))                                                   as last_month_cnt
+        from
+            user_member_log
+    </select>
+
+    <select id="getPackTotalMetrics" resultType="com.prize.lottery.infrast.persist.vo.PackMetricsVo">
+        select
+            pi.seq_no             as packNo,
+            pi.name               as packName,
+            ifnull(mt.pay_amt, 0) as payAmt,
+            ifnull(mt.pay_cnt, 0) as payCnt
+        from
+            pack_info pi
+                left join
+                (
+                    select
+                        pack_no,
+                        sum(payed)     as pay_amt,
+                        count(pack_no) as pay_cnt
+                    from
+                        user_member_log
+                    group by
+                        pack_no
+                ) mt on pi.seq_no = mt.pack_no
+        order by
+            pay_amt desc,
+            pack_no
+    </select>
+
+    <select id="getPackDayMetrics" resultType="com.prize.lottery.infrast.persist.vo.PackDayMetricsVo">
+        select
+            date(gmt_create)      as day,
+            ifnull(sum(payed), 0) as payAmt,
+            count(pack_no)        as payCnt
+        from
+            user_member_log
+        where
+              gmt_create &gt;= #{startDay}
+          and gmt_create &lt; #{endDay}
+        group by
+            day
+        order by
+            day
+    </select>
+
+</mapper>

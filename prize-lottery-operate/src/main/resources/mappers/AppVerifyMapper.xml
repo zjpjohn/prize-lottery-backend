@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.AppVerifyMapper">
+
+    <resultMap id="AppVerifyMap" type="com.prize.lottery.infrast.persist.po.AppVerifyPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="app_pack" property="appPack"/>
+        <result column="signature" property="signature"/>
+        <result column="auth_key" property="authKey"/>
+        <result column="state" property="state"/>
+        <result column="success" property="success"/>
+        <result column="cancel" property="cancel"/>
+        <result column="downgrades" property="downgrades"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addAppVerify" parameterType="com.prize.lottery.infrast.persist.po.AppVerifyPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        app_verify(
+        app_no,
+        app_pack,
+        signature,
+        auth_key,
+        state,
+        success,
+        cancel,
+        <if test="downgrades!=null">
+            downgrades,
+        </if>
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values
+        (#{appNo},
+        #{appPack},
+        #{signature},
+        #{authKey},
+        #{state},
+        #{success},
+        #{cancel},
+        <if test="downgrades!=null">
+            #{downgrades},
+        </if>
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editAppVerify" parameterType="com.prize.lottery.infrast.persist.po.AppVerifyPo">
+        update app_verify
+        set
+        <if test="appPack!=null">
+            app_pack=#{appPack},
+        </if>
+        <if test="signature!=null">
+            signature=#{signature},
+        </if>
+        <if test="authKey!=null">
+            auth_key=#{authKey},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="success!=null">
+            success=#{success},
+        </if>
+        <if test="cancel!=null">
+            cancel=#{cancel},
+        </if>
+        <if test="downgrades!=null">
+            downgrades=#{downgrades},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getVerifyById" parameterType="java.lang.Long" resultMap="AppVerifyMap">
+        select
+            id,
+            app_no,
+            app_pack,
+            signature,
+            auth_key,
+            state,
+            success,
+            cancel,
+            downgrades,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            app_verify
+        where
+            id = #{id}
+    </select>
+
+    <select id="getVerifyByNo" parameterType="java.lang.String" resultMap="AppVerifyMap">
+        select
+            id,
+            app_no,
+            app_pack,
+            signature,
+            auth_key,
+            state,
+            success,
+            cancel,
+            downgrades,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            app_verify
+        where
+            app_no = #{appNo}
+    </select>
+
+</mapper>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.DltTraceMapper">
+
+    <resultMap id="TraceMasterMap" type="com.prize.lottery.po.trace.TraceMasterPo">
+        <id column="id" property="id"/>
+        <result column="master_id" property="masterId"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="rank" property="rank"/>
+        <result column="channel" property="channel"/>
+    </resultMap>
+
+    <resultMap id="TraceResultMap" type="com.prize.lottery.po.trace.RbTraceResultPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="red" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="red" property="data"/>
+            <result column="hit_red" property="hitData"/>
+            <result column="red_hit" property="dataHit"/>
+        </association>
+        <association property="rk" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="rk" property="data"/>
+            <result column="hit_rk" property="hitData"/>
+            <result column="rk_hit" property="dataHit"/>
+        </association>
+        <association property="blue" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="blue" property="data"/>
+            <result column="hit_blue" property="hitData"/>
+            <result column="blue_hit" property="dataHit"/>
+        </association>
+        <association property="bk" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="bk" property="data"/>
+            <result column="hit_bk" property="hitData"/>
+            <result column="bk_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <insert id="addTraceMasters" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into ssq_trace_master(master_id,
+        type,
+        period,
+        `rank`,
+        channel,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.masterId},
+            #{item.type},
+            #{item.period},
+            #{item.rank},
+            #{item.channel},
+            #{item.gmtCreate}
+            )
+        </foreach>
+        on duplicate key update
+        period=values(period),
+        `rank`=values(`rank`)
+    </insert>
+
+    <delete id="delTraceMaster">
+        delete
+        from
+            ssq_trace_master
+        where
+              master_id = #{masterId}
+          and type = #{type}
+    </delete>
+
+    <select id="getTraceMaster" resultMap="TraceMasterMap">
+        select
+            id,
+            master_id,
+            type,
+            period,
+            `rank`,
+            channel,
+            gmt_create
+        from
+            ssq_trace_master
+        where
+              master_id = #{masterId}
+          and type = #{type}
+    </select>
+
+    <select id="getAllTraceMasters" resultMap="TraceMasterMap">
+        select
+            id,
+            master_id,
+            type,
+            period,
+            `rank`,
+            channel,
+            gmt_create
+        from
+            ssq_trace_master
+    </select>
+
+    <insert id="addTraceResults" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into dlt_trace_result(
+        period,
+        red,
+        rk,
+        blue,
+        bk,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},
+            #{item.red.data},
+            #{item.rk.data},
+            #{item.blue.data},
+            #{item.bk.data},
+            #{item.gmtCreate}
+            )
+        </foreach>
+        on duplicate key update
+        red=values(red),
+        rk=values(rk),
+        blue=values(blue),
+        bk=values(bk)
+    </insert>
+
+    <update id="editTraceResults" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update dlt_trace_result
+            set
+            hit_red=#{item.red.hitData},
+            red_hit=#{item.red.redHit},
+            hit_rk=#{item.rk.hitData},
+            rk_hit=#{item.rk.redHit},
+            hit_blue=#{item.blue.hitData},
+            blue_hit=#{item.blue.redHit},
+            hit_bk=#{item.bk.hitData},
+            bk_hit=#{item.bk.redHit},
+            calc_time=current_time
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <select id="getTraceResult" parameterType="java.lang.String" resultMap="TraceResultMap">
+        select
+            id,
+            period,
+            red,
+            hit_red,
+            red_hit,
+            rk,
+            hit_rk,
+            rk_hit,
+            blue,
+            hit_blue,
+            blue_hit,
+            bk,
+            hit_bk,
+            bk_hit,
+            calc_time,
+            gmt_create
+        from
+            dlt_trace_result
+        where
+            period = #{period}
+    </select>
+
+    <select id="getTraceResultList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="TraceResultMap">
+        select
+            id,
+            period,
+            red,
+            hit_red,
+            red_hit,
+            rk,
+            hit_rk,
+            rk_hit,
+            blue,
+            hit_blue,
+            blue_hit,
+            bk,
+            hit_bk,
+            bk_hit,
+            calc_time,
+            gmt_create
+        from
+            dlt_trace_result
+        order by
+            period desc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countTraceResults" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            dlt_trace_result
+    </select>
+
+</mapper>

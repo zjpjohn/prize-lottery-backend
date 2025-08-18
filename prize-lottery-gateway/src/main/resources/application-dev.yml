@@ -1,0 +1,20 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - dev
+    import:
+      - nacos:lottery-web-token-${spring.profiles.active}.yml
+      - nacos:lottery-auth-source-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      config:
+        namespace: 941459b5-782d-4513-a865-6536ff27ba67
+      discovery:
+        namespace: 941459b5-782d-4513-a865-6536ff27ba67
+      server-addr: 120.27.121.45:8878
+      username: nacos
+      password: nacos
+springdoc:
+  swagger-ui:
+    enabled: true

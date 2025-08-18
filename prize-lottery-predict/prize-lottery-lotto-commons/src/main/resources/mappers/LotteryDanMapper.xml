@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.LotteryDanMapper">
+
+    <resultMap id="LotteryAroundMap" type="com.prize.lottery.po.lottery.LotteryAroundPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="lotto" property="lotto"/>
+        <result column="period" property="period"/>
+        <result column="around" property="around"/>
+        <result column="result" property="result"/>
+        <result column="lotto_date" property="lottoDate"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="LotteryHoneyMap" type="com.prize.lottery.po.lottery.LotteryHoneyPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="honey" property="honey"/>
+        <result column="lotto_date" property="lottoDate"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addAroundList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_around(type,
+        lotto,
+        period,
+        around,
+        result,
+        lotto_date,
+        gmt_create,
+        gmt_modify
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},#{item.lotto},#{item.period},#{item.around},#{item.result},#{item.lottoDate},current_time,current_time)
+        </foreach>
+        on duplicate key update
+        type=values(type),
+        around=values(around),
+        result=values(result),
+        lotto_date=values(lotto_date)
+    </insert>
+
+    <insert id="addLotteryAround" parameterType="com.prize.lottery.po.lottery.LotteryAroundPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_around(type,
+        lotto,
+        period,
+        around,
+        <if test="result!=null">
+            result,
+        </if>
+        lotto_date,
+        gmt_create,
+        gmt_modify
+        )
+        values (#{type},
+        #{lotto},
+        #{period},
+        #{around},
+        <if test="result!=null">
+            #{result},
+        </if>
+        #{lottoDate},
+        current_time,
+        current_time)
+        on duplicate key update
+        type=values(type),
+        around=values(around),
+        <if test="result!=null">
+            result=values(result),
+        </if>
+        lotto_date=values(lotto_date),
+        gmt_modify=current_time
+    </insert>
+
+    <update id="editLotteryAround" parameterType="com.prize.lottery.po.lottery.LotteryAroundPo">
+        update lottery_around
+        set
+        <if test="around!=null">
+            around=#{around},
+        </if>
+        <if test="result!=null">
+            result=#{result},
+        </if>
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <delete id="delLotteryAround" parameterType="java.lang.Long">
+        delete
+        from
+            lottery_around
+        where
+            id = #{id}
+    </delete>
+
+    <select id="getLotteryAround" resultMap="LotteryAroundMap">
+        select
+            id,
+            type,
+            lotto,
+            period,
+            around,
+            result,
+            lotto_date,
+            gmt_create,
+            gmt_modify
+        from
+            lottery_around
+        where
+              lotto = #{lotto}
+          and period = #{period}
+    </select>
+
+    <select id="getLotteryAroundList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LotteryAroundMap">
+        select
+            id,
+            type,
+            lotto,
+            period,
+            around,
+            result,
+            lotto_date,
+            gmt_create,
+            gmt_modify
+        from
+            lottery_around
+        where
+            lotto = #{condition.lotto}
+        order by
+            period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countLotteryArounds" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            lottery_around
+        where
+            lotto = #{condition.lotto}
+    </select>
+
+    <select id="latestAroundPeriod" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_around
+        where
+            lotto = #{lotto}
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="getAroundPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_around
+        where
+            lotto = #{lotto}
+        order by
+            period desc
+        limit 30
+    </select>
+
+    <insert id="addHoneyList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_honey(type, period, honey, lotto_date, gmt_create, gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},#{item.period},#{item.honey},#{item.lottoDate},current_time,current_time)
+        </foreach>
+        on duplicate key update
+        honey=values(honey),
+        lotto_date=values(lotto_date)
+    </insert>
+
+    <insert id="addLotteryHoney" parameterType="com.prize.lottery.po.lottery.LotteryHoneyPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_honey(type,
+                                  period,
+                                  honey,
+                                  lotto_date,
+                                  gmt_create,
+                                  gmt_modify
+                                 )
+        values (#{type},
+                #{period},
+                #{honey},
+                #{lottoDate},
+                current_time,
+                current_time
+               )
+        on duplicate key update
+                             honey=values(honey),
+                             lotto_date=values(lotto_date)
+    </insert>
+
+    <delete id="delLotteryHoney" parameterType="java.lang.Long">
+        delete
+        from
+            lottery_honey
+        where
+            id = #{id}
+    </delete>
+
+    <select id="getLotteryHoney" resultMap="LotteryHoneyMap">
+        select
+            id,
+            type,
+            period,
+            honey,
+            lotto_date,
+            gmt_create,
+            gmt_modify
+        from
+            lottery_honey
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="latestHoneyPeriod" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_honey
+        where
+            type = #{type}
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="getHoneyPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_honey
+        where
+            type = #{type}
+        order by
+            period desc
+        limit 30
+    </select>
+
+    <select id="getLotteryHoneyList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LotteryHoneyMap">
+        select
+            id,
+            type,
+            period,
+            honey,
+            lotto_date,
+            gmt_create,
+            gmt_modify
+        from
+            lottery_honey
+        where
+            type = #{condition.type}
+        order by
+            period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countLotteryHoneys" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            lottery_honey
+        where
+            type = #{condition.type}
+    </select>
+
+</mapper>

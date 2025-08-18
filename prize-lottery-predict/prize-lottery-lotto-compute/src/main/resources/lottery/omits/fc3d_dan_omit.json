@@ -1,0 +1,57 @@
+{
+  "period" : "2024020" ,
+  "index1" : {
+    "key" : 2 ,
+    "calc" : 0 ,
+    "hit" : 0 ,
+    "omit" : 2
+  } ,
+  "index2" : {
+    "key" : 6 ,
+    "calc" : 0 ,
+    "hit" : 0 ,
+    "omit" : 11
+  } ,
+  "index3" : {
+    "key" : 8 ,
+    "calc" : 0 ,
+    "hit" : 0 ,
+    "omit" : 3
+  } ,
+  "index4" : {
+    "key" : 6 ,
+    "calc" : 0 ,
+    "hit" : 0 ,
+    "omit" : 4
+  } ,
+  "index5" : {
+    "key" : 4 ,
+    "calc" : 0 ,
+    "hit" : 0 ,
+    "omit" : 0
+  } ,
+  "index6" : {
+    "key" : 8 ,
+    "calc" : 0 ,
+    "hit" : 0 ,
+    "omit" : 3
+  } ,
+  "index7" : {
+    "key" : 6 ,
+    "calc" : 0 ,
+    "hit" : 0 ,
+    "omit" : 1
+  } ,
+  "index8" : {
+    "key" : 8 ,
+    "calc" : 0 ,
+    "hit" : 0 ,
+    "omit" : 9
+  } ,
+  "index9" : {
+    "key" : 4 ,
+    "calc" : 0 ,
+    "hit" : 0 ,
+    "omit" : 2
+  }
+}

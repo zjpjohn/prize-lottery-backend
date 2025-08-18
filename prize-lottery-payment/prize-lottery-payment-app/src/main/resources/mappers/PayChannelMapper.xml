@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.PayChannelMapper">
+
+    <resultMap id="PayChannelMap" type="com.prize.lottery.infrast.persist.po.PayChannelPo">
+        <id column="id" property="id"/>
+        <result column="seq" property="seq"/>
+        <result column="name" property="name"/>
+        <result column="channel" property="channel"/>
+        <result column="cover" property="cover"/>
+        <result column="icon" property="icon"/>
+        <result column="remark" property="remark"/>
+        <result column="priority" property="priority"/>
+        <result column="pay" property="pay"/>
+        <result column="withdraw" property="withdraw"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addPayChannel" parameterType="com.prize.lottery.infrast.persist.po.PayChannelPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        pay_channel(
+        seq,
+        name,
+        channel,
+        cover,
+        icon,
+        <if test="remark!=null">
+            remark,
+        </if>
+        priority,
+        pay,
+        withdraw,
+        gmt_create,
+        gmt_modify)
+        values
+        (#{seq},
+        #{name},
+        #{channel},
+        #{cover},
+        #{icon},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        #{priority},
+        #{pay},
+        #{withdraw},
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editPayChannel" parameterType="com.prize.lottery.infrast.persist.po.PayChannelPo">
+        <if test="priority!=null and priority==1">
+            update pay_channel
+            set
+            priority=0,
+            gmt_modify=current_time
+            where priority=1;
+        </if>
+        update pay_channel
+        set
+        <if test="cover!=null">
+            cover=#{cover},
+        </if>
+        <if test="icon!=null">
+            icon=#{icon},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        <if test="priority!=null">
+            priority=#{priority},
+        </if>
+        <if test="pay!=null">
+            pay=#{pay},
+        </if>
+        <if test="withdraw!=null">
+            withdraw=#{withdraw},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id};
+    </update>
+
+    <select id="getPayChannelById" parameterType="java.lang.Long" resultMap="PayChannelMap">
+        select
+            id,
+            seq,
+            name,
+            channel,
+            cover,
+            icon,
+            remark,
+            priority,
+            pay,
+            withdraw,
+            gmt_create,
+            gmt_modify
+        from
+            pay_channel
+        where
+            id=#{id}
+    </select>
+
+    <select id="getPayChannel" parameterType="java.lang.String" resultMap="PayChannelMap">
+        select
+            id,
+            seq,
+            name,
+            channel,
+            cover,
+            icon,
+            remark,
+            priority,
+            pay,
+            withdraw,
+            gmt_create
+        from
+            pay_channel
+        where
+            channel=#{channel}
+    </select>
+
+    <select id="getAllChannelList" resultMap="PayChannelMap">
+        select
+            id,
+            seq,
+            name,
+            channel,
+            cover,
+            icon,
+            remark,
+            priority,
+            pay,
+            withdraw,
+            gmt_create,
+            gmt_modify
+        from
+            pay_channel
+    </select>
+
+    <select id="getPayChannelList" resultMap="PayChannelMap">
+        select
+            id,
+            seq,
+            name,
+            channel,
+            cover,
+            icon,
+            priority,
+            pay,
+            gmt_create
+        from
+            pay_channel
+        where
+            pay = 1
+        order by
+            priority desc,
+            channel
+    </select>
+
+    <select id="getWithdrawChannelList" resultMap="PayChannelMap">
+        select
+            id,
+            seq,
+            name,
+            channel,
+            cover,
+            icon,
+            priority,
+            withdraw,
+            gmt_create
+        from
+            pay_channel
+        where
+            withdraw = 1
+        order by
+            priority desc,
+            channel
+    </select>
+</mapper>

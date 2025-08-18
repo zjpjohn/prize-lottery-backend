@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.MasterBattleMapper">
+
+    <resultMap id="MasterBattleMap" type="com.prize.lottery.po.master.MasterBattlePo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="user_id" property="userId"/>
+        <result column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="state" property="state"/>
+        <result column="sort" property="sort"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="MasterBattleVoMap" type="com.prize.lottery.vo.MasterBattleVo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="period" property="period"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <insert id="addMasterBattle" parameterType="com.prize.lottery.po.master.MasterBattlePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into master_battle(type,
+                                  user_id,
+                                  master_id,
+                                  period,
+                                  sort,
+                                  state,
+                                  gmt_create,
+                                  gmt_modify
+                                 )
+        values (#{type},
+                #{userId},
+                #{masterId},
+                #{period},
+                #{sort},
+                #{state},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editMasterBattle" parameterType="com.prize.lottery.po.master.MasterBattlePo">
+        update master_battle
+        set
+            state=#{state},
+            gmt_modify=current_time
+        where
+            id = #{id}
+    </update>
+
+    <select id="getMasterBattleById" parameterType="java.lang.Long" resultMap="MasterBattleMap">
+        select
+            id,
+            type,
+            user_id,
+            master_id,
+            period,
+            state
+        from
+            master_battle
+        where
+            id = #{id}
+    </select>
+
+    <select id="getMasterBattleByUk" resultMap="MasterBattleMap">
+        select
+            id,
+            type,
+            user_id,
+            master_id,
+            period,
+            state
+        from
+            master_battle
+        where
+              type = #{type}
+          and user_id = #{userId}
+          and master_id = #{masterId}
+          and period = #{period}
+    </select>
+
+    <delete id="removeMasterBattle" parameterType="java.lang.Long">
+        delete
+        from
+            master_battle
+        where
+            id = #{id}
+    </delete>
+
+    <select id="getUserMasterBattles" resultMap="MasterBattleVoMap">
+        select
+            mb.id,
+            mb.type,
+            mb.user_id,
+            mb.master_id,
+            mb.period,
+            mi.name,
+            mi.avatar
+        from
+            master_battle mb,
+            master_info mi
+        where
+              mb.type = #{type}
+          and mb.user_id = #{userId}
+          and mb.period = #{period}
+          and mb.master_id = mi.seq
+          and mb.state = 1
+    </select>
+
+</mapper>

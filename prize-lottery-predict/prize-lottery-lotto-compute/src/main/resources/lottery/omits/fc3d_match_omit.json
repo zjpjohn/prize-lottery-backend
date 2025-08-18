@@ -1,0 +1,56 @@
+{
+  "type" : "fc3d" ,
+  "period" : "2023202" ,
+  "comOmit" : {
+    "values" : [
+      {
+        "key" : "05" ,
+        "value" : 3
+      } ,
+      {
+        "key" : "16" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "27" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "38" ,
+        "value" : 2
+      } ,
+      {
+        "key" : "49" ,
+        "value" : 0
+      }
+    ]
+  } ,
+  "codeOmit" : {
+    "values" : [
+      {
+        "key" : "05" ,
+        "value" : 12
+      } ,
+      {
+        "key" : "16" ,
+        "value" : 8
+      } ,
+      {
+        "key" : "27" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "38" ,
+        "value" : 98
+      } ,
+      {
+        "key" : "49" ,
+        "value" : 4
+      }
+    ]
+  } ,
+  "allOmit" : {
+    "key" : "" ,
+    "value" : 1
+  }
+}

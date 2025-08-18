@@ -1,0 +1,5 @@
+cloud:
+  forecast:
+    expend: 60
+    recommend: 70
+    bounty: 20

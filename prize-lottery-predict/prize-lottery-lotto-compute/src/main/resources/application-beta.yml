@@ -1,0 +1,23 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - beta
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+      - optional:nacos:lottery-share-oss-${spring.profiles.active}.yml
+      - optional:nacos:lottery-share-period-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      username:
+      password:
+      config:
+        server-addr:
+        namespace:
+      discovery:
+        server-addr:
+        namespace:
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

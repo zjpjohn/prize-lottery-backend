@@ -1,0 +1,38 @@
+server:
+  port: 9093
+spring:
+  profiles:
+    active: @profileActive@
+  application:
+    name: lottery-operate
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy/MM/dd HH:mm:ss
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        refresh-enabled: true
+      discovery:
+        group: SPRING_CLOUD_GROUP
+com:
+  cloud:
+    event:
+      publisher:
+        enable: true
+    web:
+      security:
+        enable: true
+        excludes: /app/*,/auth
+    cache:
+      enable-local: true
+      allow-null-value: false
+      refresh-topic: ${spring.application.name}-cache-refresh-topic
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml

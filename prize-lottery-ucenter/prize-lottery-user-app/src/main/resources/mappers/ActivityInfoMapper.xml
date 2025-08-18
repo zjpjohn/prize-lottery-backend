@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.ActivityInfoMapper">
+
+    <resultMap id="ActivityInfoMap" type="com.prize.lottery.infrast.persist.po.ActivityMemberPo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="duration" property="duration"/>
+        <result column="minimum" property="minimum"/>
+        <result column="throttle" property="throttle"/>
+        <result column="version" property="version"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="ActivityDrawMap" type="com.prize.lottery.infrast.persist.po.ActivityDrawPo">
+        <id column="id" property="id"/>
+        <result column="activity_id" property="activityId"/>
+        <result column="user_id" property="userId"/>
+        <result column="day" property="day"/>
+        <result column="code" property="code"/>
+        <result column="times" property="times"/>
+        <result column="state" property="state"/>
+        <result column="version" property="version"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="ActivityUserMap" type="com.prize.lottery.infrast.persist.po.ActivityUserPo">
+        <id column="id" property="id"/>
+        <result column="activity_id" property="activityId"/>
+        <result column="user_id" property="userId"/>
+        <result column="loss" property="loss"/>
+        <result column="success" property="success"/>
+        <result column="duration" property="duration"/>
+        <result column="last_time" property="lastTime"/>
+        <result column="last_draw" property="lastDraw"/>
+        <result column="version" property="version"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="ActivityChanceMap" type="com.prize.lottery.infrast.persist.po.ActivityChancePo">
+        <id column="id" property="id"/>
+        <result column="draw_id" property="drawId"/>
+        <result column="code" property="code"/>
+        <result column="type" property="type"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserDrawResultMap" type="com.prize.lottery.infrast.persist.vo.UserDrawResultVo">
+        <id column="id" property="drawId"/>
+        <result column="activity_id" property="activityId"/>
+        <result column="day" property="day"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="times" property="times"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="addActivityInfo" parameterType="com.prize.lottery.infrast.persist.po.ActivityMemberPo">
+        insert into activity_member(id,
+                                    name,
+                                    duration,
+                                    minimum,
+                                    throttle,
+                                    version,
+                                    state,
+                                    remark,
+                                    gmt_create,
+                                    gmt_modify
+                                   )
+            value (#{id},
+            #{name},
+            #{duration},
+            #{minimum},
+            #{throttle},
+            1,
+            1,
+            #{remark},
+            current_time,
+            current_time
+            )
+    </insert>
+
+    <update id="editActivityInfo" parameterType="com.prize.lottery.infrast.persist.po.ActivityMemberPo">
+        update activity_member
+        set
+        <if test="name!=null">
+            name=#{name},
+        </if>
+        <if test="duration!=null">
+            duration=#{duration},
+        </if>
+        <if test="minimum!=null">
+            minimum=#{minimum},
+        </if>
+        <if test="throttle!=null">
+            throttle=#{throttle},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        version=version + 1,
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getActivityInfo" parameterType="java.lang.Long" resultMap="ActivityInfoMap">
+        select
+            id,
+            name,
+            duration,
+            minimum,
+            throttle,
+            version,
+            state,
+            remark,
+            gmt_create
+        from
+            activity_member
+        where
+            id = #{id}
+    </select>
+
+    <select id="getUsingActivity" resultMap="ActivityInfoMap">
+        select
+            id,
+            name,
+            duration,
+            minimum,
+            throttle,
+            version,
+            state,
+            remark,
+            gmt_create
+        from
+            activity_member
+        where
+            state = 2
+    </select>
+
+    <select id="getActivityList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="ActivityInfoMap">
+        select
+        id, name, duration, minimum, throttle, state, remark, gmt_create
+        from activity_member
+        <where>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countActivities" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from activity_member
+        <where>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addActivityDraw" parameterType="com.prize.lottery.infrast.persist.po.ActivityDrawPo">
+        insert into activity_draw(id,
+                                  activity_id,
+                                  user_id,
+                                  day,
+                                  code,
+                                  times,
+                                  state,
+                                  version,
+                                  gmt_create,
+                                  gmt_modify
+                                 )
+            value (#{id},
+            #{activityId},
+            #{userId},
+            #{day},
+            #{code},
+            #{times},
+            1,
+            1,
+            current_time,
+            current_time)
+    </insert>
+
+    <update id="editActivityDraw" parameterType="com.prize.lottery.infrast.persist.po.ActivityDrawPo">
+        update activity_draw
+        set
+        <if test="code!=null">
+            code=#{code},
+        </if>
+        <if test="times!=null">
+            times=#{times},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        version=version + 1,
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getActivityDraw" parameterType="java.lang.Long" resultMap="ActivityDrawMap">
+        select
+            id,
+            activity_id,
+            user_id, day, code, times, state, version, gmt_create
+        from
+            activity_draw
+        where
+            id =
+            #{id}
+    </select>
+
+    <select id="getActivityUserDraw" resultMap="ActivityDrawMap">
+        select
+            id,
+            activity_id,
+            user_id, day, code, times, state, version, gmt_create
+        from
+            activity_draw
+        where
+            user_id =
+                    #{userId}
+          and day = #{day}
+    </select>
+
+    <select id="getActivityDrawList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="ActivityDrawMap">
+        select
+        id, activity_id, user_id, day, code, times, state, version, gmt_create
+        from
+        activity_draw
+        where
+        activity_id = #{condition.activityId}
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countActivityDraws" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        activity_draw
+        where
+        activity_id = #{condition.activityId}
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+    </select>
+
+    <insert id="addActivityUser" parameterType="com.prize.lottery.infrast.persist.po.ActivityUserPo">
+        insert into activity_user(id,
+        activity_id,
+        user_id,
+        loss,
+        success,
+        duration,
+        <if test="lastTime!=null">
+            last_time,
+        </if>
+        <if test="lastDraw!=null">
+            last_draw,
+        </if>
+        version,
+        gmt_create,
+        gmt_modify
+        )
+        value (#{id},
+        #{activityId},
+        #{userId},
+        #{loss},
+        #{success},
+        #{duration},
+        <if test="lastTime!=null">
+            #{lastTime},
+        </if>
+        <if test="lastDraw!=null">
+            #{lastDraw},
+        </if>
+        1,
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editActivityUser" parameterType="com.prize.lottery.infrast.persist.po.ActivityUserPo">
+        update activity_user
+        set
+        <if test="loss!=null">
+            loss=#{loss},
+        </if>
+        <if test="success!=null">
+            success=#{success},
+        </if>
+        <if test="duration!=null">
+            duration=#{duration},
+        </if>
+        <if test="lastDraw!=null">
+            last_draw=#{lastDraw},
+        </if>
+        <if test="lastTime!=null">
+            last_time=#{lastTime},
+        </if>
+        version=version + 1,
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getActivityUser" resultMap="ActivityUserMap">
+        select
+            id,
+            activity_id,
+            user_id,
+            loss,
+            success,
+            duration,
+            last_time,
+            last_draw,
+            version,
+            gmt_create
+        from
+            activity_user
+        where
+              activity_id = #{activityId}
+          and user_id = #{userId}
+    </select>
+
+    <insert id="addDrawChances" parameterType="java.util.List">
+        insert into activity_chance(id,
+        draw_id,
+        code,
+        type,
+        state,
+        gmt_create,
+        gmt_modify
+        )
+        value
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},
+            #{item.drawId},
+            #{item.code},
+            #{item.type},
+            1,
+            current_time,
+            current_time)
+        </foreach>
+    </insert>
+
+    <update id="editDrawChances" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update activity_chance
+            set
+            state=#{item.state},
+            gmt_modify=current_time
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <select id="getDrawChances" parameterType="java.lang.Long" resultMap="ActivityChanceMap">
+        select
+            id,
+            draw_id,
+            code,
+            type,
+            state,
+            gmt_create
+        from
+            activity_chance
+        where
+            draw_id = #{drawId}
+    </select>
+
+    <select id="getDrawChancesByDrawIds" parameterType="java.util.List" resultMap="ActivityChanceMap">
+        select
+        id,
+        draw_id,
+        code,
+        type,
+        state,
+        gmt_create,
+        gmt_modify
+        from
+        activity_chance
+        where draw_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getUserDrawResults" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="UserDrawResultMap">
+        select
+            ad.id,
+            ad.activity_id,
+            ad.day,
+            ad.code,
+            ad.times,
+            ad.state,
+            ad.gmt_create,
+            am.name
+        from
+            activity_draw ad,
+            activity_member am
+        where
+              ad.user_id = #{condition.userId}
+          and ad.activity_id = am.id
+        order by
+            ad.gmt_create desc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countUserDrawResults" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            activity_draw
+        where
+            user_id = #{condition.userId}
+    </select>
+
+</mapper>

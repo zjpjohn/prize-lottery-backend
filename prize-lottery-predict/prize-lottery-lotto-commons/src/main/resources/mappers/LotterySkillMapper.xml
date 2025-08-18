@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.LotterySkillMapper">
+
+    <resultMap id="LotterySkillMap" type="com.prize.lottery.po.lottery.LotterySkillPo">
+        <id column="id" property="id"/>
+        <result column="sha" property="sha"/>
+        <result column="seq" property="seq"/>
+        <result column="type" property="type"/>
+        <result column="title" property="title"/>
+        <result column="header" property="header"/>
+        <result column="summary" property="summary"/>
+        <result column="content" property="content"/>
+        <result column="state" property="state"/>
+        <result column="browse" property="browse"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addLotterySkill" parameterType="com.prize.lottery.po.lottery.LotterySkillPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert
+        ignore into lottery_skill(sha,
+                                         seq,
+                                         type,
+                                         title,
+                                         header,
+                                         summary,
+                                         content,
+                                         browse,
+                                         gmt_create,
+                                         gmt_modify
+                                        )
+        values (
+        #{sha},
+        #{seq},
+        #{type},
+        #{title},
+        #{header},
+        #{summary},
+        #{content},
+        #{browse},
+        #{gmtCreate},
+        current_time
+        )
+    </insert>
+
+    <update id="editLotterySkill" parameterType="com.prize.lottery.po.lottery.LotterySkillPo">
+        update lottery_skill
+        set
+        <if test="title!=null">
+            title=#{title},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="browse!=null">
+            browse=browse+#{browse},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="hasLotterySkill" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            lottery_skill limit 1 ), 0);
+    </select>
+
+    <select id="getLotterySkill" resultMap="LotterySkillMap">
+        select
+        id,
+        seq,
+        type,
+        title,
+        <if test="detail">
+            header,summary,content,
+        </if>
+        state,
+        browse,
+        gmt_create
+        from
+        lottery_skill
+        where
+        seq=#{seq}
+    </select>
+
+    <select id="getLotterySkills" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LotterySkillMap">
+        select
+        id,
+        sha,
+        seq,
+        type,
+        title,
+        header,
+        summary,
+        state,
+        browse,
+        gmt_create,
+        gmt_modify
+        from
+        lottery_skill
+        <where>
+            <if test="condition.valid!=null">
+                state &gt;=1
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+        </where>
+        order by
+        <if test="condition.sort==1">
+            browse desc,gmt_create desc,
+        </if>
+        <if test="condition.sort==2">
+            gmt_create desc, browse desc,
+        </if>
+        id desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countLotterySkills" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from
+        lottery_skill
+        <where>
+            <if test="condition.valid!=null">
+                state &gt;=1
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+        </where>
+    </select>
+
+    <select id="getGroupedTopSkillList" resultMap="LotterySkillMap">
+        select
+            id,
+            seq,
+            type,
+            title,
+            header,
+            summary,
+            gmt_modify
+        from
+            lottery_skill ls
+        where
+            ls.type != ''
+          and ls.header != ''
+          and (
+                  select
+                      count(1)
+                  from
+                      lottery_skill lss
+                  where
+                        lss.type = ls.type
+                    and lss.id &gt; ls.id
+              ) &lt; 5
+        order by
+            gmt_modify desc
+    </select>
+
+</mapper>

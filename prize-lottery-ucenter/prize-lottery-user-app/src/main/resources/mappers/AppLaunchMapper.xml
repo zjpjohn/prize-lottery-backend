@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.AppLaunchMapper">
+
+    <resultMap id="AppLauncherMap" type="com.prize.lottery.infrast.persist.po.AppLauncherPo">
+        <id column="id" property="id"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="launch_date" property="launchDate"/>
+        <result column="launches" property="launches"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="AppLauncherLogMap" type="com.prize.lottery.infrast.persist.po.AppLauncherLogPo">
+        <id column="id" property="id"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="user_id" property="userId"/>
+        <result column="launch_ip" property="launchIp"/>
+        <result column="launch_date" property="launchDate"/>
+        <result column="launch_time" property="launchTime"/>
+        <result column="launch_version" property="launchVersion"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="AppDeviceMap" type="com.prize.lottery.infrast.persist.po.AppDevicePo">
+        <id column="id" property="id"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="brand" property="brand"/>
+        <result column="manufacturer" property="manufacturer"/>
+        <result column="sdk_int" property="sdkInt"/>
+        <result column="release" property="release"/>
+        <result column="hardware" property="hardware"/>
+        <result column="from_code" property="fromCode"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="UserActiveIndexMap" type="com.prize.lottery.infrast.persist.vo.UserActiveIndexVo">
+        <id column="user_id" property="userId"/>
+        <result column="day10" property="day10"/>
+        <result column="day15" property="day15"/>
+        <result column="day20" property="day20"/>
+        <result column="day30" property="day30"/>
+    </resultMap>
+
+    <insert id="addAppLauncher" parameterType="com.prize.lottery.infrast.persist.po.AppLauncherPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into app_launcher(device_id,
+                                 launch_date,
+                                 launches,
+                                 gmt_create,
+                                 gmt_modify
+                                )
+        values (#{deviceId},
+                #{launchDate},
+                #{launches},
+                current_time,
+                current_time
+               ) on duplicate key
+        update
+            launches=launches + 1,
+            gmt_modify= current_time
+    </insert>
+
+    <select id="getAppLauncherByUk" resultMap="AppLauncherMap">
+        select
+            id,
+            device_id,
+            launch_date,
+            launches,
+            gmt_create,
+            gmt_modify
+        from
+            app_launcher
+        where
+              device_id = #{deviceId}
+          and launch_date = #{launchDate}
+    </select>
+
+    <select id="getAppLaunchers" parameterType="com.cloud.arch.page.PageCondition" resultMap="AppLauncherMap">
+        select
+        al.id,
+        al.device_id,
+        al.launch_date,
+        al.launches,
+        al.gmt_create,
+        al.gmt_modify
+        from
+        app_launcher al,
+        user_device ud
+        where
+        ud.user_id=#{condition.userId}
+        and ud.device_id=al.device_id
+        <if test="condition.startDay!=null and condition.endDay!=null">
+            and al.launch_date &gt;=#{condition.startDay}
+            and al.launch_date &lt;=#{condition.endDay}
+        </if>
+        order by al.launch_date desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAppLaunchers" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        app_launcher al,
+        user_device ud
+        where
+        ud.user_id=#{condition.userId}
+        and ud.device_id=al.device_id
+        <if test="condition.startDay!=null and condition.endDay!=null">
+            and al.launch_date &gt;=#{condition.startDay}
+            and al.launch_date &lt;=#{condition.endDay}
+        </if>
+    </select>
+
+    <insert id="addAppLauncherLog" parameterType="com.prize.lottery.infrast.persist.po.AppLauncherLogPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into app_launcher_log(device_id,
+                                     launch_ip,
+                                     launch_date,
+                                     launch_time,
+                                     launch_version,
+                                     gmt_create
+                                    )
+        values (#{deviceId},
+                inet_aton(#{launchIp}),
+                #{launchDate},
+                #{launchTime},
+                #{launchVersion},
+                current_time
+               )
+    </insert>
+
+    <select id="getDeviceLauncherLogs" resultMap="AppLauncherLogMap">
+        select
+            id,
+            device_id,
+            launch_ip,
+            launch_date,
+            launch_time,
+            launch_version,
+            gmt_create
+        from
+            app_launcher_log
+        where
+              device_id = #{deviceId}
+          and launch_date = #{launchDate}
+    </select>
+
+    <select id="getLatestUserLaunchLogs" parameterType="java.util.List" resultMap="AppLauncherLogMap">
+        select
+        alog.id,
+        alog.device_id,
+        ull.user_id,
+        alog.launch_ip,
+        alog.launch_date,
+        alog.launch_time,
+        alog.gmt_create
+        from
+        app_launcher_log alog
+        inner join(
+        select
+        max(allog.id) as id,
+        ud.user_id
+        from
+        app_launcher_log allog,
+        user_device ud
+        where ud.device_id=allog.device_id
+        and ud.user_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        group by allog.device_id
+        ) ull on alog.id = ull.id
+    </select>
+
+    <select id="getUserTotalLaunches" parameterType="java.util.List"
+            resultType="com.prize.lottery.infrast.persist.vo.UserLaunchVo">
+        select
+        ud.user_id as userId,
+        sum(al.launches) as launches
+        from app_launcher al,
+        user_device ud
+        where ud.device_id=al.device_id
+        and ud.user_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        group by user_id
+    </select>
+
+    <insert id="addAppDevice" parameterType="com.prize.lottery.infrast.persist.po.AppDevicePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into app_device(device_id,
+        <if test="brand!=null">
+            brand,
+        </if>
+        <if test="manufacturer!=null">
+            manufacturer,
+        </if>
+        <if test="sdkInt!=null">
+            sdk_int,
+        </if>
+        <if test="release!=null">
+            `release`,
+        </if>
+        <if test="hardware!=null">
+            hardware,
+        </if>
+        <if test="fromCode!=null">
+            from_code,
+        </if>
+        gmt_create
+        )
+        values (#{deviceId},
+        <if test="brand!=null">
+            #{brand},
+        </if>
+        <if test="manufacturer!=null">
+            #{manufacturer},
+        </if>
+        <if test="sdkInt!=null">
+            #{sdkInt},
+        </if>
+        <if test="release!=null">
+            #{release},
+        </if>
+        <if test="hardware!=null">
+            #{hardware},
+        </if>
+        <if test="fromCode!=null">
+            #{fromCode},
+        </if>
+        current_time
+        )
+    </insert>
+
+    <select id="existAppDevice" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select
+                           1
+                       from
+                           app_device
+                       where
+                           device_id = #{deviceId}
+                       limit 1 ), 0)
+    </select>
+
+    <select id="getAppDevice" parameterType="java.lang.String" resultMap="AppDeviceMap">
+        select
+            id,
+            device_id,
+            brand,
+            manufacturer,
+            sdk_int,
+            `release`,
+            hardware,
+            from_code,
+            gmt_create
+        from
+            app_device
+        where
+            device_id = #{deviceId}
+    </select>
+
+    <select id="getUserDeviceList" parameterType="java.lang.Long" resultMap="AppDeviceMap">
+        select
+            ad.id,
+            ad.device_id,
+            ad.brand,
+            ad.manufacturer,
+            ad.sdk_int,
+            ad.`release`,
+            ad.hardware,
+            ad.from_code,
+            ad.gmt_create
+        from
+            app_device ad,
+            user_device ud
+        where
+              ud.user_id = #{userId}
+          and ud.device_id = ad.device_id
+    </select>
+
+    <insert id="addUserDevice" parameterType="com.prize.lottery.infrast.persist.po.UserDevicePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert
+        ignore into user_device(user_id,
+                                       device_id,
+                                       gmt_create
+                                      )
+        values (
+        #{userId},
+        #{deviceId},
+        current_time
+        )
+    </insert>
+
+    <select id="hasBindDevice" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select
+                           1
+                       from
+                           user_device
+                       where
+                           device_id = #{deviceId}
+                       limit 1 ), 0)
+    </select>
+
+    <select id="getUserActiveIndex" parameterType="java.lang.Long" resultMap="UserActiveIndexMap">
+        select
+            ud.user_id as user_id,
+            COUNT(
+                    DISTINCT
+                    IF(
+                                    launch_date &lt;= CURRENT_DATE
+                                AND launch_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 10 DAY),
+                                    launch_date,
+                                    NULL
+                    )
+            )          as day10,
+            COUNT(
+                    DISTINCT
+                    IF(
+                                    launch_date &lt;= CURRENT_DATE
+                                AND launch_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY),
+                                    launch_date,
+                                    NULL
+                    )
+            )          as day15,
+            COUNT(
+                    DISTINCT
+                    IF(
+                                    launch_date &lt;= CURRENT_DATE
+                                AND launch_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 20 DAY),
+                                    launch_date,
+                                    NULL
+                    )
+            )          as day20,
+            COUNT(
+                    DISTINCT
+                    IF(
+                                    launch_date &lt;= CURRENT_DATE
+                                AND launch_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY),
+                                    launch_date,
+                                    NULL
+                    )
+            )          as day30
+        from
+            user_device ud,
+            app_launcher_log llog
+        where
+              ud.user_id = #{userId}
+          and ud.device_id = llog.device_id
+    </select>
+
+    <select id="getActiveIndexByUsers" parameterType="java.util.List" resultMap="UserActiveIndexMap">
+        select
+        ud.user_id as user_id,
+        COUNT(
+        DISTINCT
+        IF(
+        launch_date &lt;= CURRENT_DATE
+        AND launch_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 10 DAY),
+        launch_date,
+        NULL
+        )
+        ) as day10,
+        COUNT(
+        DISTINCT
+        IF(
+        launch_date &lt;= CURRENT_DATE
+        AND launch_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY),
+        launch_date,
+        NULL
+        )
+        ) as day15,
+        COUNT(
+        DISTINCT
+        IF(
+        launch_date &lt;= CURRENT_DATE
+        AND launch_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 20 DAY),
+        launch_date,
+        NULL
+        )
+        ) as day20,
+        COUNT(
+        DISTINCT
+        IF(
+        launch_date &lt;= CURRENT_DATE
+        AND launch_date &gt;= DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY),
+        launch_date,
+        NULL
+        )
+        ) as day30
+        from user_device ud,
+        app_launcher_log llog
+        where ud.user_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        and ud.device_id = llog.device_id
+        group by ud.user_id
+    </select>
+
+
+</mapper>

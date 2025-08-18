@@ -1,0 +1,38 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - prod
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+      - optional:nacos:lottery-user-rule-${spring.profiles.active}.yml
+      - optional:nacos:lottery-web-token-${spring.profiles.active}.yml
+      - optional:nacos:lottery-auth-source-${spring.profiles.active}.yml
+      - optional:nacos:lottery-share-mobile-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      username:
+      password:
+      config:
+        server-addr:
+        namespace:
+      discovery:
+        server-addr:
+        namespace:
+com:
+  cloud:
+    redis:
+      standalone:
+        user-name: default
+        address:
+        password:
+
+dubbo:
+  consumer:
+    check: true
+  registry:
+    username:
+    password:
+    address:
+    parameters:
+      namespace:

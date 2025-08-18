@@ -1,0 +1,1935 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.DltMasterMapper">
+
+    <resultMap id="DltMasterRankMap" type="com.prize.lottery.po.dlt.DltMasterRankPo">
+        <id column="id" property="id"/>
+        <result column="master_id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="isVip"/>
+        <association property="rank" javaType="com.prize.lottery.value.RankValue">
+            <result column="rank" property="rank"/>
+            <result column="weight" property="weight"/>
+        </association>
+        <association property="red1" javaType="com.prize.lottery.value.RankValue">
+            <result column="r1_wgt" property="weight"/>
+            <result column="r1_rank" property="rank"/>
+        </association>
+        <association property="red2" javaType="com.prize.lottery.value.RankValue">
+            <result column="r2_wgt" property="weight"/>
+            <result column="r2_rank" property="rank"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.RankValue">
+            <result column="r3_wgt" property="weight"/>
+            <result column="r3_rank" property="rank"/>
+        </association>
+        <association property="red10" javaType="com.prize.lottery.value.RankValue">
+            <result column="r10_wgt" property="weight"/>
+            <result column="r10_rank" property="rank"/>
+        </association>
+        <association property="red20" javaType="com.prize.lottery.value.RankValue">
+            <result column="r20_wgt" property="weight"/>
+            <result column="r20_rank" property="rank"/>
+        </association>
+        <association property="redKill3" javaType="com.prize.lottery.value.RankValue">
+            <result column="rk3_wgt" property="weight"/>
+            <result column="rk3_rank" property="rank"/>
+        </association>
+        <association property="redKill6" javaType="com.prize.lottery.value.RankValue">
+            <result column="rk6_wgt" property="weight"/>
+            <result column="rk6_rank" property="rank"/>
+        </association>
+        <association property="blue1" javaType="com.prize.lottery.value.RankValue">
+            <result column="b1_wgt" property="weight"/>
+            <result column="b1_rank" property="rank"/>
+        </association>
+        <association property="blue2" javaType="com.prize.lottery.value.RankValue">
+            <result column="b2_wgt" property="weight"/>
+            <result column="b2_rank" property="rank"/>
+        </association>
+        <association property="blue6" javaType="com.prize.lottery.value.RankValue">
+            <result column="b6_wgt" property="weight"/>
+            <result column="b6_rank" property="rank"/>
+        </association>
+        <association property="blueKill" javaType="com.prize.lottery.value.RankValue">
+            <result column="bk_wgt" property="weight"/>
+            <result column="bk_rank" property="rank"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="DltMasterRankVoMap" type="com.prize.lottery.vo.dlt.DltMasterRankVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="vip"/>
+        <result column="hot" property="hot"/>
+        <result column="rank" property="rank"/>
+        <result column="last_rank" property="lastRank"/>
+        <result column="browse" property="browse"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="rate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hit_count" property="count"/>
+            <result column="hit_series" property="series"/>
+            <result column="hit_rate" property="rate"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_me_hit" property="series"/>
+            <result column="r3_me_count" property="count"/>
+            <result column="r3_me_rate" property="rate"/>
+        </association>
+        <association property="red20" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_me_hit" property="series"/>
+            <result column="r20_me_count" property="count"/>
+            <result column="r20_me_rate" property="rate"/>
+        </association>
+        <association property="redKill" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_count" property="count"/>
+            <result column="rk3_me_rate" property="rate"/>
+        </association>
+        <association property="blue" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b6_me_hit" property="series"/>
+            <result column="b6_me_count" property="count"/>
+            <result column="b6_me_rate" property="rate"/>
+        </association>
+        <association property="blueKill" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_me_hit" property="series"/>
+            <result column="bk_me_count" property="count"/>
+            <result column="bk_me_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="DltMasterRateMap" type="com.prize.lottery.po.dlt.DltMasterRatePo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="master_id" property="masterId"/>
+        <association property="r1Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r1_ne_hit" property="series"/>
+            <result column="r1_ne_rate" property="rate"/>
+            <result column="r1_ne_count" property="count"/>
+        </association>
+        <association property="r1Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r1_me_hit" property="series"/>
+            <result column="r1_me_rate" property="rate"/>
+            <result column="r1_me_count" property="count"/>
+        </association>
+        <association property="r1Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r1_hi_hit" property="series"/>
+            <result column="r1_hi_rate" property="rate"/>
+            <result column="r1_hi_count" property="count"/>
+        </association>
+        <association property="r2Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r2_ne_hit" property="series"/>
+            <result column="r2_ne_rate" property="rate"/>
+            <result column="r2_ne_count" property="count"/>
+        </association>
+        <association property="r2Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r2_me_hit" property="series"/>
+            <result column="r2_me_rate" property="rate"/>
+            <result column="r2_me_count" property="count"/>
+        </association>
+        <association property="r2Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r2_hi_hit" property="series"/>
+            <result column="r2_hi_rate" property="rate"/>
+            <result column="r2_hi_count" property="count"/>
+        </association>
+        <association property="r3Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_ne_hit" property="series"/>
+            <result column="r3_ne_rate" property="rate"/>
+            <result column="r3_ne_count" property="count"/>
+        </association>
+        <association property="r3Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_me_hit" property="series"/>
+            <result column="r3_me_rate" property="rate"/>
+            <result column="r3_me_count" property="count"/>
+        </association>
+        <association property="r3Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_hi_hit" property="series"/>
+            <result column="r3_hi_rate" property="rate"/>
+            <result column="r3_hi_count" property="count"/>
+        </association>
+        <association property="r10Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r10_ne_hit" property="series"/>
+            <result column="r10_ne_rate" property="rate"/>
+            <result column="r10_ne_count" property="count"/>
+        </association>
+        <association property="r10Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r10_me_hit" property="series"/>
+            <result column="r10_me_rate" property="rate"/>
+            <result column="r10_me_count" property="count"/>
+        </association>
+        <association property="r10Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r10_hi_hit" property="series"/>
+            <result column="r10_hi_rate" property="rate"/>
+            <result column="r10_hi_count" property="count"/>
+        </association>
+        <association property="r20Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_ne_hit" property="series"/>
+            <result column="r20_ne_rate" property="rate"/>
+            <result column="r20_ne_full_rate" property="fullRate"/>
+            <result column="r20_ne_count" property="count"/>
+        </association>
+        <association property="r20Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_me_hit" property="series"/>
+            <result column="r20_me_rate" property="rate"/>
+            <result column="r20_me_full_rate" property="fullRate"/>
+            <result column="r20_me_count" property="count"/>
+        </association>
+        <association property="r20Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_hi_hit" property="series"/>
+            <result column="r20_hi_rate" property="rate"/>
+            <result column="r20_hi_full_rate" property="fullRate"/>
+            <result column="r20_hi_count" property="count"/>
+        </association>
+        <association property="rk3Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_ne_hit" property="series"/>
+            <result column="rk3_ne_rate" property="rate"/>
+            <result column="rk3_ne_count" property="count"/>
+        </association>
+        <association property="rk3Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_rate" property="rate"/>
+            <result column="rk3_me_count" property="count"/>
+        </association>
+        <association property="rk3Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_hi_hit" property="series"/>
+            <result column="rk3_hi_rate" property="rate"/>
+            <result column="rk3_hi_count" property="count"/>
+        </association>
+        <association property="rk6Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk6_ne_hit" property="series"/>
+            <result column="rk6_ne_rate" property="rate"/>
+            <result column="rk6_ne_count" property="count"/>
+        </association>
+        <association property="rk6Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk6_me_hit" property="series"/>
+            <result column="rk6_me_rate" property="rate"/>
+            <result column="rk6_me_count" property="count"/>
+        </association>
+        <association property="rk6Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk6_hi_hit" property="series"/>
+            <result column="rk6_hi_rate" property="rate"/>
+            <result column="rk6_hi_count" property="count"/>
+        </association>
+        <association property="b1Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b1_ne_hit" property="series"/>
+            <result column="b1_ne_rate" property="rate"/>
+            <result column="b1_ne_count" property="count"/>
+        </association>
+        <association property="b1Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b1_me_hit" property="series"/>
+            <result column="b1_me_rate" property="rate"/>
+            <result column="b1_me_count" property="count"/>
+        </association>
+        <association property="b1Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b1_hi_hit" property="series"/>
+            <result column="b1_hi_rate" property="rate"/>
+            <result column="b1_hi_count" property="count"/>
+        </association>
+        <association property="b2Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b2_ne_hit" property="series"/>
+            <result column="b2_ne_rate" property="rate"/>
+            <result column="b2_ne_count" property="count"/>
+        </association>
+        <association property="b2Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b2_me_hit" property="series"/>
+            <result column="b2_me_rate" property="rate"/>
+            <result column="b2_me_count" property="count"/>
+        </association>
+        <association property="b2Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b2_hi_hit" property="series"/>
+            <result column="b2_hi_rate" property="rate"/>
+            <result column="b2_hi_count" property="count"/>
+        </association>
+        <association property="b6Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b6_ne_hit" property="series"/>
+            <result column="b6_ne_rate" property="rate"/>
+            <result column="b6_ne_full_rate" property="fullRate"/>
+            <result column="b6_ne_count" property="count"/>
+        </association>
+        <association property="b6Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b6_me_hit" property="series"/>
+            <result column="b6_me_rate" property="rate"/>
+            <result column="b6_me_full_rate" property="fullRate"/>
+            <result column="b6_me_count" property="count"/>
+        </association>
+        <association property="b6Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b6_hi_hit" property="series"/>
+            <result column="b6_hi_rate" property="rate"/>
+            <result column="b6_hi_full_rate" property="fullRate"/>
+            <result column="b6_hi_count" property="count"/>
+        </association>
+        <association property="bkNe" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_ne_hit" property="series"/>
+            <result column="bk_ne_rate" property="rate"/>
+            <result column="bk_ne_count" property="count"/>
+        </association>
+        <association property="bkMe" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_me_hit" property="series"/>
+            <result column="bk_me_rate" property="rate"/>
+            <result column="bk_me_count" property="count"/>
+        </association>
+        <association property="bkHi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_hi_hit" property="series"/>
+            <result column="bk_hi_rate" property="rate"/>
+            <result column="bk_hi_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="DltGladMasterMap" type="com.prize.lottery.vo.dlt.DltICaiGladVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="r20_hit" property="r20Hit"/>
+        <result column="b6_hit" property="b6Hit"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_ne_hit" property="series"/>
+            <result column="r3_ne_count" property="count"/>
+            <result column="r3_ne_rate" property="rate"/>
+        </association>
+        <association property="red20" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_me_hit" property="series"/>
+            <result column="r20_me_count" property="count"/>
+            <result column="r20_me_rate" property="rate"/>
+        </association>
+        <association property="rk" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_count" property="count"/>
+            <result column="rk3_me_rate" property="rate"/>
+        </association>
+        <association property="bk" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_me_hit" property="series"/>
+            <result column="bk_me_count" property="count"/>
+            <result column="bk_me_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="DltMasterMulRankMap" type="com.prize.lottery.vo.dlt.DltMasterMulRankVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="vip"/>
+        <result column="hot" property="hot"/>
+        <result column="rank" property="rank"/>
+        <result column="last_rank" property="lastRank"/>
+        <result column="browse" property="browse"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_ne_hit" property="series"/>
+            <result column="r3_ne_count" property="count"/>
+            <result column="r3_ne_rate" property="rate"/>
+        </association>
+        <association property="red20" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_me_hit" property="series"/>
+            <result column="r20_me_count" property="count"/>
+            <result column="r20_me_rate" property="rate"/>
+            <result column="r20_me_full_rate" property="fullRate"/>
+        </association>
+        <association property="rk" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_count" property="count"/>
+            <result column="rk3_me_rate" property="rate"/>
+        </association>
+        <association property="bk" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_me_hit" property="series"/>
+            <result column="bk_me_count" property="count"/>
+            <result column="bk_me_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="DltMasterDetailMap" type="com.prize.lottery.vo.dlt.DltMasterDetail">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="vip"/>
+        <result column="gmt_create" property="timestamp"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="seq" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+            <result column="browse" property="browse"/>
+            <result column="subscribe" property="subscribe"/>
+            <result column="searches" property="searches"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_ne_hit" property="series"/>
+            <result column="r3_ne_count" property="count"/>
+            <result column="r3_ne_rate" property="rate"/>
+        </association>
+        <association property="red20" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_me_hit" property="series"/>
+            <result column="r20_me_count" property="count"/>
+            <result column="r20_me_rate" property="rate"/>
+        </association>
+        <association property="redKill" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_count" property="count"/>
+            <result column="rk3_me_rate" property="rate"/>
+        </association>
+        <association property="blue" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b6_me_hit" property="series"/>
+            <result column="b6_me_count" property="count"/>
+            <result column="b6_me_rate" property="rate"/>
+        </association>
+        <association property="blueKill" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_me_hit" property="series"/>
+            <result column="bk_me_count" property="count"/>
+            <result column="bk_me_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="HomeMasterVoMap" type="com.prize.lottery.vo.HomeMasterVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="rank" property="rank"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="rate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hit_count" property="count"/>
+            <result column="hit_rate" property="rate"/>
+            <result column="hit_series" property="series"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="DltMasterSubscribeMap" type="com.prize.lottery.vo.dlt.DltMasterSubscribeVo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="gmt_create" property="timestamp"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_me_hit" property="series"/>
+            <result column="r3_me_count" property="count"/>
+            <result column="r3_me_rate" property="rate"/>
+        </association>
+        <association property="red20" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_me_hit" property="series"/>
+            <result column="r20_me_count" property="count"/>
+            <result column="r20_me_rate" property="rate"/>
+        </association>
+        <association property="redKill" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_count" property="count"/>
+            <result column="rk3_me_rate" property="rate"/>
+        </association>
+        <association property="blueKill" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_me_hit" property="series"/>
+            <result column="bk_me_count" property="count"/>
+            <result column="bk_me_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="LottoMasterVoMap" type="com.prize.lottery.vo.LotteryMasterVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="rank" property="rank"/>
+        <result column="i_rank" property="iRank"/>
+        <result column="last_i_rank" property="lastIRank"/>
+        <result column="homed" property="homed"/>
+        <result column="hot" property="hot"/>
+        <result column="is_vip" property="vip"/>
+        <result column="source" property="source"/>
+        <result column="browse" property="browse"/>
+        <result column="subscribe" property="subscribe"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="hit" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hit_count" property="count"/>
+            <result column="hit_series" property="series"/>
+            <result column="hit_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="DltMasterSchemaMap" type="com.prize.lottery.vo.dlt.DltMasterSchemaVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="latest" property="latest"/>
+        <result column="r10_hit" property="r10Hit"/>
+        <result column="b6_hit" property="b6Hit"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="r20" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_me_hit" property="series"/>
+            <result column="r20_me_rate" property="rate"/>
+            <result column="r20_me_count" property="count"/>
+        </association>
+        <association property="rk3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_rate" property="rate"/>
+            <result column="rk3_me_count" property="count"/>
+        </association>
+        <association property="b6" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b6_me_hit" property="series"/>
+            <result column="b6_me_rate" property="rate"/>
+            <result column="b6_me_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="DltMasterRateVoMap" type="com.prize.lottery.vo.dlt.DltMasterRateVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="red3" property="red3"/>
+        <result column="red3_avg" property="red3Avg"/>
+        <result column="red10" property="red10"/>
+        <result column="red10_avg" property="red10Avg"/>
+        <result column="red20" property="red20"/>
+        <result column="red20_avg" property="red20Avg"/>
+        <result column="rk3" property="rk3"/>
+        <result column="rk3_avg" property="rk3Avg"/>
+        <result column="blue6" property="blue6"/>
+        <result column="blue6_avg" property="blue6Avg"/>
+        <result column="bk" property="bk"/>
+        <result column="bk_avg" property="bkAvg"/>
+    </resultMap>
+
+    <resultMap id="MasterGladRateVoMap" type="com.prize.lottery.vo.MasterGladRateVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="hit_count" property="hitCount"/>
+        <result column="hit_rate" property="rate"/>
+    </resultMap>
+
+    <resultMap id="MasterFeedRateVoMap" type="com.prize.lottery.vo.MasterFeedRateVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="field" property="field"/>
+        <result column="timestamp" property="timestamp"/>
+        <result column="hit_rate" property="rate"/>
+        <result column="hit_count" property="hitCount"/>
+        <result column="hit" property="hit"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <insert id="addDltMasterRates" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        dlt_master_rate(
+        period,master_id,
+        r1_ne_hit,r1_ne_rate,r1_ne_count,
+        r1_me_hit,r1_me_rate,r1_me_count,
+        r1_hi_hit,r1_hi_rate,r1_hi_count,
+        r2_ne_hit,r2_ne_rate,r2_ne_count,
+        r2_me_hit,r2_me_rate,r2_me_count,
+        r2_hi_hit,r2_hi_rate,r2_hi_count,
+        r3_ne_hit,r3_ne_rate,r3_ne_count,
+        r3_me_hit,r3_me_rate,r3_me_count,
+        r3_hi_hit,r3_hi_rate,r3_hi_count,
+        r10_ne_hit,r10_ne_rate,r10_ne_count,
+        r10_me_hit,r10_me_rate,r10_me_count,
+        r10_hi_hit,r10_hi_rate,r10_hi_count,
+        r20_ne_hit,r20_ne_rate,r20_ne_full_rate,r20_ne_count,
+        r20_me_hit,r20_me_rate,r20_me_full_rate,r20_me_count,
+        r20_hi_hit,r20_hi_rate,r20_hi_full_rate,r20_hi_count,
+        rk3_ne_hit,rk3_ne_rate,rk3_ne_count,
+        rk3_me_hit,rk3_me_rate,rk3_me_count,
+        rk3_hi_hit,rk3_hi_rate,rk3_hi_count,
+        rk6_ne_hit,rk6_ne_rate,rk6_ne_count,
+        rk6_me_hit,rk6_me_rate,rk6_me_count,
+        rk6_hi_hit,rk6_hi_rate,rk6_hi_count,
+        b1_ne_hit,b1_ne_rate,b1_ne_count,
+        b1_me_hit,b1_me_rate,b1_me_count,
+        b1_hi_hit,b1_hi_rate,b1_hi_count,
+        b2_ne_hit,b2_ne_rate,b2_ne_count,
+        b2_me_hit,b2_me_rate,b2_me_count,
+        b2_hi_hit,b2_hi_rate,b2_hi_count,
+        b6_ne_hit,b6_ne_rate,b6_ne_full_rate,b6_ne_count,
+        b6_me_hit,b6_me_rate,b6_me_full_rate,b6_me_count,
+        b6_hi_hit,b6_hi_rate,b6_hi_full_rate,b6_hi_count,
+        bk_ne_hit,bk_ne_rate,bk_ne_count,
+        bk_me_hit,bk_me_rate,bk_me_count,
+        bk_hi_hit,bk_hi_rate,bk_hi_count,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},#{item.masterId},
+            #{item.r1Ne.series},#{item.r1Ne.rate},#{item.r1Ne.count},
+            #{item.r1Me.series},#{item.r1Me.rate},#{item.r1Me.count},
+            #{item.r1Hi.series},#{item.r1Hi.rate},#{item.r1Hi.count},
+            #{item.r2Ne.series},#{item.r2Ne.rate},#{item.r2Ne.count},
+            #{item.r2Me.series},#{item.r2Me.rate},#{item.r2Me.count},
+            #{item.r2Hi.series},#{item.r2Hi.rate},#{item.r2Hi.count},
+            #{item.r3Ne.series},#{item.r3Ne.rate},#{item.r3Ne.count},
+            #{item.r3Me.series},#{item.r3Me.rate},#{item.r3Me.count},
+            #{item.r3Hi.series},#{item.r3Hi.rate},#{item.r3Hi.count},
+            #{item.r10Ne.series},#{item.r10Ne.rate},#{item.r10Ne.count},
+            #{item.r10Me.series},#{item.r10Me.rate},#{item.r10Me.count},
+            #{item.r10Hi.series},#{item.r10Hi.rate},#{item.r10Hi.count},
+            #{item.r20Ne.series},#{item.r20Ne.rate},#{item.r20Ne.fullRate},#{item.r20Ne.count},
+            #{item.r20Me.series},#{item.r20Me.rate},#{item.r20Me.fullRate},#{item.r20Me.count},
+            #{item.r20Hi.series},#{item.r20Hi.rate},#{item.r20Hi.fullRate},#{item.r20Hi.count},
+            #{item.rk3Ne.series},#{item.rk3Ne.rate},#{item.rk3Ne.count},
+            #{item.rk3Me.series},#{item.rk3Me.rate},#{item.rk3Me.count},
+            #{item.rk3Hi.series},#{item.rk3Hi.rate},#{item.rk3Hi.count},
+            #{item.rk6Ne.series},#{item.rk6Ne.rate},#{item.rk6Ne.count},
+            #{item.rk6Me.series},#{item.rk6Me.rate},#{item.rk6Me.count},
+            #{item.rk6Hi.series},#{item.rk6Hi.rate},#{item.rk6Hi.count},
+            #{item.b1Ne.series},#{item.b1Ne.rate},#{item.b1Ne.count},
+            #{item.b1Me.series},#{item.b1Me.rate},#{item.b1Me.count},
+            #{item.b1Hi.series},#{item.b1Hi.rate},#{item.b1Hi.count},
+            #{item.b2Ne.series},#{item.b2Ne.rate},#{item.b2Ne.count},
+            #{item.b2Me.series},#{item.b2Me.rate},#{item.b2Me.count},
+            #{item.b2Hi.series},#{item.b2Hi.rate},#{item.b2Hi.count},
+            #{item.b6Ne.series},#{item.b6Ne.rate},#{item.b6Ne.fullRate},#{item.b6Ne.count},
+            #{item.b6Me.series},#{item.b6Me.rate},#{item.b6Me.fullRate},#{item.b6Me.count},
+            #{item.b6Hi.series},#{item.b6Hi.rate},#{item.b6Hi.fullRate},#{item.b6Hi.count},
+            #{item.bkNe.series},#{item.bkNe.rate},#{item.bkNe.count},
+            #{item.bkMe.series},#{item.bkMe.rate},#{item.bkMe.count},
+            #{item.bkHi.series},#{item.bkHi.rate},#{item.bkHi.count},
+            current_time)
+        </foreach>
+    </insert>
+
+    <insert id="addDltMasterRanks" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        dlt_master_rank(period,master_id,
+        weight,`rank`,
+        r1_wgt,r1_rank,
+        r2_wgt,r2_rank,
+        r3_wgt,r3_rank,
+        r10_wgt,r10_rank,
+        r20_wgt,r20_rank,
+        rk3_wgt,rk3_rank,
+        rk6_wgt,rk6_rank,
+        b1_wgt,b1_rank,
+        b2_wgt,b2_rank,
+        b6_wgt,b6_rank,
+        bk_wgt,bk_rank,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},#{item.masterId},
+            #{item.rank.weight},#{item.rank.rank},
+            #{item.red1.weight},#{item.red1.rank},
+            #{item.red2.weight},#{item.red2.rank},
+            #{item.red3.weight},#{item.red3.rank},
+            #{item.red10.weight},#{item.red10.rank},
+            #{item.red20.weight},#{item.red20.rank},
+            #{item.redKill3.weight},#{item.redKill3.rank},
+            #{item.redKill6.weight},#{item.redKill6.rank},
+            #{item.blue1.weight},#{item.blue1.rank},
+            #{item.blue2.weight},#{item.blue2.rank},
+            #{item.blue6.weight},#{item.blue6.rank},
+            #{item.blueKill.weight},#{item.blueKill.rank},
+            current_time)
+        </foreach>
+    </insert>
+
+    <update id="editDltVipMasters">
+        update dlt_master_rank
+        set
+        is_vip=1
+        where
+        period=#{period}
+        and
+        master_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </update>
+
+    <insert id="addDltHomeMasters" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        dlt_home_master(period,master_id,type,hit_count,hit_rate,hit_series,`rank`,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},
+            #{item.masterId},
+            #{item.type},
+            #{item.rate.count},
+            #{item.rate.rate},
+            #{item.rate.series},
+            #{item.rank},
+            current_time)
+        </foreach>
+    </insert>
+
+    <sql id="masterRankSql">
+        id,`period`,
+        master_id,`rank`,
+        r1_rank,r2_rank,
+        r3_rank,r10_rank,
+        r20_rank,rk3_rank,
+        rk6_rank,b1_rank,
+        b2_rank,b6_rank,
+        bk_rank,gmt_create
+    </sql>
+
+    <select id="getUnRankedMasterPeriods" resultType="java.lang.String">
+        select distinct
+            drate.period
+        from
+            dlt_master_rate drate
+        where
+                (
+                    select
+                        count(1)
+                    from
+                        dlt_master_rank drank
+                    where
+                        drank.period = drate.period
+                ) = 0
+    </select>
+
+    <select id="getDltMasterRankByPeriod" parameterType="java.lang.String" resultMap="DltMasterRankMap">
+        select
+        <include refid="masterRankSql"/>
+        from
+        dlt_master_rank
+        where
+        period=#{period}
+    </select>
+
+    <select id="isDltVipMaster" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            dlt_master_rank
+                        where
+                              period = #{period}
+                          and master_id = #{masterId}
+                          and is_vip = 1
+                        limit 1
+                    ), 0)
+    </select>
+
+    <select id="latestDltRatePeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            dlt_master_rate
+        order by
+            period desc,
+            id desc
+        limit 1
+    </select>
+
+    <select id="latestMasterRatePeriod" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            period
+        from
+            dlt_master_rate
+        where
+            master_id = #{masterId}
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="hasExistRatePeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            dlt_master_rate
+                        where
+                            period = #{period}
+                        limit 1
+                    )
+                , 0)
+    </select>
+
+    <select id="hasExistRankPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            dlt_master_rank
+                        where
+                            period = #{period}
+                        limit 1
+                    )
+                , 0)
+    </select>
+
+    <select id="latestDltRankPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            dlt_master_rank
+        order by
+            period desc,
+            id desc
+        limit 1
+    </select>
+
+    <select id="getDltRankedMasterRates" resultMap="DltMasterRateMap">
+        select
+            drate.id,
+            drate.period,
+            drate.master_id,
+            drate.${type}_ne_rate,
+            drate.${type}_ne_hit,
+            drate.${type}_ne_count,
+            drate.${type}_me_rate,
+            drate.${type}_me_hit,
+            drate.${type}_me_count,
+            drate.${type}_hi_rate,
+            drate.${type}_hi_hit,
+            drate.${type}_hi_count,
+            drank.${type}_rank `rank`
+        from
+            dlt_master_rate drate,
+            dlt_master_rank drank
+        where
+              drate.period = #{period}
+          and drate.period = drank.period
+          and drate.master_id = drank.master_id
+        order by
+            `rank` asc
+        limit #{limit}
+    </select>
+
+    <select id="extractVipMasters" resultType="com.prize.lottery.po.dlt.DltMasterRankPo">
+        (
+        select
+        id,
+        period,
+        master_id masterId
+        from
+        dlt_master_rank
+        where period=#{period}
+        order by `rank` asc
+        limit #{limit}
+        )
+        <foreach collection="types" item="type">
+            union
+            (
+            select
+            id,
+            period,
+            master_id masterId
+            from
+            dlt_master_rank
+            where period=#{period}
+            order by ${type}_rank asc
+            limit #{iLimit}
+            )
+        </foreach>
+    </select>
+
+    <select id="getDltGladMasterList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="DltGladMasterMap">
+        select
+            di.id,
+            di.period,
+            di.master_id,
+            di.r20_hit,
+            di.b6_hit,
+            mi.name,
+            mi.avatar,
+            drank.rank `rank`,
+            drate.r3_ne_hit,
+            drate.r3_ne_rate,
+            drate.r3_ne_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        from
+            dlt_icai di,
+            master_info mi,
+            dlt_master_rate drate,
+            dlt_master_rank drank
+        where
+              di.period = #{condition.period}
+          and di.master_id = drate.master_id
+          and di.master_id = drank.master_id
+          and drate.period = #{condition.period}
+          and drank.period = #{condition.period}
+          and di.master_id = mi.seq
+          and di.r20_hit = 5
+          and di.b6_hit &gt;= 1
+        order by
+            `rank` asc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countDltGladMasterList" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            dlt_icai di,
+            dlt_master_rate drate,
+            dlt_master_rank drank
+        where
+              di.period = #{condition.period}
+          and di.master_id = drate.master_id
+          and di.master_id = drank.master_id
+          and drate.period = #{condition.period}
+          and drank.period = #{condition.period}
+          and di.r20_hit = 5
+          and di.b6_hit &gt;= 1
+    </select>
+
+    <select id="getDltMasterDetail" parameterType="java.lang.String" resultMap="DltMasterDetailMap">
+        select
+            mil.*,
+            dm.*
+        from
+            (
+                select
+                    mi.seq,
+                    mi.name,
+                    mi.avatar,
+                    mi.browse,
+                    mi.subscribe,
+                    mi.searches,
+                    mi.gmt_create
+                from
+                    master_info mi,
+                    master_lottery ml
+                where
+                      mi.seq = #{masterId}
+                  and mi.seq = ml.master_id
+                  and ml.type = 'dlt'
+            ) mil
+                left join (
+                              select
+                                  period,
+                                  master_id,
+                                  r3_ne_hit,
+                                  r3_ne_rate,
+                                  r3_ne_count,
+                                  r20_me_hit,
+                                  r20_me_rate,
+                                  r20_me_count,
+                                  rk3_me_hit,
+                                  rk3_me_rate,
+                                  rk3_me_count,
+                                  b6_me_hit,
+                                  b6_me_rate,
+                                  b6_me_count,
+                                  bk_me_hit,
+                                  bk_me_rate,
+                                  bk_me_count
+                              from
+                                  dlt_master_rate
+                              where
+                                  master_id = #{masterId}
+                              order by
+                                  period desc
+                              limit 1
+                          ) dm
+                          on dm.master_id = mil.seq
+    </select>
+
+    <select id="getDltRandomMasters" resultMap="DltMasterMulRankMap">
+        select
+        rankl.*,
+        rankr.rk3_rank last_tank
+        from
+        (
+        select
+        drank.id,
+        drank.period,
+        drank.master_id,
+        drank.hot,
+        drank.is_vip,
+        drank.rk3_rank `rank`,
+        mi.name,
+        mi.avatar,
+        mi.browse,
+        drate.r3_ne_hit,
+        drate.r3_ne_rate,
+        drate.r3_ne_count,
+        drate.r20_me_hit,
+        drate.r20_me_rate,
+        drate.r20_me_full_rate,
+        drate.r20_me_count,
+        drate.rk3_me_hit,
+        drate.rk3_me_rate,
+        drate.rk3_me_count,
+        drate.bk_me_hit,
+        drate.bk_me_rate,
+        drate.bk_me_count
+        from
+        dlt_master_rank drank,
+        dlt_master_rate drate,
+        master_lottery ml,
+        master_info mi
+        where
+        drank.period=#{period}
+        and drank.master_id=drate.master_id
+        and drank.period=drate.period
+        and drank.master_id=mi.seq
+        and drank.master_id=ml.master_id
+        and ml.type='dlt'
+        and drank.rk3_rank in
+        <foreach collection="ranks" item="rank" separator="," open="(" close=")">
+            #{rank}
+        </foreach>
+        ) rankl
+        left join dlt_master_rank rankr
+        on rankl.master_id=rankr.master_id and rankr.period=#{last}
+        order by rankl.rank
+    </select>
+
+    <select id="getDltMasterMulRankList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="DltMasterMulRankMap">
+        select
+        rankl.*,
+        <if test="condition.type==0">
+            rankr.`rank` last_rank
+        </if>
+        <if test="condition.type==1">
+            rankr.bk_rank last_rank
+        </if>
+        from
+        (
+        select
+        drank.id,
+        drank.period,
+        drank.master_id,
+        drank.hot,
+        drank.is_vip,
+        <if test="condition.type==0">
+            drank.`rank` `rank`,
+        </if>
+        <if test="condition.type==1">
+            drank.bk_rank `rank`,
+        </if>
+        mi.name,
+        mi.avatar,
+        mi.browse,
+        drate.r3_ne_hit,
+        drate.r3_ne_rate,
+        drate.r3_ne_count,
+        drate.r20_me_hit,
+        drate.r20_me_rate,
+        drate.r20_me_full_rate,
+        drate.r20_me_count,
+        drate.rk3_me_hit,
+        drate.rk3_me_rate,
+        drate.rk3_me_count,
+        drate.bk_me_hit,
+        drate.bk_me_rate,
+        drate.bk_me_count
+        from
+        dlt_master_rank drank,
+        dlt_master_rate drate,
+        master_lottery ml,
+        master_info mi
+        where
+        drank.period=#{condition.period}
+        and drank.master_id=drate.master_id
+        and drank.period=drate.period
+        and drank.master_id=mi.seq
+        and drank.master_id=ml.master_id
+        and ml.type='dlt'
+        order by `rank`
+        limit #{offset},#{limit}
+        ) rankl
+        left join dlt_master_rank rankr
+        on rankl.master_id=rankr.master_id and rankr.period=#{condition.last}
+    </select>
+
+    <select id="countDltMasterMulRanks" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            dlt_master_rank
+        where
+            period = #{condition.period}
+    </select>
+
+    <select id="getDltMasterRankList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="DltMasterRankVoMap">
+        select
+        rankl.*,
+        rankr.${condition.type}_rank last_rank
+        from (
+        select
+        drate.id id,
+        drate.period,
+        drate.master_id,
+        mi.name,
+        mi.avatar,
+        mi.browse,
+        drank.is_vip,
+        drank.hot,
+        <if test="condition.type=='r1'">
+            drank.r1_rank `rank`,
+            drate.r1_me_hit hit_series,
+            drate.r1_me_rate hit_rate,
+            drate.r1_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='r2'">
+            drank.r2_rank `rank`,
+            drate.r2_me_hit hit_series,
+            drate.r2_me_rate hit_rate,
+            drate.r2_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='r3'">
+            drank.r3_rank `rank`,
+            drate.r3_me_hit hit_series,
+            drate.r3_me_rate hit_rate,
+            drate.r3_me_count hit_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='r10'">
+            drank.r10_rank `rank`,
+            drate.r10_me_hit hit_series,
+            drate.r10_me_rate hit_rate,
+            drate.r10_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='r20'">
+            drank.r20_rank `rank`,
+            drate.r20_me_hit hit_series,
+            drate.r20_me_rate hit_rate,
+            drate.r20_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='rk3'">
+            drank.rk3_rank `rank`,
+            drate.rk3_me_hit hit_series,
+            drate.rk3_me_rate hit_rate,
+            drate.rk3_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='rk6'">
+            drank.rk6_rank `rank`,
+            drate.rk6_me_hit hit_series,
+            drate.rk6_me_rate hit_rate,
+            drate.rk6_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='b1'">
+            drank.b1_rank `rank`,
+            drate.b1_me_hit hit_series,
+            drate.b1_me_rate hit_rate,
+            drate.b1_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='b2'">
+            drank.b2_rank `rank`,
+            drate.b2_me_hit hit_series,
+            drate.b2_me_rate hit_rate,
+            drate.b2_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='b6'">
+            drank.b6_rank `rank`,
+            drate.b6_me_hit hit_series,
+            drate.b6_me_rate hit_rate,
+            drate.b6_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.bk_me_hit,
+            drate.bk_me_rate,
+            drate.bk_me_count
+        </if>
+        <if test="condition.type=='bk'">
+            drank.bk_rank `rank`,
+            drate.bk_me_hit hit_series,
+            drate.bk_me_rate hit_rate,
+            drate.bk_me_count hit_count,
+            drate.r3_me_hit,
+            drate.r3_me_rate,
+            drate.r3_me_count,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count
+        </if>
+        from
+        dlt_master_rate drate,
+        dlt_master_rank drank,
+        master_lottery ml,
+        master_info mi
+        where
+        drank.period=#{condition.period}
+        and
+        drate.period=#{condition.period}
+        and
+        drate.master_id=drank.master_id
+        and
+        drank.master_id=mi.seq
+        and drank.master_id=ml.master_id
+        and ml.type='dlt'
+        <if test="condition.vip!=null">
+            and
+            drank.is_vip=#{condition.vip}
+        </if>
+        order by `rank` asc
+        limit #{offset},#{limit}
+        ) rankl
+        left join
+        dlt_master_rank rankr
+        on
+        rankr.master_id=rankl.master_id
+        and
+        rankr.period=#{condition.last}
+    </select>
+
+    <select id="countDltMasterRankList" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from
+        dlt_master_rank
+        where
+        period=#{condition.period}
+        <if test="condition.vip!=null">
+            and is_vip=#{condition.vip}
+        </if>
+    </select>
+
+    <select id="getDltLottoMasterList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LottoMasterVoMap">
+        select dlm.*,
+        dmr.${condition.type}_rank last_i_rank,
+        if(dhm.id is not null ,1,0) homed
+        from
+        (
+        select
+        drank.id,
+        drank.period,
+        drank.master_id,
+        drank.`rank`,
+        drank.hot,
+        drank.is_vip,
+        mi.name,
+        mi.avatar,
+        ml.source,
+        mi.browse,
+        mi.subscribe,
+        drank.${condition.type}_rank i_rank,
+        drate.${condition.type}_me_hit hit_series,
+        drate.${condition.type}_me_count hit_count,
+        drate.${condition.type}_me_rate hit_rate
+        from
+        dlt_master_rank drank,
+        dlt_master_rate drate,
+        master_lottery ml,
+        master_info mi
+        where
+        drank.period=#{condition.period}
+        and drate.period=#{condition.period}
+        and drank.master_id=drate.master_id
+        and ml.master_id=drank.master_id
+        and mi.seq=ml.master_id
+        and ml.type='dlt'
+        <if test="condition.vip!=null">
+            and drank.is_vip=1
+        </if>
+        <if test="condition.hot!=null">
+            and drank.hot=1
+        </if>
+        order by i_rank asc
+        limit #{offset},#{limit}
+        ) dlm
+        left join dlt_master_rank dmr on dmr.master_id=dlm.master_id and dmr.period=#{condition.last}
+        left join dlt_home_master dhm on dhm.master_id=dlm.master_id and dhm.period=dlm.period and
+        dhm.type=#{condition.type}
+    </select>
+
+    <select id="countDltLottoMasters" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        dlt_master_rank drank,
+        dlt_master_rate drate,
+        master_lottery ml,
+        master_info mi
+        where
+        drank.period=#{condition.period}
+        and drate.period=#{condition.period}
+        and drank.master_id=drate.master_id
+        and ml.master_id=drank.master_id
+        and mi.seq=ml.master_id
+        and ml.type='dlt'
+        <if test="condition.vip!=null">
+            and drank.is_vip=1
+        </if>
+        <if test="condition.hot!=null">
+            and drank.hot=1
+        </if>
+    </select>
+
+    <sql id="masterRateSql">
+        id,master_id,period,
+        r1_ne_rate,r1_me_rate,r1_hi_rate,
+        r2_ne_rate,r2_me_rate,r2_hi_rate,
+        r3_ne_rate,r3_me_rate,r3_hi_rate,
+        r10_ne_rate,r10_me_rate,r10_hi_rate,
+        r20_ne_rate,r20_ne_full_rate,r20_me_rate,r20_me_full_rate,r20_hi_rate,r20_hi_full_rate,
+        rk3_ne_rate,rk3_me_rate,rk3_hi_rate,
+        rk6_ne_rate,rk6_me_rate,rk6_hi_rate,
+        b1_ne_rate,b1_me_rate,b1_hi_rate,
+        b2_ne_rate,b2_me_rate,b2_hi_rate,
+        b6_ne_rate,b6_ne_full_rate,b6_me_rate,b6_me_full_rate,b6_hi_rate,b6_hi_full_rate,
+        bk_ne_rate,bk_me_rate,bk_hi_rate
+    </sql>
+
+    <select id="getDltMasterRates" parameterType="java.lang.String" resultMap="DltMasterRateMap">
+        select
+        <include refid="masterRateSql"/>
+        from
+        dlt_master_rate
+        where
+        period=#{period}
+    </select>
+
+    <select id="getDltHomeMasters" parameterType="java.lang.String" resultMap="HomeMasterVoMap">
+        select
+            dhm.id,
+            dhm.period,
+            dhm.master_id,
+            mi.name,
+            mi.avatar,
+            dhm.type,
+            dhm.hit_count,
+            dhm.hit_rate,
+            dhm.hit_series,
+            dhm.rank,
+            dhm.gmt_create
+        from
+            dlt_home_master dhm,
+            master_info mi
+        where
+              dhm.period = #{period}
+          and dhm.master_id = mi.seq
+        order by
+            type,
+            `rank`
+    </select>
+
+    <select id="getMasterLatestRate" parameterType="java.lang.String" resultMap="DltMasterRateMap">
+        select
+            id,
+            period,
+            master_id,
+            r1_ne_hit,
+            r1_ne_rate,
+            r1_ne_count,
+            r2_ne_hit,
+            r2_ne_rate,
+            r2_ne_count,
+            r3_me_hit,
+            r3_me_rate,
+            r3_me_count,
+            r10_ne_hit,
+            r10_ne_rate,
+            r10_ne_count,
+            r20_ne_hit,
+            r20_ne_rate,
+            r20_ne_count,
+            rk3_me_hit,
+            rk3_me_rate,
+            rk3_me_count,
+            rk6_ne_hit,
+            rk6_ne_rate,
+            rk6_ne_count,
+            b1_ne_hit,
+            b1_ne_rate,
+            b1_ne_count,
+            b2_ne_hit,
+            b2_ne_rate,
+            b2_ne_count,
+            b6_me_hit,
+            b6_me_rate,
+            b6_me_count,
+            bk_me_hit,
+            bk_me_rate,
+            bk_me_count,
+            gmt_create
+        from
+            dlt_master_rate
+        where
+            master_id = #{masterId}
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="latestHomeMasterPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            dlt_home_master
+        order by
+            period desc,
+            id desc
+        limit 1
+    </select>
+
+    <select id="hasExtractHomeMaster" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            dlt_home_master
+                        where
+                            period = #{period}
+                        limit 1
+                    ), 0)
+    </select>
+
+    <select id="hasExtractVipMaster" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            dlt_master_rank
+                        where
+                              period = #{period}
+                          and is_vip = 1
+                        limit 1
+                    ),
+                    0)
+    </select>
+
+    <select id="getDltMasterSubscribes" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="DltMasterSubscribeMap">
+        select
+            msi.*,
+            dmr.r3_me_hit,
+            dmr.r3_me_rate,
+            dmr.r3_me_count,
+            dmr.r20_me_hit,
+            dmr.r20_me_rate,
+            dmr.r20_me_count,
+            dmr.rk3_me_hit,
+            dmr.rk3_me_rate,
+            dmr.rk3_me_count,
+            dmr.bk_me_hit,
+            dmr.bk_me_rate,
+            dmr.bk_me_count
+        from
+            (
+                select
+                    ms.id,
+                    ms.user_id,
+                    ms.type,
+                    ms.master_id,
+                    mi.name,
+                    mi.avatar,
+                    ms.gmt_create
+                from
+                    master_subscribe ms,
+                    master_info mi
+                where
+                      ms.type = 'dlt'
+                  and ms.master_id = mi.seq
+                  and ms.user_id = #{condition.userId}
+                order by
+                    gmt_create desc
+                limit #{offset},#{limit}
+            ) msi
+                left join
+                dlt_master_rate dmr
+                on
+                            dmr.master_id = msi.master_id
+                        and
+                            dmr.period = #{condition.period}
+    </select>
+
+    <select id="countDltMasterSubscribes" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_subscribe
+        where
+              type = 'dlt'
+          and user_id = #{condition.userId}
+    </select>
+
+    <select id="getDltSchemaMasters" resultMap="DltMasterSchemaMap">
+        select
+            drate.master_id,
+            drate.period,
+            mi.`name`,
+            mi.avatar,
+            ml.latest,
+            dicai.r10_hit,
+            dicai.b6_hit,
+            drate.r20_me_hit,
+            drate.r20_me_rate,
+            drate.r20_me_count,
+            drate.rk3_me_hit,
+            drate.rk3_me_rate,
+            drate.rk3_me_count,
+            drate.b6_me_hit,
+            drate.b6_me_rate,
+            drate.b6_me_count
+        from
+            dlt_master_rate drate,
+            dlt_icai dicai,
+            master_lottery ml,
+            master_info mi
+        where
+              drate.master_id = dicai.master_id
+          and drate.period = #{period}
+          and drate.period = dicai.period
+          and drate.master_id = ml.master_id
+          and ml.type = 'dlt'
+          and drate.master_id = mi.seq
+          and dicai.r10_hit &gt;= 4
+          and dicai.b6_hit &gt;= 1
+        order by
+                    drate.r20_me_rate * 0.25 + drate.rk3_me_rate * 1.95 + drate.r10_me_rate * 0.35 desc,
+                    dicai.r10_hit desc,
+                    dicai.b6_hit desc
+        limit #{limit}
+    </select>
+
+    <select id="getDltMasterRateVo" resultMap="DltMasterRateVoMap">
+        select
+            master_id,
+            period,
+            r3_me_rate  red3,
+            r10_me_rate red10,
+            r20_me_rate red20,
+            rk3_me_rate rk3,
+            b6_me_rate  blue6,
+            bk_me_rate  bk,
+            red3_avg,
+            red10_avg,
+            red20_avg,
+            rk3_avg,
+            blue6_avg,
+            bk_avg
+        from
+            dlt_master_rate,
+            (
+                select
+                    round(avg(r3_me_rate), 2)  red3_avg,
+                    round(avg(r10_me_rate), 2) red10_avg,
+                    round(avg(r20_me_rate), 2) red20_avg,
+                    round(avg(rk3_me_rate), 2) rk3_avg,
+                    round(avg(b6_me_rate), 2)  blue6_avg,
+                    round(avg(bk_me_rate), 2)  bk_avg
+                from
+                    dlt_master_rate
+                where
+                    period = #{period}
+            ) r_avg
+        where
+              period = #{period}
+          and master_id = #{masterId}
+    </select>
+
+    <select id="getDltR20BestMaster" parameterType="java.lang.String" resultMap="MasterGladRateVoMap">
+        select
+            icai.period,
+            icai.master_id,
+            rate.r20_hi_count hit_count,
+            rate.r20_hi_rate  hit_rate
+        from
+            dlt_icai icai,
+            dlt_master_rate rate
+        where
+              icai.period = #{period}
+          and icai.r20_hit = 5
+          and icai.master_id = rate.master_id
+          and icai.period = rate.period
+        order by
+            rate.r20_hi_rate desc,
+            rate.rk3_hi_rate desc
+        limit 1
+    </select>
+
+    <select id="getDltRk3BestMasters" parameterType="java.lang.String" resultMap="MasterGladRateVoMap">
+        select
+            icai.period,
+            icai.master_id,
+            rate.rk3_hi_count hit_count,
+            rate.rk3_hi_rate  hit_rate
+        from
+            dlt_icai icai,
+            dlt_master_rate rate
+        where
+              icai.period = #{period}
+          and icai.master_id = rate.master_id
+          and icai.period = rate.period
+        order by
+            rate.rk3_hi_rate desc,
+            rate.r20_hi_rate desc
+        limit 2
+    </select>
+
+    <select id="getDltMasterFeeds" parameterType="java.lang.String" resultMap="MasterFeedRateVoMap">
+        (
+            select
+                icai.period      as period,
+                'b6'             as field,
+                icai.master_id   as master_id,
+                icai.b6_hit      as hit,
+                rate.b6_hi_count as hit_count,
+                rate.b6_hi_rate  as hit_rate,
+                icai.gmt_create  as timestamp,
+                mi.`name`        as name,
+                mi.avatar        as avatar
+            from
+                dlt_icai icai,
+                dlt_master_rate rate,
+                master_info mi
+            where
+                  icai.period = #{period}
+              and mi.seq = icai.master_id
+              and icai.master_id = rate.master_id
+              and icai.period = rate.period
+              and icai.b6_hit = 2
+            order by
+                hit_rate desc,
+                hit desc
+            limit 6
+        )
+        union all
+        (
+            select
+                icai.period       as period,
+                'r20'             as field,
+                icai.master_id    as master_id,
+                icai.r20_hit      as hit,
+                rate.r20_hi_count as hit_count,
+                rate.r20_hi_rate  as hit_rate,
+                icai.gmt_create   as timestamp,
+                mi.`name`         as name,
+                mi.avatar         as avatar
+            from
+                dlt_icai icai,
+                dlt_master_rate rate,
+                master_info mi
+            where
+                  icai.period = #{period}
+              and mi.seq = icai.master_id
+              and icai.master_id = rate.master_id
+              and icai.period = rate.period
+              and icai.r20_hit >= 4
+            order by
+                hit_rate desc,
+                hit desc
+            limit 6
+        )
+        union all
+        (
+            select
+                icai.period       as period,
+                'rk3'             as field,
+                icai.master_id    as master_id,
+                icai.rk3_hit      as hit,
+                rate.rk3_hi_count as hit_count,
+                rate.rk3_hi_rate  as hit_rate,
+                icai.gmt_create   as timestamp,
+                mi.`name`         as name,
+                mi.avatar         as avatar
+            from
+                dlt_icai icai,
+                dlt_master_rate rate,
+                master_info mi
+            where
+                  icai.period = #{period}
+              and mi.seq = icai.master_id
+              and icai.master_id = rate.master_id
+              and icai.period = rate.period
+              and icai.rk3_hit = 1
+            order by
+                rate.rk3_hi_rate desc,
+                rate.r20_hi_rate desc
+            limit 6
+        )
+    </select>
+
+    <select id="getDltMasterFeed" resultMap="MasterFeedRateVoMap">
+        <if test="field=='b6'">
+            select
+            icai.period as period,
+            'b6' as field,
+            icai.master_id as master_id,
+            icai.b6_hit as hit,
+            rate.b6_hi_count as hit_count,
+            rate.b6_hi_rate as hit_rate,
+            icai.gmt_create as timestamp,
+            mi.`name` as name,
+            mi.avatar as avatar
+            from
+            dlt_icai icai,
+            dlt_master_rate rate,
+            master_info mi
+            where
+            icai.period = #{period}
+            and icai.master_id=#{masterId}
+            and mi.seq = icai.master_id
+            and icai.master_id = rate.master_id
+            and icai.period = rate.period
+        </if>
+        <if test="field=='r20'">
+            select
+            icai.period as period,
+            'r20' as field,
+            icai.master_id as master_id,
+            icai.r20_hit as hit,
+            rate.r20_hi_count as hit_count,
+            rate.r20_hi_rate as hit_rate,
+            icai.gmt_create as timestamp,
+            mi.`name` as name,
+            mi.avatar as avatar
+            from
+            dlt_icai icai,
+            dlt_master_rate rate,
+            master_info mi
+            where
+            icai.period = #{period}
+            and icai.master_id=#{masterId}
+            and mi.seq = icai.master_id
+            and icai.master_id = rate.master_id
+            and icai.period = rate.period
+        </if>
+        <if test="field=='rk3'">
+            select
+            icai.period as period,
+            'rk3' as field,
+            icai.master_id as master_id,
+            icai.rk3_hit as hit,
+            rate.rk3_hi_count as hit_count,
+            rate.rk3_hi_rate as hit_rate,
+            icai.gmt_create as timestamp,
+            mi.`name` as name,
+            mi.avatar as avatar
+            from
+            dlt_icai icai,
+            dlt_master_rate rate,
+            master_info mi
+            where
+            icai.period = #{period}
+            and icai.master_id=#{masterId}
+            and mi.seq = icai.master_id
+            and icai.master_id = rate.master_id
+            and icai.period = rate.period
+        </if>
+    </select>
+
+    <select id="getWorseMasters" parameterType="com.prize.lottery.dto.WorseMasterFilter"
+            resultType="java.lang.String">
+        (
+        SELECT
+        master_id
+        FROM
+        dlt_master_rank
+        WHERE
+        period IN
+        <foreach collection="periods" item="period" open="(" close=")" separator=",">
+            #{period}
+        </foreach>
+        AND `rank` &gt; #{throttle}
+        GROUP BY
+        master_id
+        HAVING
+        COUNT(master_id) &gt;= #{size}
+        )
+        <foreach collection="items" item="item">
+            union (
+            SELECT
+            master_id
+            FROM
+            dlt_master_rank
+            WHERE
+            period IN
+            <foreach collection="periods" item="period" open="(" close=")" separator=",">
+                #{period}
+            </foreach>
+            AND ${item}_rank &gt; #{throttle}
+            GROUP BY
+            master_id
+            HAVING
+            COUNT(master_id) &gt;= #{size}
+            )
+        </foreach>
+    </select>
+
+    <delete id="delMasterRanks" parameterType="java.util.List">
+        delete
+        from dlt_master_rank
+        where master_id in
+        <foreach collection="list" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+    <delete id="delMasterRates" parameterType="java.util.List">
+        delete
+        from dlt_master_rate
+        where master_id in
+        <foreach collection="list" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+</mapper>

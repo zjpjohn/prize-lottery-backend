@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - prod
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+      - optional:nacos:lottery-share-oss-${spring.profiles.active}.yml
+      - optional:nacos:lottery-share-period-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      config:
+        server-addr:
+        namespace:
+      discovery:
+        server-addr:
+        namespace: 

@@ -1,0 +1,12 @@
+com:
+  cloud:
+    sms:
+      accessId: 
+      secret: 
+      product: 
+      region: 
+      endpoint: 
+    mobile:
+      accessKey: 
+      accessSecret: 
+      endpoint: 

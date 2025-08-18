@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.PutChannelMapper">
+
+    <resultMap id="PutChannelMap" type="com.prize.lottery.infrast.persist.po.PutChannelPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="biz_no" property="bizNo"/>
+        <result column="type" property="type"/>
+        <result column="state" property="state"/>
+        <result column="target_cnt" property="targetCnt"/>
+        <result column="third_id" property="thirdId"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="PutRecordMap" type="com.prize.lottery.infrast.persist.po.PutRecordPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="channel" property="channel"/>
+        <result column="code" property="code"/>
+        <result column="inv_uri" property="invUri"/>
+        <result column="expect_amt" property="expectAmt"/>
+        <result column="user_cnt" property="userCnt"/>
+        <result column="state" property="state"/>
+        <result column="put_time" property="putTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="PutChannelStatsMap" type="com.prize.lottery.infrast.persist.vo.PutChannelStatsVo">
+        <id column="code" property="code"/>
+        <result column="user_cnt" property="userCnt"/>
+        <result column="expect_amt" property="expectAmt"/>
+        <result column="batches" property="batches"/>
+    </resultMap>
+
+    <insert id="addPutChannel" parameterType="com.prize.lottery.infrast.persist.po.PutChannelPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into put_channel(app_no,
+        biz_no,
+        type,
+        state,
+        target_cnt,
+        third_id,
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify
+        )
+        values (#{appNo},
+        #{bizNo},
+        #{type},
+        #{state},
+        #{targetCnt},
+        #{thirdId},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time
+        )
+    </insert>
+
+    <update id="editPutChannel" parameterType="com.prize.lottery.infrast.persist.po.PutChannelPo">
+        update put_channel
+        set
+        <if test="type!=null">
+            type=#{type},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="targetCnt!=null">
+            target_cnt=#{targetCnt},
+        </if>
+        <if test="thirdId!=null">
+            third_id=#{thirdId},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getPutChannel" parameterType="java.lang.Long" resultMap="PutChannelMap">
+        select
+            id,
+            app_no,
+            biz_no,
+            type,
+            state,
+            target_cnt,
+            third_id,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            put_channel
+        where
+            id = #{id}
+    </select>
+
+    <select id="getPutChannelByNo" parameterType="java.lang.String" resultMap="PutChannelMap">
+        select
+            id,
+            app_no,
+            biz_no,
+            type,
+            state,
+            target_cnt,
+            third_id,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            put_channel
+        where
+            biz_no = #{bizNo}
+    </select>
+
+    <select id="getPutChannelList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="PutChannelMap">
+        select
+        id, app_no, biz_no, type, state, target_cnt, third_id, remark, gmt_create, gmt_modify
+        from
+        put_channel
+        <where>
+            <if test="condition.appNo!=null">
+                and app_no = #{condition.appNo}
+            </if>
+            <if test="condition.type!=null">
+                and type = #{condition.type}
+            </if>
+            <if test="condition.state!=null">
+                and state = #{condition.state}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countPutChannels" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        put_channel
+        <where>
+            <if test="condition.appNo!=null">
+                and app_no = #{condition.appNo}
+            </if>
+            <if test="condition.type!=null">
+                and type = #{condition.type}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addPutRecord" parameterType="com.prize.lottery.infrast.persist.po.PutRecordPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into put_record(app_no,
+        channel,
+        code,
+        inv_uri,
+        expect_amt,
+        state,
+        <if test="remark!=null">
+            remark,
+        </if>
+        <if test="putTime!=null">
+            put_time,
+        </if>
+        gmt_create,
+        gmt_modify
+        )
+        values (#{appNo},
+        #{channel},
+        #{code},
+        #{invUri},
+        #{expectAmt},
+        #{state},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        <if test="putTime!=null">
+            #{putTime},
+        </if>
+        current_time,
+        current_time
+        )
+    </insert>
+
+    <update id="editPutRecord" parameterType="com.prize.lottery.infrast.persist.po.PutRecordPo">
+        update put_record
+        set
+        <if test="expectAmt!=null">
+            expect_amt=#{expectAmt},
+        </if>
+        <if test="userCnt!=null">
+            user_cnt=user_cnt+#{userCnt},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        <if test="putTime!=null">
+            put_time=#{putTime},
+        </if>
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getPutRecord" parameterType="java.lang.Long" resultMap="PutRecordMap">
+        select
+            id,
+            app_no,
+            channel,
+            code,
+            inv_uri,
+            expect_amt,
+            user_cnt,
+            state,
+            remark,
+            put_time,
+            gmt_create,
+            gmt_modify
+        from
+            put_record
+        where
+            id = #{id}
+    </select>
+
+    <select id="getPutRecordByCode" parameterType="java.lang.String" resultMap="PutRecordMap">
+        select
+            id,
+            app_no,
+            channel,
+            code,
+            inv_uri,
+            expect_amt,
+            user_cnt,
+            state,
+            remark,
+            put_time,
+            gmt_create,
+            gmt_modify
+        from
+            put_record
+        where
+            code = #{code}
+    </select>
+
+    <select id="getPutRecordsByChannel" parameterType="java.lang.String" resultMap="PutRecordMap">
+        select
+            id,
+            app_no,
+            channel,
+            code,
+            inv_uri,
+            expect_amt,
+            user_cnt,
+            state,
+            remark,
+            put_time,
+            gmt_create,
+            gmt_modify
+        from
+            put_record
+        where
+            channel = #{channel}
+        order by
+            gmt_create desc
+    </select>
+
+    <select id="getChannelStats" resultType="java.lang.String" resultMap="PutChannelStatsMap">
+        select
+            channel         as code,
+            count(1)        as batches,
+            sum(expect_amt) as expect_amt,
+            sum(user_cnt)   as user_cnt
+        from
+            put_record
+        where
+              channel = #{code}
+          and state in (2, 3)
+    </select>
+
+    <select id="getChannelStatsList" resultType="java.util.List" resultMap="PutChannelStatsMap">
+        select
+        channel as code,
+        count(1) as batches,
+        sum(expect_amt) as expect_amt,
+        sum(user_cnt) as user_cnt
+        from
+        put_record
+        where
+        state in (2, 3)
+        and channel in
+        <foreach collection="list" item="code" separator="," open="(" close=")">
+            #{code}
+        </foreach>
+        group by channel
+    </select>
+
+
+</mapper>

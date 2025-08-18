@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.LotteryIndexMapper">
+
+    <resultMap id="LotteryIndexMap" type="com.prize.lottery.po.lottery.LotteryIndexPo">
+        <id column="id" property="id"/>
+        <result column="lottery" property="lottery"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="red_ball" property="redBall"/>
+        <result column="blue_ball" property="blueBall"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addLotteryIndex" parameterType="com.prize.lottery.po.lottery.LotteryIndexPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_index(lottery,
+                                  period,
+                                  type,
+                                  red_ball,
+                                  blue_ball,
+                                  gmt_create,
+                                  gmt_modify
+                                 )
+        values (#{lottery},
+                #{period},
+                #{type},
+                #{redBall},
+                #{blueBall},
+                current_time,
+                current_time
+               ) on duplicate key
+        update red_ball=
+        values (red_ball), blue_ball=
+        values (blue_ball), gmt_modify= current_time
+    </insert>
+
+    <select id="getLotteryIndexByUk" resultMap="LotteryIndexMap">
+        select
+            id,
+            lottery,
+            period,
+            type,
+            red_ball,
+            blue_ball,
+            gmt_create,
+            gmt_modify
+        from
+            lottery_index
+        where
+              lottery = #{lottery}
+          and period = #{period}
+          and type = #{type}
+    </select>
+
+    <select id="getLotteryIndices" resultMap="LotteryIndexMap">
+        select
+            id,
+            lottery,
+            period,
+            type,
+            red_ball,
+            blue_ball,
+            gmt_create,
+            gmt_modify
+        from
+            lottery_index
+        where
+              lottery = #{lottery}
+          and period = #{period}
+    </select>
+
+    <select id="getLotteryIndexList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LotteryIndexMap">
+        select
+        id, lottery, period, type, red_ball, blue_ball, gmt_create, gmt_modify
+        from
+        lottery_index
+        <where>
+            <if test="condition.lottery!=null">
+                and lottery=#{condition.lottery}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.period!=null">
+                and period=#{condition.period}
+            </if>
+        </where>
+        order by period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countLotteryIndices" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        lottery_index
+        <where>
+            <if test="condition.lottery!=null">
+                and lottery=#{condition.lottery}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.period!=null">
+                and period=#{condition.period}
+            </if>
+        </where>
+    </select>
+
+    <select id="latestPeriod" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            period
+        from
+            lottery_index
+        where
+            lottery = #{lottery}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="indexPeriodList" parameterType="java.lang.String" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_index
+        where
+            lottery = #{lottery}
+        order by
+            period desc
+    </select>
+
+</mapper>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.AppResourceMapper">
+
+    <resultMap id="AppResourceMap" type="com.prize.lottery.infrast.persist.po.AppResourcePo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="fe_no" property="feNo"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="uri" property="uri"/>
+        <result column="last_uri" property="lastUri"/>
+        <result column="def_uri" property="defUri"/>
+        <result column="specs" property="specs"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addResourceList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        app_resource(app_no,
+        fe_no,
+        name,
+        type,
+        uri,
+        last_uri,
+        def_uri,
+        specs,
+        state,
+        remark,
+        gmt_create,
+        gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.appNo},
+            #{item.feNo},
+            #{item.name},
+            #{item.type},
+            #{item.uri},
+            <if test="item.lastUri!=null">
+                #{item.lastUri},
+            </if>
+            <if test="item.lastUri==null">
+                '',
+            </if>
+            #{item.defUri},
+            #{item.specs},
+            <if test="item.state!=null">
+                #{item.state},
+            </if>
+            <if test="item.state==null">
+                1,
+            </if>
+            <if test="item.remark!=null">
+                #{item.remark},
+            </if>
+            <if test="item.remark==null">
+                '',
+            </if>
+            current_time,
+            current_time)
+        </foreach>
+    </insert>
+
+    <insert id="addAppResource" parameterType="com.prize.lottery.infrast.persist.po.AppResourcePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        app_resource(
+        app_no,
+        fe_no,
+        name,
+        type,
+        uri,
+        def_uri,
+        specs,
+        <if test="state!=null">
+            state,
+        </if>
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values
+        (#{appNo},
+        #{feNo},
+        #{name},
+        #{type},
+        #{uri},
+        #{defUri},
+        #{specs},
+        <if test="state!=null">
+            #{state},
+        </if>
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editAppResource" parameterType="com.prize.lottery.infrast.persist.po.AppResourcePo">
+        update app_resource
+        set
+        <if test="name!=null">
+            name=#{name},
+        </if>
+        <if test="feNo!=null">
+            fe_no=#{feNo},
+        </if>
+        <if test="uri!=null">
+            uri=#{uri},
+        </if>
+        <if test="lastUri!=null">
+            last_uri=#{lastUri},
+        </if>
+        <if test="defUri!=null">
+            def_uri=#{defUri},
+        </if>
+        <if test="specs!=null">
+            specs=#{specs},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <sql id="baseSql">
+        id
+        ,app_no,fe_no,uri,last_uri,def_uri,specs,state
+    </sql>
+
+    <select id="getAppResourceById" resultMap="AppResourceMap">
+        select
+        <include refid="baseSql"/>
+        <if test="detail">
+            ,name,type,remark,gmt_create,gmt_modify
+        </if>
+        from
+        app_resource
+        where
+        id=#{id}
+    </select>
+
+    <select id="existResourceFeNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            app_resource
+                        where
+                              app_no = #{appNo}
+                          and fe_no = #{feNo}
+                        limit 1 ),
+                    0);
+    </select>
+
+    <select id="getAppResourceList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="AppResourceMap">
+        select
+        <include refid="baseSql"/>,name,type,remark,gmt_create
+        from
+        app_resource
+        where
+        app_no=#{condition.appNo}
+        <if test="condition.type!=null">
+            and type=#{condition.type}
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+        order by fe_no, gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAppResources" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        app_resource
+        where
+        app_no=#{condition.appNo}
+        <if test="condition.type!=null">
+            and type=#{condition.type}
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+    </select>
+
+    <select id="getUsingAppResources" parameterType="java.lang.String" resultMap="AppResourceMap">
+        select
+            id,
+            app_no,
+            fe_no,
+            name,
+            type,
+            uri,
+            last_uri,
+            def_uri,
+            specs,
+            state,
+            remark,
+            gmt_create
+        from
+            app_resource
+        where
+              app_no = #{appNo}
+          and state = 2
+    </select>
+
+</mapper>

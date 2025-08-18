@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.AdministratorMapper">
+
+    <resultMap id="AdministratorMap" type="com.prize.lottery.infrast.persist.po.AdministratorPo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="phone" property="phone"/>
+        <result column="level" property="level"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="AdminLoginMap" type="com.prize.lottery.infrast.persist.po.AdminLoginPo">
+        <id column="id" property="id"/>
+        <result column="admin_id" property="adminId"/>
+        <result column="token_id" property="tokenId"/>
+        <result column="expire_at" property="expireAt"/>
+        <result column="login_time" property="loginTime"/>
+        <result column="login_ip" property="loginIp"/>
+        <result column="state" property="state"/>
+        <result column="last_ip" property="lastIp"/>
+        <result column="last_time" property="lastTime"/>
+    </resultMap>
+
+    <resultMap id="AdminLoginLogMap" type="com.prize.lottery.infrast.persist.po.AdminLoginLogPo">
+        <id column="id" property="id"/>
+        <result column="admin_id" property="adminId"/>
+        <result column="login_time" property="loginTime"/>
+        <result column="login_ip" property="loginIp"/>
+        <result column="ip_region" property="ipRegion"/>
+        <result column="expire_at" property="expireAt"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="addAdministrator" parameterType="com.prize.lottery.infrast.persist.po.AdministratorPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into administrator(`name`,
+                                  password,
+                                  phone,
+                                  `level`,
+                                  gmt_create,
+                                  gmt_modify
+                                 )
+        values (#{name},
+                #{password},
+                #{phone},
+                #{level},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editAdministrator" parameterType="com.prize.lottery.infrast.persist.po.AdministratorPo">
+        update administrator
+        set
+        <if test="name!=null">
+            `name`=#{name},
+        </if>
+        <if test="password!=null">
+            password=#{password},
+        </if>
+        <if test="phone!=null">
+            phone=#{phone},
+        </if>
+        <if test="level!=null">
+            `level`=#{level},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        gmt_modify=current_time
+        where id=#{id}
+    </update>
+
+    <sql id="administratorSql">
+        id,`name`,password,phone,`level`,state,gmt_create,gmt_modify
+    </sql>
+
+    <select id="getAdministratorById" parameterType="java.lang.Long" resultMap="AdministratorMap">
+        select
+        <include refid="administratorSql"/>
+        from
+        administrator
+        where id=#{id}
+    </select>
+
+    <select id="getAdministratorByName" parameterType="java.lang.String" resultMap="AdministratorMap">
+        select
+        <include refid="administratorSql"/>
+        from
+        administrator
+        where `name`=#{name}
+    </select>
+
+    <select id="getAllAdministrators" resultMap="AdministratorMap">
+        select
+        <include refid="administratorSql"/>
+        from
+        administrator
+    </select>
+
+    <select id="getAdministratorsWithout" parameterType="java.lang.Long" resultMap="AdministratorMap">
+        select
+        <include refid="administratorSql"/>
+        from
+        administrator
+        where id!=#{managerId}
+    </select>
+
+    <insert id="addAdminLogin" parameterType="com.prize.lottery.infrast.persist.po.AdminLoginPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into admin_login_info(admin_id,
+                                     token_id,
+                                     expire_at,
+                                     login_ip,
+                                     login_time,
+                                     state
+                                    )
+        values (#{adminId},
+                #{tokenId},
+                #{expireAt},
+                inet_aton(#{loginIp}),
+                #{loginTime},
+                #{state}
+               )
+        on duplicate key
+            update
+                last_ip=login_ip,
+                last_time=login_time,
+                login_ip=values(login_ip),
+                login_time=values(login_time),
+                token_id=values(token_id),
+                expire_at=values(expire_at),
+                state =values(state)
+    </insert>
+
+    <select id="getAdminLogin" parameterType="java.lang.Long" resultMap="AdminLoginMap">
+        select
+            id,
+            admin_id,
+            token_id,
+            expire_at,
+            inet_ntoa(login_ip) as login_ip,
+            login_time,
+            inet_ntoa(last_ip)  as last_ip,
+            last_time
+        from
+            admin_login_info
+        where
+            admin_id = #{adminId}
+    </select>
+
+    <insert id="addAdminLoginLog" parameterType="com.prize.lottery.infrast.persist.po.AdminLoginLogPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into admin_login_log(admin_id,
+                                    login_time,
+                                    login_ip,
+                                    ip_region,
+                                    expire_at,
+                                    gmt_create
+                                   )
+        values (#{adminId},
+                #{loginTime},
+                inet_aton(#{loginIp}),
+                #{ipRegion},
+                #{expireAt},
+                current_time
+               )
+    </insert>
+
+    <select id="getAdminLoginLogs" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="AdminLoginLogMap">
+        select
+            id,
+            admin_id,
+            login_time,
+            inet_ntoa(login_ip) as login_ip,
+            ip_region,
+            expire_at,
+            gmt_create
+        from
+            admin_login_log
+        where
+            admin_id = #{condition.adminId}
+        order by
+            gmt_create desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="countAdminLoginLogs" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            admin_login_log
+        where
+            admin_id = #{condition.adminId}
+    </select>
+
+</mapper>

@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - dev
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+      - optional:nacos:lottery-web-token-${spring.profiles.active}.yml
+      - optional:nacos:lottery-share-oss-${spring.profiles.active}.yml
+      - optional:nacos:lottery-auth-source-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      username:
+      password:
+      config:
+        server-addr:
+        namespace:
+      discovery:
+        server-addr:
+        namespace:
+
+com:
+  cloud:
+    redis:
+      standalone:
+        address:
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

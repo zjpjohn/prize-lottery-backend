@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.AnnounceInfoMapper">
+
+    <resultMap id="AnnounceMap" type="com.prize.lottery.infrast.persist.po.AnnounceInfoPo">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="obj_id" property="objId"/>
+        <result column="obj_type" property="objType"/>
+        <result column="obj_action" property="objAction"/>
+        <result column="type" property="type"/>
+        <result column="channel" property="channel"/>
+        <result column="mode" property="mode"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="AnnounceMailboxMap" type="com.prize.lottery.infrast.persist.po.AnnounceMailboxPo">
+        <id column="id" property="id"/>
+        <result column="announce_id" property="announceId"/>
+        <result column="receiver_id" property="receiverId"/>
+        <result column="channel" property="channel"/>
+        <result column="latest_read" property="latestRead"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="addAnnounceInfo" parameterType="com.prize.lottery.infrast.persist.po.AnnounceInfoPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into mc_announce(title,
+                                content,
+                                obj_id,
+                                obj_type,
+                                obj_action,
+                                type,
+                                `channel`,
+                                mode,
+                                gmt_create,
+                                gmt_modify
+                               )
+        values (#{title},
+                #{content},
+                #{objId},
+                #{objType},
+                #{objAction},
+                #{type},
+                #{channel},
+                #{mode},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editAnnounceInfo" parameterType="com.prize.lottery.infrast.persist.po.AnnounceInfoPo">
+        update mc_announce
+        set
+        <if test="title!=null and title!=''">
+            title=#{title},
+        </if>
+        <if test="content!=null">
+            content=#{content},
+        </if>
+        gmt_modify=current_time
+        where id=#{id}
+    </update>
+
+    <select id="getAnnounceInfo" parameterType="java.lang.Long" resultMap="AnnounceMap">
+        select
+            id,
+            title,
+            content,
+            obj_id,
+            obj_type,
+            obj_action,
+            type,
+            channel,
+            mode,
+            gmt_create
+        from
+            mc_announce
+        where
+            id = #{id}
+    </select>
+
+    <insert id="addAnnounceMailbox" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into
+        mc_announce_mailbox(announce_id,
+        receiver_id,
+        `channel`,
+        latest_read,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.announceId},
+            #{item.receiverId},
+            #{item.channel},
+            #{item.latestRead},
+            current_time)
+        </foreach>
+        on duplicate key update
+        announce_id=values(announce_id),
+        latest_read=values(latest_read)
+    </insert>
+
+    <select id="getAnnounceList" parameterType="com.cloud.arch.page.PageCondition" resultMap="AnnounceMap">
+        select
+        id, title, content, obj_id, obj_type, obj_action, type, `channel`, `mode`, gmt_create,gmt_modify
+        from mc_announce
+        <where>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.mode!=null">
+                and `mode`=#{condition.mode}
+            </if>
+            <if test="condition.announceId!=null">
+                and id &gt;#{condition.announceId}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;=#{condition.end}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAnnounces" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from mc_announce
+        <where>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.mode!=null">
+                and `mode`=#{condition.mode}
+            </if>
+            <if test="condition.announceId!=null">
+                and id &gt;#{condition.announceId}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;=#{condition.end}
+            </if>
+        </where>
+    </select>
+
+    <select id="getAnnounceMailbox" resultMap="AnnounceMailboxMap">
+        select
+            id,
+            announce_id,
+            receiver_id,
+            channel,
+            latest_read,
+            gmt_create
+        from
+            mc_announce_mailbox
+        where
+              receiver_id = #{receiverId}
+          and `channel` = #{channel}
+    </select>
+
+    <select id="getAnnounceMailboxList" resultMap="AnnounceMailboxMap">
+        select
+        id, announce_id, receiver_id, channel, latest_read, gmt_create
+        from
+        mc_announce_mailbox
+        where receiver_id=#{receiverId}
+        and channel in
+        <foreach collection="channels" item="channel" separator="," open="(" close=")">
+            #{channel}
+        </foreach>
+    </select>
+
+    <select id="getChannelLatestAnnounces" parameterType="java.util.List" resultMap="AnnounceMap">
+        select
+        id, title, content, obj_id, obj_type, obj_action, type, channel, mode, gmt_create
+        from
+        mc_announce
+        where
+        id in (
+        select
+        max(id)
+        from
+        mc_announce
+        where channel in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        group by channel
+        )
+    </select>
+
+</mapper>

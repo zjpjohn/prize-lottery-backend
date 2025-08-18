@@ -1,0 +1,1925 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.SsqMasterMapper">
+
+    <resultMap id="SsqMasterRankMap" type="com.prize.lottery.po.ssq.SsqMasterRankPo">
+        <id column="id" property="id"/>
+        <result column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="isVip"/>
+        <association property="rank" javaType="com.prize.lottery.value.RankValue">
+            <result column="weight" property="weight"/>
+            <result column="rank" property="rank"/>
+        </association>
+        <association property="red1" javaType="com.prize.lottery.value.RankValue">
+            <result column="r1_wgt" property="weight"/>
+            <result column="r1_rank" property="rank"/>
+        </association>
+        <association property="red2" javaType="com.prize.lottery.value.RankValue">
+            <result column="r2_wgt" property="weight"/>
+            <result column="r2_rank" property="rank"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.RankValue">
+            <result column="r3_wgt" property="weight"/>
+            <result column="r3_rank" property="rank"/>
+        </association>
+        <association property="red12" javaType="com.prize.lottery.value.RankValue">
+            <result column="r12_wgt" property="weight"/>
+            <result column="r12_rank" property="rank"/>
+        </association>
+        <association property="red20" javaType="com.prize.lottery.value.RankValue">
+            <result column="r20_wgt" property="weight"/>
+            <result column="r20_rank" property="rank"/>
+        </association>
+        <association property="red25" javaType="com.prize.lottery.value.RankValue">
+            <result column="r25_wgt" property="weight"/>
+            <result column="r25_rank" property="rank"/>
+        </association>
+        <association property="redKill3" javaType="com.prize.lottery.value.RankValue">
+            <result column="rk3_wgt" property="weight"/>
+            <result column="rk3_rank" property="rank"/>
+        </association>
+        <association property="redKill6" javaType="com.prize.lottery.value.RankValue">
+            <result column="rk6_wgt" property="weight"/>
+            <result column="rk6_rank" property="rank"/>
+        </association>
+        <association property="blue3" javaType="com.prize.lottery.value.RankValue">
+            <result column="b3_wgt" property="weight"/>
+            <result column="b3_rank" property="rank"/>
+        </association>
+        <association property="blue5" javaType="com.prize.lottery.value.RankValue">
+            <result column="b5_wgt" property="weight"/>
+            <result column="b5_rank" property="rank"/>
+        </association>
+        <association property="blueKill" javaType="com.prize.lottery.value.RankValue">
+            <result column="bk_wgt" property="weight"/>
+            <result column="bk_rank" property="rank"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqMasterRankVoMap" type="com.prize.lottery.vo.ssq.SsqMasterRankVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="vip"/>
+        <result column="hot" property="hot"/>
+        <result column="rank" property="rank"/>
+        <result column="last_rank" property="lastRank"/>
+        <result column="browse" property="browse"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="rate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hit_count" property="count"/>
+            <result column="hit_series" property="series"/>
+            <result column="hit_rate" property="rate"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_hit" property="series"/>
+            <result column="r3_rate" property="rate"/>
+            <result column="r3_count" property="count"/>
+        </association>
+        <association property="red25" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r25_hit" property="series"/>
+            <result column="r25_rate" property="rate"/>
+            <result column="r25_count" property="count"/>
+        </association>
+        <association property="rk3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_hit" property="series"/>
+            <result column="rk3_rate" property="rate"/>
+            <result column="rk3_count" property="count"/>
+        </association>
+        <association property="b5" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b5_hit" property="series"/>
+            <result column="b5_rate" property="rate"/>
+            <result column="b5_count" property="count"/>
+        </association>
+        <association property="bk" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_hit" property="series"/>
+            <result column="bk_rate" property="rate"/>
+            <result column="bk_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqMasterRateMap" type="com.prize.lottery.po.ssq.SsqMasterRatePo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="master_id" property="masterId"/>
+        <association property="r1Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r1_ne_hit" property="series"/>
+            <result column="r1_ne_rate" property="rate"/>
+            <result column="r1_ne_count" property="count"/>
+        </association>
+        <association property="r1Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r1_me_hit" property="series"/>
+            <result column="r1_me_rate" property="rate"/>
+            <result column="r1_me_count" property="count"/>
+        </association>
+        <association property="r1Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r1_hi_hit" property="series"/>
+            <result column="r1_hi_rate" property="rate"/>
+            <result column="r1_hi_count" property="count"/>
+        </association>
+        <association property="r2Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r2_ne_hit" property="series"/>
+            <result column="r2_ne_rate" property="rate"/>
+            <result column="r2_ne_count" property="count"/>
+        </association>
+        <association property="r2Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r2_me_hit" property="series"/>
+            <result column="r2_me_rate" property="rate"/>
+            <result column="r2_me_count" property="count"/>
+        </association>
+        <association property="r2Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r2_hi_hit" property="series"/>
+            <result column="r2_hi_rate" property="rate"/>
+            <result column="r2_hi_count" property="count"/>
+        </association>
+        <association property="r3Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_ne_hit" property="series"/>
+            <result column="r3_ne_rate" property="rate"/>
+            <result column="r3_ne_count" property="count"/>
+        </association>
+        <association property="r3Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_me_hit" property="series"/>
+            <result column="r3_me_rate" property="rate"/>
+            <result column="r3_me_count" property="count"/>
+        </association>
+        <association property="r3Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_hi_hit" property="series"/>
+            <result column="r3_hi_rate" property="rate"/>
+            <result column="r3_hi_count" property="count"/>
+        </association>
+        <association property="r12Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r12_ne_hit" property="series"/>
+            <result column="r12_ne_rate" property="rate"/>
+            <result column="r12_ne_count" property="count"/>
+        </association>
+        <association property="r12Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r12_me_hit" property="series"/>
+            <result column="r12_me_rate" property="rate"/>
+            <result column="r12_me_count" property="count"/>
+        </association>
+        <association property="r12Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r12_hi_hit" property="series"/>
+            <result column="r12_hi_rate" property="rate"/>
+            <result column="r12_hi_count" property="count"/>
+        </association>
+        <association property="r20Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_ne_hit" property="series"/>
+            <result column="r20_ne_rate" property="rate"/>
+            <result column="r20_ne_full_rate" property="fullRate"/>
+            <result column="r20_ne_count" property="count"/>
+        </association>
+        <association property="r20Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_me_hit" property="series"/>
+            <result column="r20_me_rate" property="rate"/>
+            <result column="r20_me_full_rate" property="fullRate"/>
+            <result column="r20_me_count" property="count"/>
+        </association>
+        <association property="r20Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_hi_hit" property="series"/>
+            <result column="r20_hi_rate" property="rate"/>
+            <result column="r20_hi_full_rate" property="fullRate"/>
+            <result column="r20_hi_count" property="count"/>
+        </association>
+        <association property="r25Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r25_ne_hit" property="series"/>
+            <result column="r25_ne_rate" property="rate"/>
+            <result column="r25_ne_full_rate" property="fullRate"/>
+            <result column="r25_ne_count" property="count"/>
+        </association>
+        <association property="r25Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r25_me_hit" property="series"/>
+            <result column="r25_me_rate" property="rate"/>
+            <result column="r25_me_full_rate" property="fullRate"/>
+            <result column="r25_me_count" property="count"/>
+        </association>
+        <association property="r25Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r25_hi_hit" property="series"/>
+            <result column="r25_hi_rate" property="rate"/>
+            <result column="r25_hi_full_rate" property="fullRate"/>
+            <result column="r25_hi_count" property="count"/>
+        </association>
+        <association property="rk3Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_ne_hit" property="series"/>
+            <result column="rk3_ne_rate" property="rate"/>
+            <result column="rk3_ne_count" property="count"/>
+        </association>
+        <association property="rk3Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_rate" property="rate"/>
+            <result column="rk3_me_count" property="count"/>
+        </association>
+        <association property="rk3Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_hi_hit" property="series"/>
+            <result column="rk3_hi_rate" property="rate"/>
+            <result column="rk3_hi_count" property="count"/>
+        </association>
+        <association property="rk6Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk6_ne_hit" property="series"/>
+            <result column="rk6_ne_rate" property="rate"/>
+            <result column="rk6_ne_count" property="count"/>
+        </association>
+        <association property="rk6Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk6_me_hit" property="series"/>
+            <result column="rk6_me_rate" property="rate"/>
+            <result column="rk6_me_count" property="count"/>
+        </association>
+        <association property="rk6Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk6_hi_hit" property="series"/>
+            <result column="rk6_hi_rate" property="rate"/>
+            <result column="rk6_hi_count" property="count"/>
+        </association>
+        <association property="b3Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b3_ne_hit" property="series"/>
+            <result column="b3_ne_rate" property="rate"/>
+            <result column="b3_ne_count" property="count"/>
+        </association>
+        <association property="b3Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b3_me_hit" property="series"/>
+            <result column="b3_me_rate" property="rate"/>
+            <result column="b3_me_count" property="count"/>
+        </association>
+        <association property="b3Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b3_hi_hit" property="series"/>
+            <result column="b3_hi_rate" property="rate"/>
+            <result column="b3_hi_count" property="count"/>
+        </association>
+        <association property="b5Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b5_ne_hit" property="series"/>
+            <result column="b5_ne_rate" property="rate"/>
+            <result column="b5_ne_count" property="count"/>
+        </association>
+        <association property="b5Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b5_me_hit" property="series"/>
+            <result column="b5_me_rate" property="rate"/>
+            <result column="b5_me_count" property="count"/>
+        </association>
+        <association property="b5Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b5_hi_hit" property="series"/>
+            <result column="b5_hi_rate" property="rate"/>
+            <result column="b5_hi_count" property="count"/>
+        </association>
+        <association property="bkNe" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_ne_hit" property="series"/>
+            <result column="bk_ne_rate" property="rate"/>
+            <result column="bk_ne_count" property="count"/>
+        </association>
+        <association property="bkMe" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_me_hit" property="series"/>
+            <result column="bk_me_rate" property="rate"/>
+            <result column="bk_me_count" property="count"/>
+        </association>
+        <association property="bkHi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_hi_hit" property="series"/>
+            <result column="bk_hi_rate" property="rate"/>
+            <result column="bk_hi_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqGladMasterMap" type="com.prize.lottery.vo.ssq.SsqICaiGladVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="r25_hit" property="r25Hit"/>
+        <result column="b5_hit" property="b5Hit"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_me_hit" property="series"/>
+            <result column="r3_me_rate" property="rate"/>
+            <result column="r3_me_count" property="count"/>
+        </association>
+        <association property="red25" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r25_me_hit" property="series"/>
+            <result column="r25_me_rate" property="rate"/>
+            <result column="r25_me_count" property="count"/>
+        </association>
+        <association property="rk3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_rate" property="rate"/>
+            <result column="rk3_me_count" property="count"/>
+        </association>
+        <association property="bk" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_hi_hit" property="series"/>
+            <result column="bk_hi_rate" property="rate"/>
+            <result column="bk_hi_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqMasterMulRankMap" type="com.prize.lottery.vo.ssq.SsqMasterMulRankVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="vip"/>
+        <result column="hot" property="hot"/>
+        <result column="rank" property="rank"/>
+        <result column="last_rank" property="lastRank"/>
+        <result column="browse" property="browse"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_me_hit" property="series"/>
+            <result column="r3_me_rate" property="rate"/>
+            <result column="r3_me_count" property="count"/>
+        </association>
+        <association property="red25" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r25_me_hit" property="series"/>
+            <result column="r25_me_rate" property="rate"/>
+            <result column="r25_me_full_rate" property="fullRate"/>
+            <result column="r25_me_count" property="count"/>
+        </association>
+        <association property="rk3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_rate" property="rate"/>
+            <result column="rk3_me_count" property="count"/>
+        </association>
+        <association property="bk" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_hi_hit" property="series"/>
+            <result column="bk_hi_rate" property="rate"/>
+            <result column="bk_hi_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqMasterDetailMap" type="com.prize.lottery.vo.ssq.SsqMasterDetail">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="vip"/>
+        <result column="gmt_create" property="timestamp"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="seq" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+            <result column="browse" property="browse"/>
+            <result column="subscribe" property="subscribe"/>
+            <result column="searches" property="searches"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_hit" property="series"/>
+            <result column="r3_rate" property="rate"/>
+            <result column="r3_count" property="count"/>
+        </association>
+        <association property="red25" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r25_hit" property="series"/>
+            <result column="r25_rate" property="rate"/>
+            <result column="r25_count" property="count"/>
+        </association>
+        <association property="rk3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_hit" property="series"/>
+            <result column="rk3_rate" property="rate"/>
+            <result column="rk3_count" property="count"/>
+        </association>
+        <association property="b5" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b5_hit" property="series"/>
+            <result column="b5_rate" property="rate"/>
+            <result column="b5_count" property="count"/>
+        </association>
+        <association property="bk" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_hit" property="series"/>
+            <result column="bk_rate" property="rate"/>
+            <result column="bk_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="HomeMasterVoMap" type="com.prize.lottery.vo.HomeMasterVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="rank" property="rank"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="rate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hit_count" property="count"/>
+            <result column="hit_rate" property="rate"/>
+            <result column="hit_series" property="series"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqMasterSubscribeMap" type="com.prize.lottery.vo.ssq.SsqMasterSubscribeVo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r3_hit" property="series"/>
+            <result column="r3_rate" property="rate"/>
+            <result column="r3_count" property="count"/>
+        </association>
+        <association property="red25" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r25_hit" property="series"/>
+            <result column="r25_rate" property="rate"/>
+            <result column="r25_count" property="count"/>
+        </association>
+        <association property="rk3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_hit" property="series"/>
+            <result column="rk3_rate" property="rate"/>
+            <result column="rk3_count" property="count"/>
+        </association>
+        <association property="bk" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="bk_hit" property="series"/>
+            <result column="bk_rate" property="rate"/>
+            <result column="bk_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="LottoMasterVoMap" type="com.prize.lottery.vo.LotteryMasterVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="rank" property="rank"/>
+        <result column="i_rank" property="iRank"/>
+        <result column="last_i_rank" property="lastIRank"/>
+        <result column="homed" property="homed"/>
+        <result column="hot" property="hot"/>
+        <result column="is_vip" property="vip"/>
+        <result column="source" property="source"/>
+        <result column="browse" property="browse"/>
+        <result column="subscribe" property="subscribe"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="hit" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hit_count" property="count"/>
+            <result column="hit_series" property="series"/>
+            <result column="hit_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqMasterSchemaMap" type="com.prize.lottery.vo.ssq.SsqMasterSchemaVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="latest" property="latest"/>
+        <result column="r12_hit" property="r12Hit"/>
+        <result column="r20_hit" property="r20Hit"/>
+        <result column="b5_hit" property="b5Hit"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="r20" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r20_me_hit" property="series"/>
+            <result column="r20_me_rate" property="rate"/>
+            <result column="r20_me_count" property="count"/>
+        </association>
+        <association property="r25" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="r25_me_hit" property="series"/>
+            <result column="r25_me_rate" property="rate"/>
+            <result column="r25_me_count" property="count"/>
+        </association>
+        <association property="rk3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="rk3_me_hit" property="series"/>
+            <result column="rk3_me_rate" property="rate"/>
+            <result column="rk3_me_count" property="count"/>
+        </association>
+        <association property="b5" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="b5_me_hit" property="series"/>
+            <result column="b5_me_rate" property="rate"/>
+            <result column="b5_me_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqMasterRateVoMap" type="com.prize.lottery.vo.ssq.SsqMasterRateVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="red3" property="red3"/>
+        <result column="red3_avg" property="red3Avg"/>
+        <result column="red20" property="red20"/>
+        <result column="red20_avg" property="red20Avg"/>
+        <result column="red25" property="red25"/>
+        <result column="red25_avg" property="red25Avg"/>
+        <result column="rk3" property="rk3"/>
+        <result column="rk3_avg" property="rk3Avg"/>
+        <result column="blue5" property="blue5"/>
+        <result column="blue5_avg" property="blue5Avg"/>
+        <result column="bk" property="bk"/>
+        <result column="bk_avg" property="bkAvg"/>
+    </resultMap>
+
+    <resultMap id="MasterGladRateVoMap" type="com.prize.lottery.vo.MasterGladRateVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="hit_count" property="hitCount"/>
+        <result column="hit_rate" property="rate"/>
+    </resultMap>
+
+    <resultMap id="MasterFeedRateVoMap" type="com.prize.lottery.vo.MasterFeedRateVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="field" property="field"/>
+        <result column="timestamp" property="timestamp"/>
+        <result column="hit_rate" property="rate"/>
+        <result column="hit_count" property="hitCount"/>
+        <result column="hit" property="hit"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <insert id="addSsqMasterRates" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        ssq_master_rate(
+        period,master_id,
+        r1_ne_hit,r1_ne_rate,r1_ne_count,
+        r1_me_hit,r1_me_rate,r1_me_count,
+        r1_hi_hit,r1_hi_rate,r1_hi_count,
+        r2_ne_hit,r2_ne_rate,r2_ne_count,
+        r2_me_hit,r2_me_rate,r2_me_count,
+        r2_hi_hit,r2_hi_rate,r2_hi_count,
+        r3_ne_hit,r3_ne_rate,r3_ne_count,
+        r3_me_hit,r3_me_rate,r3_me_count,
+        r3_hi_hit,r3_hi_rate,r3_hi_count,
+        r12_ne_hit,r12_ne_rate,r12_ne_count,
+        r12_me_hit,r12_me_rate,r12_me_count,
+        r12_hi_hit,r12_hi_rate,r12_hi_count,
+        r20_ne_hit,r20_ne_rate,r20_ne_full_rate,r20_ne_count,
+        r20_me_hit,r20_me_rate,r20_me_full_rate,r20_me_count,
+        r20_hi_hit,r20_hi_rate,r20_hi_full_rate,r20_hi_count,
+        r25_ne_hit,r25_ne_rate,r25_ne_full_rate,r25_ne_count,
+        r25_me_hit,r25_me_rate,r25_me_full_rate,r25_me_count,
+        r25_hi_hit,r25_hi_rate,r25_hi_full_rate,r25_hi_count,
+        rk3_ne_hit,rk3_ne_rate,rk3_ne_count,
+        rk3_me_hit,rk3_me_rate,rk3_me_count,
+        rk3_hi_hit,rk3_hi_rate,rk3_hi_count,
+        rk6_ne_hit,rk6_ne_rate,rk6_ne_count,
+        rk6_me_hit,rk6_me_rate,rk6_me_count,
+        rk6_hi_hit,rk6_hi_rate,rk6_hi_count,
+        b3_ne_hit,b3_ne_rate,b3_ne_count,
+        b3_me_hit,b3_me_rate,b3_me_count,
+        b3_hi_hit,b3_hi_rate,b3_hi_count,
+        b5_ne_hit,b5_ne_rate,b5_ne_count,
+        b5_me_hit,b5_me_rate,b5_me_count,
+        b5_hi_hit,b5_hi_rate,b5_hi_count,
+        bk_ne_hit,bk_ne_rate,bk_ne_count,
+        bk_me_hit,bk_me_rate,bk_me_count,
+        bk_hi_hit,bk_hi_rate,bk_hi_count,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},#{item.masterId},
+            #{item.r1Ne.series},#{item.r1Ne.rate},#{item.r1Ne.count},
+            #{item.r1Me.series},#{item.r1Me.rate},#{item.r1Me.count},
+            #{item.r1Hi.series},#{item.r1Hi.rate},#{item.r1Hi.count},
+            #{item.r2Ne.series},#{item.r2Ne.rate},#{item.r2Ne.count},
+            #{item.r2Me.series},#{item.r2Me.rate},#{item.r2Me.count},
+            #{item.r2Hi.series},#{item.r2Hi.rate},#{item.r2Hi.count},
+            #{item.r3Ne.series},#{item.r3Ne.rate},#{item.r3Ne.count},
+            #{item.r3Me.series},#{item.r3Me.rate},#{item.r3Me.count},
+            #{item.r3Hi.series},#{item.r3Hi.rate},#{item.r3Hi.count},
+            #{item.r12Ne.series},#{item.r12Ne.rate},#{item.r12Ne.count},
+            #{item.r12Me.series},#{item.r12Me.rate},#{item.r12Me.count},
+            #{item.r12Hi.series},#{item.r12Hi.rate},#{item.r12Hi.count},
+            #{item.r20Ne.series},#{item.r20Ne.rate},#{item.r20Ne.fullRate},#{item.r20Ne.count},
+            #{item.r20Me.series},#{item.r20Me.rate},#{item.r20Me.fullRate},#{item.r20Me.count},
+            #{item.r20Hi.series},#{item.r20Hi.rate},#{item.r20Hi.fullRate},#{item.r20Hi.count},
+            #{item.r25Ne.series},#{item.r25Ne.rate},#{item.r25Ne.fullRate},#{item.r25Ne.count},
+            #{item.r25Me.series},#{item.r25Me.rate},#{item.r25Me.fullRate},#{item.r25Me.count},
+            #{item.r25Hi.series},#{item.r25Hi.rate},#{item.r25Hi.fullRate},#{item.r25Hi.count},
+            #{item.rk3Ne.series},#{item.rk3Ne.rate},#{item.rk3Ne.count},
+            #{item.rk3Me.series},#{item.rk3Me.rate},#{item.rk3Me.count},
+            #{item.rk3Hi.series},#{item.rk3Hi.rate},#{item.rk3Hi.count},
+            #{item.rk6Ne.series},#{item.rk6Ne.rate},#{item.rk6Ne.count},
+            #{item.rk6Me.series},#{item.rk6Me.rate},#{item.rk6Me.count},
+            #{item.rk6Hi.series},#{item.rk6Hi.rate},#{item.rk6Hi.count},
+            #{item.b3Ne.series},#{item.b3Ne.rate},#{item.b3Ne.count},
+            #{item.b3Me.series},#{item.b3Me.rate},#{item.b3Me.count},
+            #{item.b3Hi.series},#{item.b3Hi.rate},#{item.b3Hi.count},
+            #{item.b5Ne.series},#{item.b5Ne.rate},#{item.b5Ne.count},
+            #{item.b5Me.series},#{item.b5Me.rate},#{item.b5Me.count},
+            #{item.b5Hi.series},#{item.b5Hi.rate},#{item.b5Hi.count},
+            #{item.bkNe.series},#{item.bkNe.rate},#{item.bkNe.count},
+            #{item.bkMe.series},#{item.bkMe.rate},#{item.bkMe.count},
+            #{item.bkHi.series},#{item.bkHi.rate},#{item.bkHi.count},
+            current_time)
+        </foreach>
+    </insert>
+
+    <insert id="addSsqMasterRanks" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        ssq_master_rank(period,master_id,
+        weight,`rank`,
+        r1_wgt,r1_rank,
+        r2_wgt,r2_rank,
+        r3_wgt,r3_rank,
+        r12_wgt,r12_rank,
+        r20_wgt,r20_rank,
+        r25_wgt,r25_rank,
+        rk3_wgt,rk3_rank,
+        rk6_wgt,rk6_rank,
+        b3_wgt,b3_rank,
+        b5_wgt,b5_rank,
+        bk_wgt,bk_rank,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},#{item.masterId},
+            #{item.rank.weight},#{item.rank.rank},
+            #{item.red1.weight},#{item.red1.rank},
+            #{item.red2.weight},#{item.red2.rank},
+            #{item.red3.weight},#{item.red3.rank},
+            #{item.red12.weight},#{item.red12.rank},
+            #{item.red20.weight},#{item.red20.rank},
+            #{item.red25.weight},#{item.red25.rank},
+            #{item.redKill3.weight},#{item.redKill3.rank},
+            #{item.redKill6.weight},#{item.redKill6.rank},
+            #{item.blue3.weight},#{item.blue3.rank},
+            #{item.blue5.weight},#{item.blue5.rank},
+            #{item.blueKill.weight},#{item.blueKill.rank},
+            current_time)
+        </foreach>
+    </insert>
+
+    <update id="editSsqVipMasters">
+        update ssq_master_rank
+        set
+        is_vip=1
+        where period=#{period}
+        and master_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </update>
+
+    <insert id="addSsqHomeMasters" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        ssq_home_master(period,master_id,type,hit_count,hit_rate,hit_series,`rank`,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},
+            #{item.masterId},
+            #{item.type},
+            #{item.rate.count},
+            #{item.rate.rate},
+            #{item.rate.series},
+            #{item.rank},
+            current_time)
+        </foreach>
+    </insert>
+
+    <sql id="masterRankSql">
+        id
+        ,`period`,master_id,`rank`,
+        r1_rank,r2_rank,
+        r3_rank,r12_rank,
+        r20_rank,r25_rank,
+        rk3_rank,rk6_rank,
+        b3_rank,b5_rank,
+        bk_rank,gmt_create
+    </sql>
+
+    <select id="getSsqMasterRankByPeriod" parameterType="java.lang.String" resultMap="SsqMasterRankMap">
+        select
+        <include refid="masterRankSql"/>
+        from ssq_master_rank
+        where period=#{period}
+    </select>
+
+    <select id="isSsqVipMaster" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            ssq_master_rank
+                        where
+                              period = #{period}
+                          and master_id = #{masterId}
+                          and is_vip = 1
+                        limit 1 ), 0)
+    </select>
+
+    <select id="latestSsqRatePeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            ssq_master_rate
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+    <select id="latestMasterRatePeriod" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            period
+        from
+            ssq_master_rate
+        where
+            master_id = #{masterId}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="latestSsqRankPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            ssq_master_rank
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+    <select id="getUnRankedMasterPeriods" resultType="java.lang.String">
+        select distinct
+            srate.period
+        from
+            ssq_master_rate srate
+        where
+                (
+                    select
+                        count(1)
+                    from
+                        ssq_master_rank srank
+                    where
+                        srank.period = srate.period
+                ) = 0
+    </select>
+
+    <select id="hasExistRatePeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            ssq_master_rate
+                        where
+                            period = #{period}
+                        limit 1 ), 0)
+    </select>
+
+    <select id="getSsqRankedMasterRates" resultMap="SsqMasterRateMap">
+        select
+            srate.id,
+            srate.period,
+            srate.master_id,
+            srate.${type}_ne_rate,
+            srate.${type}_ne_hit,
+            srate.${type}_ne_count,
+            srate.${type}_me_rate,
+            srate.${type}_me_hit,
+            srate.${type}_me_count,
+            srate.${type}_hi_rate,
+            srate.${type}_hi_hit,
+            srate.${type}_hi_count,
+            srank.${type}_rank `rank`
+        from
+            ssq_master_rate srate,
+            ssq_master_rank srank
+        where
+              srate.period = #{period}
+          and srate.master_id = srank.master_id
+          and srate.period = srank.period
+        order by
+            `rank` asc
+            limit #{limit}
+    </select>
+
+    <select id="extractVipMasters" resultType="com.prize.lottery.po.ssq.SsqMasterRankPo">
+        (
+        select
+        id,
+        period,
+        master_id masterId
+        from
+        ssq_master_rank
+        where period=#{period}
+        order by `rank` asc
+        limit #{limit}
+        )
+        <foreach collection="types" item="type">
+            union
+            (
+            select
+            id,
+            period,
+            master_id masterId
+            from
+            ssq_master_rank
+            where period=#{period}
+            order by ${type}_rank asc
+            limit #{iLimit}
+            )
+        </foreach>
+    </select>
+
+    <select id="getLatestMasterRate" parameterType="java.lang.String" resultMap="SsqMasterRateMap">
+        select
+            id,
+            period,
+            master_id,
+            r1_ne_hit,
+            r1_ne_rate,
+            r1_ne_count,
+            r2_ne_hit,
+            r2_ne_rate,
+            r2_ne_count,
+            r3_me_hit,
+            r3_me_rate,
+            r3_me_count,
+            r12_ne_hit,
+            r12_ne_rate,
+            r12_ne_count,
+            r20_me_hit,
+            r20_me_rate,
+            r20_me_count,
+            r25_me_hit,
+            r25_me_rate,
+            r25_me_count,
+            rk3_me_hit,
+            rk3_me_rate,
+            rk3_me_count,
+            rk6_ne_hit,
+            rk6_ne_rate,
+            rk6_ne_count,
+            b3_ne_hit,
+            b3_ne_rate,
+            b3_ne_count,
+            b5_ne_hit,
+            b5_ne_rate,
+            b5_ne_count,
+            bk_me_hit,
+            bk_me_rate,
+            bk_me_count,
+            gmt_create
+        from
+            ssq_master_rate
+        where
+            master_id = #{masterId}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getSsqGladMasters" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="SsqGladMasterMap">
+        select
+            si.id,
+            si.master_id,
+            si.period,
+            si.r25_hit,
+            si.b5_hit,
+            mi.name,
+            mi.avatar,
+            sr.`rank`,
+            sm.r3_me_hit,
+            sm.r3_me_rate,
+            sm.r3_me_count,
+            sm.r25_me_hit,
+            sm.r25_me_rate,
+            sm.r25_me_count,
+            sm.rk3_me_hit,
+            sm.rk3_me_rate,
+            sm.rk3_me_count,
+            sm.bk_hi_hit,
+            sm.bk_hi_rate,
+            sm.bk_hi_count
+        from
+            ssq_icai si,
+            master_info mi,
+            ssq_master_rate sm,
+            ssq_master_rank sr
+        where
+              si.period = #{condition.period}
+          and si.master_id = sm.master_id
+          and si.master_id = sr.master_id
+          and si.master_id = mi.seq
+          and sm.period = #{condition.period}
+          and sr.period = #{condition.period}
+          and si.r25_hit = 6
+        order by
+            sr.`rank`
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countSsqGladMasters" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            ssq_icai si,
+            ssq_master_rate sm,
+            ssq_master_rank sr
+        where
+              si.period = #{condition.period}
+          and si.master_id = sm.master_id
+          and si.master_id = sr.master_id
+          and sm.period = #{condition.period}
+          and sr.period = #{condition.period}
+          and si.r25_hit = 6
+    </select>
+
+    <select id="getSsqMasterDetail" parameterType="java.lang.String" resultMap="SsqMasterDetailMap">
+        select
+            mil.*,
+            sm.*
+        from
+            (
+                select
+                    mi.seq,
+                    mi.name,
+                    mi.avatar,
+                    mi.browse,
+                    mi.subscribe,
+                    mi.searches,
+                    mi.gmt_create
+                from
+                    master_info mi,
+                    master_lottery ml
+                where
+                      mi.seq = #{masterId}
+                  and mi.seq = ml.master_id
+                  and ml.type = 'ssq'
+            ) mil
+                left join
+                (
+                    select
+                        period,
+                        master_id,
+                        r3_hi_hit    r3_hit,
+                        r3_hi_rate   r3_rate,
+                        r3_hi_count  r3_count,
+                        r25_hi_hit   r25_hit,
+                        r25_hi_rate  r25_rate,
+                        r25_hi_count r25_count,
+                        rk3_hi_hit   rk3_hit,
+                        rk3_hi_rate  rk3_rate,
+                        rk3_hi_count rk3_count,
+                        b5_hi_hit    b5_hit,
+                        b5_hi_rate   b5_rate,
+                        b5_hi_count  b5_count,
+                        bk_hi_hit    bk_hit,
+                        bk_hi_rate   bk_rate,
+                        bk_hi_count  bk_count
+                    from
+                        ssq_master_rate
+                    where
+                        master_id = #{masterId}
+                    order by
+                        period desc limit 1
+                ) sm
+                on sm.master_id = mil.seq
+    </select>
+
+    <select id="getSsqRandomMasters" resultMap="SsqMasterMulRankMap">
+        select
+        rankl.*,
+        rankr.rk3_rank last_rank
+        from
+        (
+        select
+        srank.id,
+        srank.period,
+        srank.master_id,
+        srank.hot,
+        srank.is_vip,
+        srank.rk3_rank `rank`,
+        mi.avatar,
+        mi.name,
+        mi.browse,
+        srate.r3_me_hit,
+        srate.r3_me_rate,
+        srate.r3_me_count,
+        srate.r25_me_hit,
+        srate.r25_me_rate,
+        srate.r25_me_full_rate,
+        srate.r25_me_count,
+        srate.rk3_me_hit,
+        srate.rk3_me_rate,
+        srate.rk3_me_count,
+        srate.bk_hi_hit,
+        srate.bk_hi_rate,
+        srate.bk_hi_count
+        from
+        ssq_master_rank srank,
+        ssq_master_rate srate,
+        master_lottery ml,
+        master_info mi
+        where
+        srank.period=#{period}
+        and srank.master_id=srate.master_id
+        and srank.period=srate.period
+        and srank.master_id=mi.seq
+        and srank.master_id=ml.master_id
+        and ml.type='ssq'
+        and srank.rk3_rank in
+        <foreach collection="ranks" item="rank" separator="," open="(" close=")">
+            #{rank}
+        </foreach>
+        order by `rank`
+        ) rankl
+        left join ssq_master_rank rankr
+        on rankl.master_id=rankr.master_id and rankr.period=#{last}
+        order by rankl.rank
+    </select>
+
+    <select id="getSsqMasterMulRankList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="SsqMasterMulRankMap">
+        select
+        rankl.*,
+        <if test="condition.type==0">
+            rankr.`rank` last_rank
+        </if>
+        <if test="condition.type==1">
+            rankr.bk_rank last_rank
+        </if>
+        from
+        (
+        select
+        srank.id,
+        srank.period,
+        srank.master_id,
+        srank.hot,
+        srank.is_vip,
+        <if test="condition.type==0">
+            srank.`rank` `rank`,
+        </if>
+        <if test="condition.type==1">
+            srank.bk_rank `rank`,
+        </if>
+        mi.avatar,
+        mi.name,
+        mi.browse,
+        srate.r3_me_hit,
+        srate.r3_me_rate,
+        srate.r3_me_count,
+        srate.r25_me_hit,
+        srate.r25_me_rate,
+        srate.r25_me_full_rate,
+        srate.r25_me_count,
+        srate.rk3_me_hit,
+        srate.rk3_me_rate,
+        srate.rk3_me_count,
+        srate.bk_hi_hit,
+        srate.bk_hi_rate,
+        srate.bk_hi_count
+        from
+        ssq_master_rank srank,
+        ssq_master_rate srate,
+        master_lottery ml,
+        master_info mi
+        where
+        srank.period=#{condition.period}
+        and srank.master_id=srate.master_id
+        and srank.period=srate.period
+        and srank.master_id=mi.seq
+        and srank.master_id=ml.master_id
+        and ml.type='ssq'
+        order by `rank`
+        limit #{offset},#{limit}
+        ) rankl
+        left join ssq_master_rank rankr
+        on rankl.master_id=rankr.master_id and rankr.period=#{condition.last}
+    </select>
+
+    <select id="countSsqMasterMulRanks" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            ssq_master_rank
+        where
+            period = #{condition.period}
+    </select>
+
+    <select id="getSsqMasterRankList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="SsqMasterRankVoMap">
+        select
+        rankl.*,
+        rankr.${condition.type}_rank last_rank
+        from (
+        select
+        srate.id id,
+        srate.period,
+        srate.master_id,
+        mi.name,
+        mi.avatar,
+        mi.browse,
+        srank.is_vip,
+        srank.hot,
+        <if test="condition.type=='r1'">
+            srank.r1_rank `rank`,
+            srate.r1_me_hit hit_series,
+            srate.r1_me_rate hit_rate,
+            srate.r1_me_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='r2'">
+            srank.r2_rank `rank`,
+            srate.r2_me_hit hit_series,
+            srate.r2_me_rate hit_rate,
+            srate.r2_me_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='r3'">
+            srank.r3_rank `rank`,
+            srate.r3_me_hit hit_series,
+            srate.r3_me_rate hit_rate,
+            srate.r3_me_count hit_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='r12'">
+            srank.r12_rank `rank`,
+            srate.r12_hi_hit hit_series,
+            srate.r12_hi_rate hit_rate,
+            srate.r12_hi_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='r20'">
+            srank.r20_rank `rank`,
+            srate.r20_me_hit hit_series,
+            srate.r20_me_rate hit_rate,
+            srate.r20_me_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='r25'">
+            srank.r25_rank `rank`,
+            srate.r25_me_hit hit_series,
+            srate.r25_me_rate hit_rate,
+            srate.r25_me_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='rk3'">
+            srank.rk3_rank `rank`,
+            srate.rk3_me_hit hit_series,
+            srate.rk3_me_rate hit_rate,
+            srate.rk3_me_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='rk6'">
+            srank.rk6_rank `rank`,
+            srate.rk6_me_hit hit_series,
+            srate.rk6_me_rate hit_rate,
+            srate.rk6_me_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='b3'">
+            srank.b3_rank `rank`,
+            srate.b3_me_hit hit_series,
+            srate.b3_me_rate hit_rate,
+            srate.b3_me_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='b5'">
+            srank.b5_rank `rank`,
+            srate.b5_me_hit hit_series,
+            srate.b5_me_rate hit_rate,
+            srate.b5_me_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.bk_hi_hit bk_hit,
+            srate.bk_hi_rate bk_rate,
+            srate.bk_hi_count bk_count
+        </if>
+        <if test="condition.type=='bk'">
+            srank.bk_rank `rank`,
+            srate.bk_me_hit hit_series,
+            srate.bk_me_rate hit_rate,
+            srate.bk_me_count hit_count,
+            srate.r3_me_hit r3_hit,
+            srate.r3_me_rate r3_rate,
+            srate.r3_me_count r3_count,
+            srate.r25_hi_hit r25_hit,
+            srate.r25_hi_rate r25_rate,
+            srate.r25_hi_count r25_count,
+            srate.rk3_hi_hit rk3_hit,
+            srate.rk3_hi_rate rk3_rate,
+            srate.rk3_hi_count rk3_count,
+            srate.b5_hi_hit b5_hit,
+            srate.b5_hi_rate b5_rate,
+            srate.b5_hi_count b5_count
+        </if>
+        from
+        ssq_master_rate srate,
+        ssq_master_rank srank,
+        master_lottery ml,
+        master_info mi
+        where
+        srank.period=#{condition.period}
+        and
+        srate.period=#{condition.period}
+        and
+        srate.master_id=srank.master_id
+        and
+        srank.master_id=mi.seq
+        and srank.master_id=ml.master_id
+        and ml.type='ssq'
+        <if test="condition.vip!=null">
+            and
+            srank.is_vip=#{condition.vip}
+        </if>
+        order by `rank` asc
+        limit #{offset},#{limit}
+        ) rankl
+        left join
+        ssq_master_rank rankr
+        on
+        rankr.master_id=rankl.master_id
+        and
+        rankr.period=#{condition.last}
+    </select>
+
+    <select id="countSsqMasterRankList" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from
+        ssq_master_rank
+        where
+        period=#{condition.period}
+        <if test="condition.vip!=null">
+            and is_vip=#{condition.vip}
+        </if>
+    </select>
+
+    <select id="getSsqLottoMasterList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LottoMasterVoMap">
+        select slm.*,
+        smr.${condition.type}_rank last_i_rank,
+        if(shm.id is not null,1,0) homed
+        from
+        (
+        select
+        srank.id,
+        srank.master_id,
+        srank.period,
+        srank.`rank`,
+        srank.hot,
+        srank.is_vip,
+        mi.name,
+        mi.avatar,
+        ml.source,
+        mi.browse,
+        mi.subscribe,
+        srank.${condition.type}_rank i_rank,
+        srate.${condition.type}_me_hit hit_series,
+        srate.${condition.type}_me_count hit_count,
+        srate.${condition.type}_me_rate hit_rate
+        from
+        ssq_master_rank srank,
+        ssq_master_rate srate,
+        master_lottery ml,
+        master_info mi
+        where
+        srank.period=#{condition.period}
+        and srate.period=#{condition.period}
+        and srank.master_id=srate.master_id
+        and ml.master_id=srank.master_id
+        and mi.seq=ml.master_id
+        and ml.type='ssq'
+        <if test="condition.vip!=null">
+            and srank.is_vip=1
+        </if>
+        <if test="condition.hot!=null">
+            and srank.hot=1
+        </if>
+        order by i_rank asc
+        limit #{offset},#{limit}
+        ) slm
+        left join ssq_master_rank smr on smr.master_id=slm.master_id and smr.period=#{condition.last}
+        left join ssq_home_master shm on shm.master_id=slm.master_id and shm.period=slm.period and
+        shm.type=#{condition.type}
+    </select>
+
+    <select id="countSsqLottoMasters" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        ssq_master_rank srank,
+        ssq_master_rate srate,
+        master_lottery ml,
+        master_info mi
+        where
+        srank.period=#{condition.period}
+        and srate.period=#{condition.period}
+        and srank.master_id=srate.master_id
+        and ml.master_id=srank.master_id
+        and mi.seq=ml.master_id
+        and ml.type='ssq'
+        <if test="condition.vip!=null">
+            and srank.is_vip=1
+        </if>
+        <if test="condition.hot!=null">
+            and srank.hot=1
+        </if>
+    </select>
+
+    <sql id="masterRateSql">
+        id
+        ,master_id,period,
+        r1_ne_rate,r1_me_rate,r1_hi_rate,
+        r2_ne_rate,r2_me_rate,r2_hi_rate,
+        r3_ne_rate,r3_me_rate,r3_hi_rate,
+        r12_ne_rate,r12_me_rate,r12_hi_rate,
+        r20_ne_rate,r20_ne_full_rate,r20_me_rate,r20_me_full_rate,r20_hi_rate,r20_hi_full_rate,
+        r25_ne_rate,r25_ne_full_rate,r25_me_rate,r25_me_full_rate,r25_hi_rate,r25_hi_full_rate,
+        rk3_ne_rate,rk3_me_rate,rk3_hi_rate,
+        rk6_ne_rate,rk6_me_rate,rk6_hi_rate,
+        b3_ne_rate,b3_me_rate,b3_hi_rate,
+        b5_ne_rate,b5_me_rate,b5_hi_rate,
+        bk_ne_rate,bk_me_rate,bk_hi_rate
+    </sql>
+
+    <select id="getSsqMasterRates" parameterType="java.lang.String" resultMap="SsqMasterRateMap">
+        select
+        <include refid="masterRateSql"/>
+        from ssq_master_rate
+        where period=#{period}
+    </select>
+
+    <select id="getSsqHomeMasters" parameterType="java.lang.String" resultMap="HomeMasterVoMap">
+        select
+            shm.id,
+            shm.period,
+            shm.master_id,
+            mi.name,
+            mi.avatar,
+            shm.type,
+            shm.hit_count,
+            shm.hit_rate,
+            shm.hit_series,
+            shm.rank,
+            shm.gmt_create
+        from
+            ssq_home_master shm,
+            master_info mi
+        where
+              shm.period = #{period}
+          and shm.master_id = mi.seq
+        order by
+            type,
+            `rank`
+    </select>
+
+    <select id="latestHomedMasterPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            ssq_home_master
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+    <select id="hasExtractHomeMaster" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            ssq_home_master
+                        where
+                            period = #{period}
+                        limit 1 ), 0)
+    </select>
+
+    <select id="hasExtractVipMaster" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            ssq_master_rank
+                        where
+                              period = #{period}
+                          and is_vip = 1
+                        limit 1 ),
+                    0)
+    </select>
+
+    <select id="hasExistRankMaster" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            ssq_master_rank
+                        where
+                            period = #{period}
+                        limit 1 ),
+                    0)
+    </select>
+
+    <select id="getSsqMasterSubScribeList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="SsqMasterSubscribeMap">
+        select
+            msi.*,
+            smr.r3_me_hit    r3_hit,
+            smr.r3_me_rate   r3_rate,
+            smr.r3_me_count  r3_count,
+            smr.r25_hi_hit   r25_hit,
+            smr.r25_hi_rate  r25_rate,
+            smr.r25_hi_count r25_count,
+            smr.rk3_hi_hit   rk3_hit,
+            smr.rk3_hi_rate  rk3_rate,
+            smr.rk3_hi_count rk3_count,
+            smr.bk_hi_hit    bk_hit,
+            smr.bk_hi_rate   bk_rate,
+            smr.bk_hi_count  bk_count
+        from
+            (
+                select
+                    ms.id,
+                    ms.user_id,
+                    ms.type,
+                    ms.master_id,
+                    mi.name,
+                    mi.avatar,
+                    ms.gmt_create
+                from
+                    master_subscribe ms,
+                    master_info mi
+                where
+                      ms.type = 'ssq'
+                  and ms.master_id = mi.seq
+                  and ms.user_id = #{condition.userId}
+                order by
+                    gmt_create desc
+                    limit
+                    #{offset},
+                    #{limit}
+            ) msi
+                left join
+                ssq_master_rate smr
+                on
+                            smr.master_id = msi.master_id
+                        and
+                            smr.period = #{condition.period}
+    </select>
+
+    <select id="countSsqMasterSubscribes" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_subscribe
+        where
+              type = 'ssq'
+          and user_id = #{condition.userId}
+    </select>
+
+    <select id="getSsqSchemaMasters" resultMap="SsqMasterSchemaMap">
+        select
+            srate.master_id,
+            srate.period,
+            mi.`name`,
+            mi.avatar,
+            ml.latest,
+            sicai.r12_hit,
+            sicai.r20_hit,
+            sicai.b5_hit,
+            srate.r20_me_count,
+            srate.r20_me_hit,
+            srate.r20_me_rate,
+            srate.r25_me_count,
+            srate.r25_me_hit,
+            srate.r25_me_rate,
+            srate.rk3_me_count,
+            srate.rk3_me_hit,
+            srate.rk3_me_rate,
+            srate.b5_me_count,
+            srate.b5_me_hit,
+            srate.b5_me_rate
+        from
+            ssq_master_rate srate,
+            ssq_icai sicai,
+            master_lottery ml,
+            master_info mi
+        where
+              srate.master_id = sicai.master_id
+          and srate.period = #{period}
+          and srate.period = sicai.period
+          and srate.master_id = ml.master_id
+          and ml.type = 'ssq'
+          and srate.master_id = mi.seq
+          and sicai.r12_hit &gt;= 4
+        order by
+                    srate.r20_me_rate * 0.65 + srate.r25_hi_rate * 0.45 + srate.rk3_me_rate * 0.35 desc,
+                    sicai.r12_hit desc,
+                    sicai.b5_hit desc
+            limit
+                    #{limit}
+    </select>
+
+    <select id="getSsqMasterRateVo" resultMap="SsqMasterRateVoMap">
+        select
+            master_id,
+            period,
+            r3_ne_rate  red3,
+            r20_me_rate red20,
+            r25_me_rate red25,
+            rk3_me_rate rk3,
+            b5_me_rate  blue5,
+            bk_me_rate  bk,
+            red3_avg,
+            red20_avg,
+            red25_avg,
+            rk3_avg,
+            blue5_avg,
+            bk_avg
+        from
+            ssq_master_rate,
+            (
+                select
+                    round(avg(r3_me_rate), 2)  red3_avg,
+                    round(avg(r20_me_rate), 2) red20_avg,
+                    round(avg(r25_me_rate), 2) red25_avg,
+                    round(avg(rk3_me_rate), 2) rk3_avg,
+                    round(avg(b5_me_rate), 2)  blue5_avg,
+                    round(avg(bk_me_rate), 2)  bk_avg
+                from
+                    ssq_master_rate
+                where
+                    period = #{period}
+            ) r_avg
+        where
+              period = #{period}
+          and master_id = #{masterId}
+    </select>
+
+    <select id="getSsqR20BestMaster" parameterType="java.lang.String" resultMap="MasterGladRateVoMap">
+        select
+            icai.period,
+            icai.master_id,
+            rate.r20_hi_count hit_count,
+            rate.r20_hi_rate  hit_rate
+        from
+            ssq_icai icai,
+            ssq_master_rate rate
+        where
+              icai.period = #{period}
+          and icai.r20_hit = 6
+          and icai.master_id = rate.master_id
+          and icai.period = rate.period
+        order by
+            rate.r20_hi_rate desc,
+            rate.r25_hi_rate desc limit 1
+    </select>
+
+    <select id="getSsqRk3BestMasters" parameterType="java.lang.String" resultMap="MasterGladRateVoMap">
+        select
+            icai.period,
+            icai.master_id,
+            rate.rk3_hi_count hit_count,
+            rate.rk3_hi_rate  hit_rate
+        from
+            ssq_icai icai,
+            ssq_master_rate rate
+        where
+              icai.period = #{period}
+          and icai.master_id = rate.master_id
+          and icai.period = rate.period
+        order by
+            rate.rk3_hi_rate desc,
+            rate.r25_hi_rate desc limit 2
+    </select>
+
+    <select id="getSsqMasterFeeds" parameterType="java.lang.String" resultMap="MasterFeedRateVoMap">
+        (
+            select
+                icai.period       as period,
+                'r20'             as field,
+                icai.master_id    as master_id,
+                icai.r20_hit      as hit,
+                rate.r20_hi_count as hit_count,
+                rate.r20_hi_rate  as hit_rate,
+                icai.gmt_create as timestamp,
+                mi.`name`         as name,
+                mi.avatar         as avatar
+            from
+                ssq_icai icai, ssq_master_rate rate, master_info mi
+            where
+                icai.period =
+                #{period}
+              and mi.seq = icai.master_id
+              and icai.master_id = rate.master_id
+              and icai.period = rate.period
+              and icai.r20_hit >= 4
+            order by
+                hit_rate desc, hit desc
+                limit 6
+        )
+        union all
+        (
+            select
+                icai.period       as period,
+                'r25'             as field,
+                icai.master_id    as master_id,
+                icai.r25_hit      as hit,
+                rate.r25_hi_count as hit_count,
+                rate.r25_hi_rate  as hit_rate,
+                icai.gmt_create as timestamp,
+                mi.`name`         as name,
+                mi.avatar         as avatar
+            from
+                ssq_icai icai, ssq_master_rate rate, master_info mi
+            where
+                icai.period =
+                #{period}
+              and mi.seq = icai.master_id
+              and icai.master_id = rate.master_id
+              and icai.period = rate.period
+              and icai.r25_hit >= 5
+            order by
+                hit_rate desc, hit desc
+                limit 6
+        )
+        union all
+        (
+            select
+                icai.period       as period,
+                'rk3'             as field,
+                icai.master_id    as master_id,
+                icai.rk3_hit      as hit,
+                rate.rk3_hi_count as hit_count,
+                rate.rk3_hi_rate  as hit_rate,
+                icai.gmt_create as timestamp,
+                mi.`name`         as name,
+                mi.avatar         as avatar
+            from
+                ssq_icai icai, ssq_master_rate rate, master_info mi
+            where
+                icai.period =
+                #{period}
+              and mi.seq = icai.master_id
+              and icai.master_id = rate.master_id
+              and icai.period = rate.period
+              and icai.rk3_hit = 1
+            order by
+                rate.rk3_hi_rate desc, rate.r25_hi_rate desc
+                limit 6
+        )
+    </select>
+
+    <select id="getSsqMasterFeed" resultMap="MasterFeedRateVoMap">
+        <if test="field=='r20'">
+            select
+            icai.period as period,
+            'r20' as field,
+            icai.master_id as master_id,
+            icai.r20_hit as hit,
+            rate.r20_hi_count as hit_count,
+            rate.r20_hi_rate as hit_rate,
+            icai.gmt_create as timestamp,
+            mi.`name` as name,
+            mi.avatar as avatar
+            from
+            ssq_icai icai,
+            ssq_master_rate rate,
+            master_info mi
+            where
+            icai.period = #{period}
+            and icai.master_id=#{masterId}
+            and mi.seq = icai.master_id
+            and icai.master_id = rate.master_id
+            and icai.period = rate.period
+        </if>
+        <if test="field=='r25'">
+            select
+            icai.period as period,
+            'r25' as field,
+            icai.master_id as master_id,
+            icai.r25_hit as hit,
+            rate.r25_hi_count as hit_count,
+            rate.r25_hi_rate as hit_rate,
+            icai.gmt_create as timestamp,
+            mi.`name` as name,
+            mi.avatar as avatar
+            from
+            ssq_icai icai,
+            ssq_master_rate rate,
+            master_info mi
+            where
+            icai.period = #{period}
+            and icai.master_id=#{masterId}
+            and mi.seq = icai.master_id
+            and icai.master_id = rate.master_id
+            and icai.period = rate.period
+        </if>
+        <if test="field=='rk3'">
+            select
+            icai.period as period,
+            'rk3' as field,
+            icai.master_id as master_id,
+            icai.rk3_hit as hit,
+            rate.rk3_hi_count as hit_count,
+            rate.rk3_hi_rate as hit_rate,
+            icai.gmt_create as timestamp,
+            mi.`name` as name,
+            mi.avatar as avatar
+            from
+            ssq_icai icai,
+            ssq_master_rate rate,
+            master_info mi
+            where
+            icai.period = #{period}
+            and icai.master_id=#{masterId}
+            and mi.seq = icai.master_id
+            and icai.master_id = rate.master_id
+            and icai.period = rate.period
+        </if>
+    </select>
+
+    <select id="getWorseMasters" parameterType="com.prize.lottery.dto.WorseMasterFilter"
+            resultType="java.lang.String">
+        (
+        SELECT
+        master_id
+        FROM
+        ssq_master_rank
+        WHERE
+        period IN
+        <foreach collection="periods" item="period" open="(" close=")" separator=",">
+            #{period}
+        </foreach>
+        AND `rank` &gt; #{throttle}
+        GROUP BY
+        master_id
+        HAVING
+        COUNT(master_id) &gt;= #{size}
+        )
+        <foreach collection="items" item="item">
+            union (
+            SELECT
+            master_id
+            FROM
+            ssq_master_rank
+            WHERE
+            period IN
+            <foreach collection="periods" item="period" open="(" close=")" separator=",">
+                #{period}
+            </foreach>
+            AND ${item}_rank &gt; #{throttle}
+            GROUP BY
+            master_id
+            HAVING
+            COUNT(master_id) &gt;= #{size}
+            )
+        </foreach>
+    </select>
+
+    <delete id="delMasterRanks" parameterType="java.util.List">
+        delete
+        from ssq_master_rank
+        where master_id in
+        <foreach collection="list" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+    <delete id="delMasterRates" parameterType="java.util.List">
+        delete
+        from ssq_master_rate
+        where master_id in
+        <foreach collection="list" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+</mapper>

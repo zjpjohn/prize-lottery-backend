@@ -1,0 +1,34 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - prod
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      username:
+      password:
+      config:
+        server-addr:
+        namespace:
+      discovery:
+        server-addr:
+        namespace:
+com:
+  cloud:
+    event:
+      rocket:
+        ons:
+          access-key:
+          secret-key:
+          ons-address:
+dubbo:
+  consumer:
+    check: true
+  registry:
+    username:
+    password:
+    address:
+    parameters:
+      namespace:

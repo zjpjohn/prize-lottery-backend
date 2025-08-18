@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.NotifyTagMapper">
+
+    <resultMap id="NotifyTagGroupMap" type="com.prize.lottery.infrast.persist.po.NotifyTagGroupPo">
+        <id column="id" property="id"/>
+        <result column="app_key" property="appKey"/>
+        <result column="name" property="name"/>
+        <result column="tag_prefix" property="tagPrefix"/>
+        <result column="binds" property="binds"/>
+        <result column="tags" property="tags"/>
+        <result column="remark" property="remark"/>
+        <result column="state" property="state"/>
+        <result column="upper_bound" property="upperBound"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="NotifyTagMap" type="com.prize.lottery.infrast.persist.po.NotifyTagPo">
+        <id column="id" property="id"/>
+        <result column="app_key" property="appKey"/>
+        <result column="tag_name" property="tagName"/>
+        <result column="binds" property="binds"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="addTagGroup" parameterType="com.prize.lottery.infrast.persist.po.NotifyTagGroupPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into notify_tag_group(app_key,
+                                     name,
+                                     tag_prefix,
+                                     binds,
+                                     tags,
+                                     remark,
+                                     state,
+                                     upper_bound,
+                                     gmt_create,
+                                     gmt_modify
+                                    )
+        values (#{appKey},
+                #{name},
+                #{tagPrefix},
+                #{binds},
+                #{tags},
+                #{remark},
+                #{state},
+                #{upperBound},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editTagGroup" parameterType="com.prize.lottery.infrast.persist.po.NotifyTagGroupPo">
+        update notify_tag_group
+        set
+        <if test="name!=null">
+            name=#{name},
+        </if>
+        <if test="tagPrefix!=null">
+            tag_prefix=#{tagPrefix},
+        </if>
+        <if test="binds!=null">
+            binds=#{binds},
+        </if>
+        <if test="tags!=null">
+            tags=#{tags},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="upperBound!=null">
+            upper_bound=#{upperBound},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getTagGroupById" parameterType="java.lang.Long" resultMap="NotifyTagGroupMap">
+        select
+            id,
+            app_key,
+            name,
+            tag_prefix,
+            binds,
+            tags,
+            remark,
+            state,
+            upper_bound
+        from
+            notify_tag_group
+        where
+            id = #{id}
+    </select>
+
+    <select id="getTagGroupList" resultMap="NotifyTagGroupMap">
+        select id, app_key, name,tag_prefix, binds, tags, remark, state, upper_bound, gmt_create, gmt_modify
+        from notify_tag_group
+        <where>
+            <if test="appKey!=null">
+                and app_key=#{appKey}
+            </if>
+            <if test="state!=null">
+                and state=#{state}
+            </if>
+        </where>
+        order by gmt_create desc
+    </select>
+
+    <insert id="addNotifyTags" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        notify_tag(app_key,group_id,tag_name,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.appKey},#{item.groupId},#{item.tagName},current_time)
+        </foreach>
+
+    </insert>
+
+    <update id="editNotifyTag" parameterType="com.prize.lottery.infrast.persist.po.NotifyTagPo">
+        update notify_tag
+        set
+            binds=#{binds}
+        where
+            id = #{id}
+    </update>
+
+    <select id="getNotifyTag" parameterType="java.lang.Long" resultMap="NotifyTagMap">
+        select
+            id,
+            app_key,
+            group_id,
+            tag_name,
+            binds,
+            gmt_create
+        from
+            notify_tag
+        where
+            id = #{id};
+    </select>
+
+    <select id="getGroupTagList" parameterType="java.lang.Long" resultMap="NotifyTagMap">
+        select
+            id,
+            app_key,
+            group_id,
+            tag_name,
+            binds
+        from
+            notify_tag
+        where
+            group_id = #{groupId}
+    </select>
+
+    <select id="getNotifyTagList" parameterType="com.cloud.arch.page.PageCondition" resultMap="NotifyTagMap">
+        select
+            id,
+            app_key,
+            group_id,
+            tag_name,
+            binds,
+            gmt_create
+        from
+            notify_tag
+        where
+            group_id = #{condition.groupId}
+        order by
+            gmt_create desc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countNotifyTags" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            notify_tag
+        where
+            group_id = #{condition.groupId}
+    </select>
+
+    <insert id="addNotifyTagBind" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        notify_tag_bind(app_key,group_id,tag_id,device_id,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.appKey},#{item.groupId},#{item.tagId},#{item.deviceId},current_time)
+        </foreach>
+    </insert>
+
+    <delete id="delNotifyTagBind" parameterType="com.prize.lottery.infrast.persist.po.NotifyTagBindPo">
+        delete
+        from
+            notify_tag_bind
+        where
+              app_key = #{appKey}
+          and group_id = #{groupId}
+          and device_id = #{deviceId}
+    </delete>
+
+</mapper>

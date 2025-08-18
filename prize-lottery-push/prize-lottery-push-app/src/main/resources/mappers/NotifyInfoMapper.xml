@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.NotifyInfoMapper">
+
+    <resultMap id="NotifyInfoMap" type="com.prize.lottery.infrast.persist.po.NotifyInfoPo">
+        <id column="id" property="id"/>
+        <result column="app_key" property="appKey"/>
+        <result column="group_id" property="groupId"/>
+        <result column="type" property="type"/>
+        <result column="hour" property="hour"/>
+        <result column="title" property="title"/>
+        <result column="body" property="body"/>
+        <result column="notice" property="notice"/>
+        <result column="bar_type" property="barType"/>
+        <result column="bar_priority" property="barPriority"/>
+        <result column="ext_params" property="extParams"/>
+        <result column="open_type" property="openType"/>
+        <result column="open_url" property="openUrl"/>
+        <result column="open_activity" property="openActivity"/>
+        <result column="channel" property="channel"/>
+        <result column="state" property="state"/>
+        <result column="online" property="online"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="NotifyTaskMap" type="com.prize.lottery.infrast.persist.po.NotifyTaskPo">
+        <id column="id" property="id"/>
+        <result column="app_key" property="appKey"/>
+        <result column="notify_id" property="notifyId"/>
+        <result column="platform" property="platform"/>
+        <result column="tags" property="tags"/>
+        <result column="tag_list" property="tagList"/>
+        <result column="state" property="state"/>
+        <result column="expect_time" property="expectTime"/>
+        <result column="push_time" property="pushTime"/>
+        <result column="message_id" property="messageId"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="MetricsNotifyMap" type="com.prize.lottery.infrast.persist.po.MetricsNotifyPo">
+        <id column="id" property="id"/>
+        <result column="app_key" property="appKey"/>
+        <result column="sent" property="sent"/>
+        <result column="accept" property="accept"/>
+        <result column="receive" property="receive"/>
+        <result column="opened" property="opened"/>
+        <result column="deleted" property="deleted"/>
+        <result column="metrics_date" property="metricsDate"/>
+        <result column="latest_time" property="latestTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="PushMetricsVoMap" type="com.prize.lottery.infrast.persist.vo.PushMetricsVo">
+        <id column="app_key" property="appKey"/>
+        <result column="today_sent" property="todaySent"/>
+        <result column="today_receive" property="todayReceive"/>
+        <result column="today_opened" property="todayOpened"/>
+        <result column="today_deleted" property="todayDeleted"/>
+        <result column="yesterday_sent" property="yesterdaySent"/>
+        <result column="yesterday_receive" property="yesterdayReceive"/>
+        <result column="yesterday_opened" property="yesterdayOpened"/>
+        <result column="yesterday_deleted" property="yesterdayDeleted"/>
+    </resultMap>
+
+    <insert id="addNotifyInfo" parameterType="com.prize.lottery.infrast.persist.po.NotifyInfoPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into notify_info(app_key,
+                                group_id,
+                                type,
+                                hour,
+                                title,
+                                body,
+                                notice,
+                                bar_type,
+                                bar_priority,
+                                ext_params,
+                                open_type,
+                                open_url,
+                                open_activity,
+                                channel,
+                                state,
+                                online,
+                                remark,
+                                gmt_create,
+                                gmt_modify
+                               )
+        values (#{appKey},
+                #{groupId},
+                #{type},
+                #{hour},
+                #{title},
+                #{body},
+                #{notice},
+                #{barType},
+                #{barPriority},
+                #{extParams},
+                #{openType},
+                #{openUrl},
+                #{openActivity},
+                #{channel},
+                #{state},
+                #{online},
+                #{remark},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editNotifyInfo" parameterType="com.prize.lottery.infrast.persist.po.NotifyInfoPo">
+        update notify_info
+        set
+        <if test="type!=null">
+            type=#{type},
+        </if>
+        <if test="hour!=null">
+            hour=#{hour},
+        </if>
+        <if test="title!=null">
+            title=#{title},
+        </if>
+        <if test="body!=null">
+            body=#{body},
+        </if>
+        <if test="notice!=null">
+            notice=#{notice},
+        </if>
+        <if test="barType!=null">
+            bar_type=#{barType},
+        </if>
+        <if test="barPriority!=null">
+            bar_priority=#{barPriority},
+        </if>
+        <if test="extParams!=null">
+            ext_params=#{extParams},
+        </if>
+        <if test="openType!=null">
+            open_type=#{openType},
+        </if>
+        <if test="openUrl!=null">
+            open_url=#{openUrl},
+        </if>
+        <if test="openActivity!=null">
+            open_activity=#{openActivity},
+        </if>
+        <if test="channel!=null">
+            channel=#{channel},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="online!=null">
+            online=#{online},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getNotifyInfo" parameterType="java.lang.Long" resultMap="NotifyInfoMap">
+        select
+            id,
+            app_key,
+            group_id,
+            type, hour, title, body, notice, bar_type, bar_priority, ext_params, open_type, open_url, open_activity, channel, state, online, remark, gmt_create
+        from
+            notify_info
+        where
+            id=
+            #{id}
+    </select>
+
+    <select id="getUsingNotifyList" parameterType="java.lang.Long" resultMap="NotifyInfoMap">
+        select
+            id,
+            app_key,
+            group_id,
+            type, hour, title, body, notice, bar_type, bar_priority, ext_params, open_type, open_url, open_activity, channel, state, online
+        from
+            notify_info
+        where
+            app_key=
+            #{appKey}
+          and state =2
+    </select>
+
+    <select id="getNotifyInfoList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="NotifyInfoMap">
+        select id,
+        app_key,
+        group_id,
+        type,
+        hour,
+        title,
+        body,
+        notice,
+        bar_type,
+        bar_priority,
+        ext_params,
+        open_type,
+        open_url,
+        open_activity,
+        channel,
+        state,
+        online,
+        remark,
+        gmt_create,
+        gmt_modify
+        from
+        notify_info
+        where
+        group_id=#{condition.groupId}
+        <if test="condition.type!=null">
+            and type=#{condition.type}
+        </if>
+        <if test="condition.notice!=null">
+            and notice=#{condition.notice}
+        </if>
+        <if test="condition.openType!=null">
+            and open_type=#{condition.openType}
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+        <if test="condition.online!=null">
+            and online=#{condition.online}
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countNotifyInfos" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        notify_info
+        where
+        group_id=#{condition.groupId}
+        <if test="condition.type!=null">
+            and type=#{condition.type}
+        </if>
+        <if test="condition.notice!=null">
+            and notice=#{condition.notice}
+        </if>
+        <if test="condition.openType!=null">
+            and open_type=#{condition.openType}
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+        <if test="condition.online!=null">
+            and online=#{condition.online}
+        </if>
+    </select>
+
+    <insert id="addNotifyTask" parameterType="com.prize.lottery.infrast.persist.po.NotifyTaskPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        notify_task(
+        app_key,
+        group_id,
+        notify_id,
+        platform,
+        tags,
+        tag_list,
+        state,
+        expect_time,
+        <if test="messageId!=null">
+            message_id,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values
+        (
+        #{appKey},
+        #{groupId},
+        #{notifyId},
+        #{platform},
+        #{tags},
+        #{tagList},
+        #{state},
+        #{expectTime},
+        <if test="messageId!=null">
+            #{messageId},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editNotifyTask" parameterType="com.prize.lottery.infrast.persist.po.NotifyTaskPo">
+        update notify_task
+        set
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="pushTime!=null">
+            push_time=#{pushTime},
+        </if>
+        <if test="messageId!=null">
+            message_id=#{messageId},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <update id="editNotifyTasks" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update notify_task
+            set
+            <if test="item.state!=null">
+                state=#{item.state},
+            </if>
+            push_time=#{item.pushTime},
+            gmt_modify=current_time
+            where message_id=#{item.messageId}
+        </foreach>
+    </update>
+
+    <select id="getNotifyTask" parameterType="java.lang.Long" resultMap="NotifyTaskMap">
+        select
+            id,
+            app_key,
+            group_id,
+            notify_id,
+            platform,
+            tags,
+            tag_list,
+            state,
+            expect_time,
+            push_time,
+            message_id,
+            gmt_create
+        from
+            notify_task
+        where
+            id = #{id}
+    </select>
+
+    <select id="getNotifyTaskByMsgId" parameterType="java.lang.String" resultMap="NotifyTaskMap">
+        select
+            id,
+            app_key,
+            group_id,
+            notify_id,
+            platform,
+            tags,
+            tag_list,
+            state,
+            expect_time,
+            push_time,
+            message_id,
+            gmt_create
+        from
+            notify_task
+        where
+            message_id = #{messageId}
+    </select>
+
+    <select id="getNotifyTaskList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="NotifyTaskMap">
+        select
+        id,
+        app_key,
+        group_id,
+        notify_id,
+        platform,
+        tags,
+        tag_list,
+        state,
+        expect_time,
+        push_time,
+        message_id,
+        gmt_create,
+        gmt_modify
+        from
+        notify_task
+        where
+        notify_id=#{condition.notifyId}
+        <if test="condition.platform!=null">
+            and platform=#{condition.platform}
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countNotifyTasks" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        notify_task
+        where
+        notify_id=#{condition.notifyId}
+        <if test="condition.platform!=null">
+            and platform=#{condition.platform}
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+    </select>
+
+    <insert id="addNotifyMetrics" parameterType="java.util.List"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        metrics_notify(
+        app_key,sent,accept,receive,opened,deleted,metrics_date,latest_time,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.appKey},
+            #{item.sent},
+            #{item.accept},
+            #{item.receive},
+            #{item.opened},
+            #{item.deleted},
+            #{item.metricsDate},
+            current_time,
+            current_time)
+        </foreach>
+        on duplicate key update
+        sent=values(sent),
+        accept=values(accept),
+        receive=values(receive),
+        opened=values(opened),
+        deleted=values(deleted),
+        latest_time=current_time
+    </insert>
+
+    <select id="getMetricsNotifyList" resultMap="MetricsNotifyMap">
+        select
+            id,
+            app_key,
+            sent,
+            accept,
+            receive,
+            opened,
+            deleted,
+            metrics_date
+        from
+            metrics_notify
+        where
+              app_key = #{appKey}
+          and metrics_date &gt;= #{startDay}
+          and metrics_date &lt; #{endDay}
+    </select>
+
+    <select id="getPushMetricsVo" parameterType="java.lang.Long" resultMap="PushMetricsVoMap">
+        select
+            app_key,
+            ifnull(sum(if(metrics_date = current_date, sent, 0)), 0)                              as today_sent,
+            ifnull(sum(if(metrics_date = current_date, receive, 0)), 0)                           as today_receive,
+            ifnull(sum(if(metrics_date = current_date, opened, 0)), 0)                            as today_opened,
+            ifnull(sum(if(metrics_date = current_date, deleted, 0)), 0)                           as today_deleted,
+            ifnull(sum(if(metrics_date = date_sub(current_date, interval 1 day), sent, 0)), 0)    as yesterday_sent,
+            ifnull(sum(if(metrics_date = date_sub(current_date, interval 1 day), receive, 0)), 0) as yesterday_receive,
+            ifnull(sum(if(metrics_date = date_sub(current_date, interval 1 day), opened, 0)), 0)  as yesterday_opened,
+            ifnull(sum(if(metrics_date = date_sub(current_date, interval 1 day), deleted, 0)), 0) as yesterday_deleted
+        from
+            metrics_notify
+        where
+            app_key = #{appKey}
+    </select>
+
+</mapper>

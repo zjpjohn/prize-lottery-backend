@@ -1,0 +1,57 @@
+cloud:
+  lottery:
+    periods:
+      fc3d:
+        - year: 2024
+          max-period: 352
+        - year: 2023
+          max-period: 351
+        - year: 2022
+          max-period: 351
+        - year: 2021
+          max-period: 351   
+      pl3:
+        - year: 2024
+          max-period: 352
+        - year: 2023
+          max-period: 351
+        - year: 2022
+          max-period: 351
+        - year: 2021
+          max-period: 351    
+      ssq:
+        - year: 2023
+          max-period: 151
+        - year: 2023
+          max-period: 151
+        - year: 2022
+          max-period: 150
+        - year: 2021
+          max-period: 150
+      dlt:
+        - year: 2024
+          max-period: 152
+        - year: 2023
+          max-period: 150
+        - year: 2022
+          max-period: 150
+        - year: 2021
+          max-period: 150    
+      qlc:
+        - year: 2024
+          max-period: 151 
+        - year: 2023
+          max-period: 150
+        - year: 2022
+          max-period: 151
+        - year: 2021
+          max-period: 151
+      kl8: 
+        - year: 2024
+          max-period: 352
+        - year: 2023
+          max-period: 351
+        - year: 2022
+          max-period: 351
+        - year: 2021
+          max-period: 351

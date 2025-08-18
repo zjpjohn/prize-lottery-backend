@@ -1,0 +1,17 @@
+com:
+  cloud:
+    web:
+      auth:
+       domain:
+        user:
+          domain: user
+          identity: userId
+          description: 用户域
+          retains:
+            - userId
+        manager:
+          domain: manager
+          identity: managerId
+          description: 管理员域
+          retains:
+            - managerId

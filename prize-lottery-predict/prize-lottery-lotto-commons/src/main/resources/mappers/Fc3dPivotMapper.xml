@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Fc3dPivotMapper">
+
+    <resultMap id="Fc3dPivotMap" type="com.prize.lottery.po.fc3d.Fc3dPivotPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="master" property="master"/>
+        <result column="edits" property="edits"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="version" property="version"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+        <association property="best" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="best" property="data"/>
+            <result column="hit_best" property="hitData"/>
+            <result column="best_hit" property="dataHit"/>
+        </association>
+        <association property="second" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="second" property="data"/>
+            <result column="hit_second" property="hitData"/>
+            <result column="second_hit" property="dataHit"/>
+        </association>
+        <association property="quality" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="quality" property="data"/>
+            <result column="hit_quality" property="hitData"/>
+            <result column="quality_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <insert id="addFc3dPivot" parameterType="com.prize.lottery.po.fc3d.Fc3dPivotPo">
+        insert into fc3d_today_pivot(id,
+        period,
+        best,
+        <if test="best.hitData!=null">
+            hit_best,
+        </if>
+        <if test="best.dataHit!=null">
+            best_hit,
+        </if>
+        second,
+        <if test="second.hitData!=null">
+            hit_second,
+        </if>
+        <if test="second.dataHit!=null">
+            second_hit,
+        </if>
+        quality,
+        <if test="quality.hitData!=null">
+            hit_quality,
+        </if>
+        <if test="quality.dataHit!=null">
+            quality_hit,
+        </if>
+        <if test="calcTime!=null">
+            calc_time,
+        </if>
+        master,
+        version,
+        gmt_create,
+        gmt_modify
+        )
+        value (#{id},
+        #{period},
+        #{best.data},
+        <if test="best.hitData!=null">
+            #{best.hitData},
+        </if>
+        <if test="best.dataHit!=null">
+            #{best.dataHit},
+        </if>
+        #{second.data},
+        <if test="second.hitData!=null">
+            #{second.hitData},
+        </if>
+        <if test="second.dataHit!=null">
+            #{second.dataHit},
+        </if>
+        #{quality.data},
+        <if test="quality.hitData!=null">
+            #{quality.hitData},
+        </if>
+        <if test="quality.dataHit!=null">
+            #{quality.dataHit},
+        </if>
+        <if test="calcTime!=null">
+            #{calcTime},
+        </if>
+        #{master},
+        1,
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editFc3dPivot" parameterType="com.prize.lottery.po.fc3d.Fc3dPivotPo">
+        update fc3d_today_pivot
+        set
+        <if test="best!=null">
+            <if test="best.data!=null">
+                best=#{best.data},
+            </if>
+            <if test="best.hitData!=null">
+                hit_best=#{best.hitData},
+            </if>
+            <if test="best.dataHit!=null">
+                best_hit=#{best.dataHit},
+            </if>
+        </if>
+        <if test="second!=null">
+            <if test="second.data!=null">
+                second=#{second.data},
+            </if>
+            <if test="second.hitData!=null">
+                hit_second=#{second.hitData},
+            </if>
+            <if test="second.dataHit!=null">
+                second_hit=#{second.dataHit},
+            </if>
+        </if>
+        <if test="quality!=null">
+            <if test="quality.data!=null">
+                quality=#{quality.data},
+            </if>
+            <if test="quality.hitData!=null">
+                hit_quality=#{quality.hitData},
+            </if>
+            <if test="quality.dataHit!=null">
+                quality_hit=#{quality.dataHit},
+            </if>
+        </if>
+        <if test="master!=null">
+            master=#{master},
+        </if>
+        <if test="edits!=null">
+            edits=#{edits},
+        </if>
+        <if test="calcTime!=null">
+            calc_time=#{calcTime},
+        </if>
+        version=version + 1,
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getFc3dPivot" parameterType="java.lang.String" resultMap="Fc3dPivotMap">
+        select
+            id,
+            period,
+            best,
+            best_hit,
+            hit_best, second, second_hit, hit_second, quality, quality_hit, hit_quality, master, edits, calc_time, version, gmt_create, gmt_modify
+        from
+            fc3d_today_pivot
+        where
+            period =
+            #{period}
+    </select>
+
+    <select id="getFc3dPivotById" parameterType="java.lang.Long" resultMap="Fc3dPivotMap">
+        select
+            id,
+            period,
+            best,
+            best_hit,
+            hit_best,
+            `second`,
+            second_hit,
+            hit_second,
+            quality,
+            quality_hit,
+            hit_quality,
+            master,
+            edits,
+            calc_time,
+            version,
+            gmt_create,
+            gmt_modify
+        from
+            fc3d_today_pivot
+        where
+                id =
+                #{id}
+    </select>
+
+    <select id="getFc3dPivotList" parameterType="com.cloud.arch.page.PageCondition" resultMap="Fc3dPivotMap">
+        select
+        id,
+        period,
+        best,
+        best_hit,
+        hit_best,
+        second,
+        second_hit,
+        hit_second,
+        quality,
+        quality_hit,
+        hit_quality,
+        master,
+        edits,
+        calc_time,
+        version,
+        gmt_create,
+        gmt_modify
+        from
+        fc3d_today_pivot
+        <where>
+            <if test="condition.best!=null">
+                and best_hit=#{condition.best}
+            </if>
+            <if test="condition.second!=null">
+                and second_hit=#{condition.second}
+            </if>
+        </where>
+        order by `period` desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countFc3dPivots" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from
+        fc3d_today_pivot
+        <where>
+            <if test="condition.best!=null">
+                and best_hit=#{condition.best}
+            </if>
+            <if test="condition.second!=null">
+                and second_hit=#{condition.second}
+            </if>
+        </where>
+    </select>
+
+    <select id="latestPivotPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            fc3d_today_pivot
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="fc3dPivotPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            fc3d_today_pivot
+        order by
+            period desc limit 20
+    </select>
+
+</mapper>

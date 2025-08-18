@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Num3LayerMapper">
+
+    <resultMap id="Num3LayerMap" type="com.prize.lottery.po.lottery.Num3LayerFilterPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="layer1" property="layer1"/>
+        <result column="layer2" property="layer2"/>
+        <result column="layer3" property="layer3"/>
+        <result column="layer4" property="layer4"/>
+        <result column="layer5" property="layer5"/>
+        <result column="edit_time" property="editTime"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="edits" property="edits"/>
+        <result column="version" property="version"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="saveNum3LayerFilter" parameterType="com.prize.lottery.po.lottery.Num3LayerFilterPo">
+        insert into num3_layer_filter(id,
+        period,
+        type,
+        layer1,
+        layer2,
+        layer3,
+        <if test="layer4!=null">
+            layer4,
+        </if>
+        <if test="layer5!=null">
+            layer5,
+        </if>
+        <if test="calcTime!=null">
+            calc_time,
+        </if>
+        version,
+        gmt_create,
+        gmt_modify
+        )
+        values (#{id},
+        #{period},
+        #{type},
+        #{layer1},
+        #{layer2},
+        #{layer3},
+        <if test="layer4!=null">
+            #{layer4},
+        </if>
+        <if test="layer5!=null">
+            #{layer5},
+        </if>
+        <if test="calcTime!=null">
+            #{calcTime},
+        </if>
+        1,
+        current_time,
+        current_time
+        )
+        on duplicate key update
+        layer1=values(layer1),
+        layer2=values(layer2),
+        layer3=values(layer3),
+        <if test="layer4!=null">
+            layer4=values(layer4),
+        </if>
+        <if test="layer5!=null">
+            layer5=values(layer5),
+        </if>
+        <if test="editTime!=null">
+            edit_time=#{editTime},
+            edits=edits + 1,
+        </if>
+        <if test="calcTime!=null">
+            calc_time=#{calcTime},
+        </if>
+        version=version + 1,
+        gmt_modify=current_time
+    </insert>
+
+    <select id="getNum3LayerFilter" parameterType="java.lang.Long" resultMap="Num3LayerMap">
+        select
+            id,
+            period,
+            type,
+            layer1,
+            layer2,
+            layer3,
+            layer4,
+            layer5,
+            edit_time,
+            calc_time,
+            edits,
+            version,
+            gmt_create,
+            gmt_modify
+        from
+            num3_layer_filter
+        where
+            id = #{id}
+    </select>
+
+    <select id="getNum3LayerFilterByUk" resultMap="Num3LayerMap">
+        select
+            id,
+            period,
+            type,
+            layer1,
+            layer2,
+            layer3,
+            layer4,
+            layer5,
+            edit_time,
+            calc_time,
+            edits,
+            version,
+            gmt_create,
+            gmt_modify
+        from
+            num3_layer_filter
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getNum3LayerFilters" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Num3LayerMap">
+        select
+        id,
+        period,
+        type,
+        layer1,
+        layer2,
+        layer3,
+        layer4,
+        layer5,
+        edit_time,
+        calc_time,
+        edits,
+        version,
+        gmt_create,
+        gmt_modify
+        from
+        num3_layer_filter
+        where
+        type = #{condition.type}
+        <if test="condition.edit==1">
+            and edits &gt;=1
+        </if>
+        <if test="condition.edit==0">
+            and edits=0
+        </if>
+        <if test="condition.hit!=null">
+            and layer1->>'$.hit'=#{condition.hit}
+            or layer2->>'$.hit'=#{condition.hit}
+            or layer3->>'$.hit'=#{condition.hit}
+        </if>
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+        order by period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="getNum3LayerState" resultType="com.prize.lottery.vo.Num3LayerStateVo">
+        select
+            type,
+            period,
+            (case
+                 when calc_time is null then 2
+                 when calc_time is not null and layer1 ->> '$.hit' > 0 then 1
+                 else 0 end
+                ) as state
+        from
+            num3_layer_filter
+        where
+            type = #{type}
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="countNum3LayerFilters" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        num3_layer_filter
+        where
+        type = #{condition.type}
+        <if test="condition.edit==1">
+            and edits &gt;=1
+        </if>
+        <if test="condition.edit==0">
+            and edits=0
+        </if>
+        <if test="condition.hit!=null">
+            and layer1->>'$.hit'=#{condition.hit}
+            or layer2->>'$.hit'=#{condition.hit}
+            or layer3->>'$.hit'=#{condition.hit}
+        </if>
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+    </select>
+
+    <select id="latestPeriod" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            num3_layer_filter
+        where
+            type = #{type}
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="layerPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            num3_layer_filter
+        where
+            type = #{type}
+        order by
+            period desc
+        limit 30
+    </select>
+
+</mapper>

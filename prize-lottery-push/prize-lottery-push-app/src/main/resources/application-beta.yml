@@ -1,0 +1,38 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - beta
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      username:
+      password:
+      config:
+        server-addr:
+        namespace:
+      discovery:
+        server-addr:
+        namespace:
+com:
+  cloud:
+    event:
+      rocket:
+        ons:
+          access-key:
+          secret-key:
+          ons-address:
+dubbo:
+  consumer:
+    check: true
+  registry:
+    username:
+    password:
+    address:
+    parameters:
+      namespace:
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

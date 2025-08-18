@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/open_lottery?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      max-active: 10
+      filter: stat
+      initial-size: 10
+      max-wait: 60000
+      min-idle: 5
+      validation-query: select 'X'
+      test-on-return: false
+      test-on-borrow: false
+      test-while-idle: true
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000    

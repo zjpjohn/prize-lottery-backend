@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile:
+        - dev
+    import:
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+      - optional:nacos:lottery-forecast-rule-${spring.profiles.active}.yml
+      - optional:nacos:lottery-share-period-${spring.profiles.active}.yml
+  cloud:
+    nacos:
+      username:
+      password:
+      config:
+        server-addr:
+        namespace:
+      discovery:
+        server-addr:
+        namespace:
+
+dubbo:
+  consumer:
+    check: true
+  registry:
+    username:
+    password:
+    address:
+    parameters:
+      namespace:

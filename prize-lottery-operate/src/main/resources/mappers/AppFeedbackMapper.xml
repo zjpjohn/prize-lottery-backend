@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.AppFeedbackMapper">
+
+    <resultMap id="FeedbackMap" type="com.prize.lottery.infrast.persist.po.AppFeedbackPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="app_version" property="appVersion"/>
+        <result column="device" property="device"/>
+        <result column="type" property="type"/>
+        <result column="content" property="content"/>
+        <result column="images" property="images"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="FeedbackTypeMap" type="com.prize.lottery.infrast.persist.po.FeedbackTypePo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="type" property="type"/>
+        <result column="suit_ver" property="suitVer"/>
+        <result column="remark" property="remark"/>
+        <result column="sort" property="sort"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addAppFeedback" parameterType="com.prize.lottery.infrast.persist.po.AppFeedbackPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into app_feedback(app_no,
+                                 app_version,
+                                 device,
+                                 type,
+                                 content,
+                                 images,
+                                 gmt_create,
+                                 gmt_modify
+                                )
+        values (#{appNo},
+                #{appVersion},
+                #{device},
+                #{type},
+                #{content},
+                #{images},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editAppFeedback" parameterType="com.prize.lottery.infrast.persist.po.AppFeedbackPo">
+        update app_feedback
+        set
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getAppFeedback" parameterType="java.lang.Long" resultMap="FeedbackMap">
+        select
+            id,
+            app_no,
+            app_version,
+            device,
+            type,
+            content,
+            images,
+            state,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            app_feedback
+        where
+            id = #{id}
+    </select>
+
+    <select id="getFeedbackList" parameterType="com.cloud.arch.page.PageCondition" resultMap="FeedbackMap">
+        select
+        id, app_no, app_version, device, type, content, images, state, remark, gmt_create, gmt_modify
+        from app_feedback
+        <where>
+            <if test="condition.appNo!=null">
+                and app_no=#{condition.appNo}
+            </if>
+            <if test="condition.appVersion!=null">
+                and app_version=#{condition.appVersion}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countFeedbacks" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from app_feedback
+        <where>
+            <if test="condition.appNo!=null">
+                and app_no=#{condition.appNo}
+            </if>
+            <if test="condition.appVersion!=null">
+                and app_version=#{condition.appVersion}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addFeedbackType" parameterType="com.prize.lottery.infrast.persist.po.FeedbackTypePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into feedback_type(app_no,
+        type,
+        suit_ver,
+        sort,
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify
+        )
+        values (#{appNo},
+        #{type},
+        #{suitVer},
+        #{sort},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time
+        )
+    </insert>
+
+    <update id="editFeedbackType" parameterType="com.prize.lottery.infrast.persist.po.FeedbackTypePo">
+        update feedback_type
+        set
+        <if test="type!=null">
+            type=#{type},
+        </if>
+        <if test="suitVer!=null">
+            suit_ver=#{suitVer},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <delete id="removeFeedType" parameterType="java.lang.Long">
+        delete
+        from
+            feedback_type
+        where
+            id = #{id}
+    </delete>
+
+    <update id="sortFeedbackType">
+        <if test="position &gt; sort">
+            update feedback_type
+            set
+            sort=sort-1,
+            gmt_modify=current_time
+            where
+            sort &gt;#{sort}
+            and sort &lt;=#{position};
+        </if>
+        <if test="position &lt; sort">
+            update feedback_type
+            set
+            sort=sort+1,
+            gmt_modify=current_time
+            where
+            sort &gt;=#{position}
+            and sort &lt;#{sort};
+        </if>
+        update feedback_type
+        set
+        sort=#{position},
+        gmt_modify=current_time
+        where
+        id=#{id};
+    </update>
+
+    <select id="typeMaxSort" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            sort
+        from
+            feedback_type
+        where
+            app_no = #{appNo}
+        order by
+            sort desc limit 1
+    </select>
+
+    <select id="getFeedbackType" parameterType="java.lang.Long" resultMap="FeedbackTypeMap">
+        select
+            id,
+            app_no,
+            type,
+            suit_ver,
+            remark,
+            sort,
+            gmt_create,
+            gmt_modify
+        from
+            feedback_type
+        where
+            id = #{id}
+    </select>
+
+    <select id="getFeedbackTypesByApp" parameterType="java.lang.String" resultMap="FeedbackTypeMap">
+        select
+            id,
+            app_no,
+            type,
+            suit_ver,
+            remark,
+            sort,
+            gmt_create
+        from
+            feedback_type
+        where
+            app_no = #{appNo}
+    </select>
+
+    <select id="getFeedbackTypeList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="FeedbackTypeMap">
+        select
+        id, app_no, type, suit_ver, remark,sort, gmt_create, gmt_modify
+        from feedback_type
+        <where>
+            <if test="condition.appNo!=null">
+                and app_no=#{condition.appNo}
+            </if>
+            <if test="condition.version!=null">
+                and suit_ver='*'
+                or suit_ver &gt;=#{condition.version}
+            </if>
+        </where>
+        order by sort
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countFeedbackTypes" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from feedback_type
+        <where>
+            <if test="condition.appNo!=null">
+                and app_no=#{condition.appNo}
+            </if>
+            <if test="condition.version!=null">
+                and suit_ver='*'
+                or suit_ver &gt;=#{condition.version}
+            </if>
+        </where>
+    </select>
+
+</mapper>

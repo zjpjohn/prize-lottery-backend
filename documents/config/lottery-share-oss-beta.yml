@@ -1,0 +1,13 @@
+com:
+  cloud:
+    oss:
+      appId: 
+      secret: 
+      endpoint: 
+      bucket: 
+      hostUri: 
+      domainUri: 
+      webDirect:
+        expire: 
+        prefix: 
+        callback:  

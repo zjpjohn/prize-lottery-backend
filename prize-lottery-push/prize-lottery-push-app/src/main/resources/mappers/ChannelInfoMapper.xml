@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.ChannelInfoMapper">
+
+    <resultMap id="ChannelInfoMap" type="com.prize.lottery.infrast.persist.po.ChannelInfoPo">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="channel" property="channel"/>
+        <result column="cover" property="cover"/>
+        <result column="remark" property="remark"/>
+        <result column="type" property="type"/>
+        <result column="scope" property="scope"/>
+        <result column="remind" property="remind"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addChannelInfo" parameterType="com.prize.lottery.infrast.persist.po.ChannelInfoPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert
+        ignore into
+            mc_channel(name,
+                       channel,
+                       cover,
+                       remark,
+                       type,
+                       scope,
+                       remind,
+                       state,
+                       gmt_create,
+                       gmt_modify)
+        values
+            (
+        #{name},
+        #{channel},
+        #{cover},
+        #{remark},
+        #{type},
+        #{scope},
+        #{remind},
+        #{state},
+        current_time,
+        current_time
+        )
+    </insert>
+
+    <update id="editChannelInfo" parameterType="com.prize.lottery.infrast.persist.po.ChannelInfoPo">
+        update mc_channel
+        set
+        <if test="name!=null">
+            name=#{name},
+        </if>
+        <if test="cover!=null">
+            cover=#{cover},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        <if test="type!=null">
+            type=#{type},
+        </if>
+        <if test="scope!=null">
+            scope=#{scope},
+        </if>
+        <if test="remind!=null">
+            remind=#{remind},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getChannelById" parameterType="java.lang.Long" resultMap="ChannelInfoMap">
+        select
+            id,
+            name,
+            channel,
+            cover,
+            remark,
+            type,
+            scope,
+            remind,
+            state,
+            gmt_create
+        from
+            mc_channel
+        where
+            id = #{id}
+    </select>
+
+    <select id="getChannelByUk" parameterType="java.lang.String" resultMap="ChannelInfoMap">
+        select
+            id,
+            name,
+            channel,
+            cover,
+            remark,
+            type,
+            scope,
+            remind,
+            state,
+            gmt_create,
+            gmt_modify
+        from
+            mc_channel
+        where
+            channel = #{channel}
+    </select>
+
+    <select id="getChannelInfoByUkList" parameterType="java.util.List" resultMap="ChannelInfoMap">
+        select
+        id, name, channel, cover, remark, type, scope, remind, state, gmt_create
+        from
+        mc_channel
+        where channel in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getUsingTypedChannels" parameterType="java.lang.Integer" resultMap="ChannelInfoMap">
+        select
+            id,
+            name,
+            channel,
+            cover,
+            remark,
+            type,
+            scope,
+            remind,
+            state,
+            gmt_create
+        from
+            mc_channel
+        where
+              state = 2
+          and type = #{type}
+    </select>
+
+    <select id="getChannelList" parameterType="com.cloud.arch.page.PageCondition" resultMap="ChannelInfoMap">
+        select
+        id, name, channel, cover, remark, type, scope, remind, state, gmt_create, gmt_modify
+        from mc_channel
+        <where>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.scope!=null">
+                and scope=#{condition.scope}
+            </if>
+            <if test="condition.remind!=null">
+                and remind=#{condition.remind}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countChannels" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from mc_channel
+        <where>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.scope!=null">
+                and scope=#{condition.scope}
+            </if>
+            <if test="condition.remind!=null">
+                and remind=#{condition.remind}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+        </where>
+    </select>
+
+    <select id="getTypeUsedChannels" resultMap="ChannelInfoMap">
+        select
+        id,
+        name,
+        channel,
+        cover,
+        remark,
+        type,
+        scope,
+        remind,
+        state,
+        gmt_create
+        from
+        mc_channel
+        where
+        state=2
+        and type=#{type}
+        and scope in
+        <foreach collection="scopes" item="scope" separator="," open="(" close=")">
+            #{scope}
+        </foreach>
+        order by
+        gmt_create
+    </select>
+
+</mapper>

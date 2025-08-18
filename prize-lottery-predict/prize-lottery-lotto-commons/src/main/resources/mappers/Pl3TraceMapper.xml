@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Pl3TraceMapper">
+
+    <resultMap id="TraceMasterMap" type="com.prize.lottery.po.trace.TraceMasterPo">
+        <id column="id" property="id"/>
+        <result column="master_id" property="masterId"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="rank" property="rank"/>
+        <result column="channel" property="channel"/>
+    </resultMap>
+
+    <resultMap id="TraceResultMap" type="com.prize.lottery.po.trace.No3TraceResultPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="com" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="com" property="data"/>
+            <result column="hit_com" property="hitData"/>
+            <result column="com_hit" property="dataHit"/>
+        </association>
+        <association property="kill" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="kill" property="data"/>
+            <result column="hit_kill" property="hitData"/>
+            <result column="kill_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <insert id="addTraceMasters" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into pl3_trace_master(master_id,
+        type,
+        period,
+        `rank`,
+        channel,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.masterId},
+            #{item.type},
+            #{item.period},
+            #{item.rank},
+            #{item.channel},
+            #{item.gmtCreate}
+            )
+        </foreach>
+        on duplicate key update
+        period=values(period),
+        `rank`=values(`rank`)
+    </insert>
+
+    <delete id="delTraceMaster" parameterType="java.lang.Long">
+        delete
+        from
+            pl3_trace_master
+        where
+            master_id = #{masterId}
+    </delete>
+
+    <select id="getTraceMaster" parameterType="java.lang.String" resultMap="TraceMasterMap">
+        select
+            id,
+            master_id,
+            type,
+            period,
+            `rank`,
+            channel,
+            gmt_create
+        from
+            pl3_trace_master
+        where
+            master_id = #{masterId}
+    </select>
+
+    <select id="getAllTraceMasters" resultMap="TraceMasterMap">
+        select
+            id,
+            master_id,
+            type,
+            period,
+            `rank`,
+            channel,
+            gmt_create
+        from
+            pl3_trace_master
+    </select>
+
+    <insert id="addTraceResults" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into pl3_trace_result(
+        period,
+        com,
+        `kill`,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},
+            #{item.com.data},
+            #{item.kill.data},
+            #{item.gmtCreate}
+            )
+        </foreach>
+        on duplicate key update
+        com=values(com),
+        `kill`=values(`kill`)
+    </insert>
+
+    <update id="editTraceResults" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update pl3_trace_result
+            set
+            hit_com=#{item.com.hitData},
+            com_hit=#{item.com.dataHit},
+            hit_kill=#{item.kill.hitData},
+            kill_hit=#{item.kill.dataHit},
+            calc_time=current_time
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <select id="getTraceResult" parameterType="java.lang.String" resultMap="TraceResultMap">
+        select
+            id,
+            period,
+            com,
+            `kill`,
+            hit_com,
+            hit_kill,
+            calc_time,
+            gmt_create
+        from
+            pl3_trace_result
+        where
+            period = #{period}
+    </select>
+
+    <select id="getTraceResultList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="TraceResultMap">
+        select
+            id,
+            period,
+            com,
+            hit_com,
+            com_hit,
+            `kill`,
+            hit_kill,
+            kill_hit,
+            calc_time,
+            gmt_create
+        from
+            pl3_trace_result
+        order by
+            period desc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countTraceResults" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            pl3_trace_result
+    </select>
+
+</mapper>

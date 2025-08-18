@@ -1,0 +1,19 @@
+cloud:
+  expert:
+    expert-award:
+      fc3d: 30
+      pl3: 30
+      ssq: 30
+      dlt: 30
+      qlc: 30
+  user:  
+    invite:
+      agent: 1
+      uri: http://beta.mobile.icaiwa.com/share/%d/%s
+    coupon:
+      ratio: 10
+      throttle: 100
+    sign:
+      series: 600
+      throttle: 7
+      every: 100

@@ -1,0 +1,53 @@
+server:
+  port: 9090
+spring:
+  profiles:
+    active: @profileActive@
+  application:
+    name: lottery-user
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy/MM/dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        refresh-enabled: true
+      discovery:
+        group: SPRING_CLOUD_GROUP
+com:
+  cloud:
+    web:
+      security:
+        enable: true
+        cached: true
+        excludes: /app/user/register,/app/user/login,/mobile/,/mobile/verify,/mobile/sms
+    event:
+      publisher:
+        enable: true
+      subscriber:
+        enable: true
+
+dubbo:
+  scan:
+    base-packages: com.prize.lottery.adapter.rpc
+  application:
+    name: ${spring.application.name}
+    register-mode: instance
+    qos-enable: false
+  protocol:
+    name: dubbo
+    port: -1
+  provider:
+    filter: -exception
+    timeout: 3000
+  registry:
+    group: DUBBO_GROUP
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml

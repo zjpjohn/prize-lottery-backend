@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.TransferRuleMapper">
+
+    <resultMap id="TransferRuleMap" type="com.prize.lottery.infrast.persist.po.TransferRulePo">
+        <id column="id" property="id"/>
+        <result column="scene" property="scene"/>
+        <result column="throttle" property="throttle"/>
+        <result column="force" property="force"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addTransferRule" parameterType="com.prize.lottery.infrast.persist.po.TransferRulePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        transfer_rule(
+        scene,
+        `force`,
+        state,
+        <if test="throttle!=null">
+            throttle,
+        </if>
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values
+        (#{scene},
+        #{force},
+        #{state},
+        <if test="throttle!=null">
+            #{throttle},
+        </if>
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editTransferRule" parameterType="com.prize.lottery.infrast.persist.po.TransferRulePo">
+        update transfer_rule
+        set
+        <if test="throttle!=null">
+            throttle=#{throttle},
+        </if>
+        <if test="force!=null">
+            `force`=#{force},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id};
+    </update>
+
+    <select id="getTransferRuleById" parameterType="java.lang.Long" resultMap="TransferRuleMap">
+        select
+            id,
+            scene,
+            throttle,
+            `force`,
+            state,
+            remark,
+            gmt_create
+        from
+            transfer_rule
+        where
+            id=#{id}
+    </select>
+
+    <select id="getTransferSceneRule" parameterType="java.lang.String" resultMap="TransferRuleMap">
+        select
+            id,
+            throttle,
+            `force`,
+            state,
+            scene,
+            remark,
+            gmt_create
+        from
+            transfer_rule
+        where
+            scene=#{scene}
+    </select>
+
+    <select id="getAllTransferRules" resultMap="TransferRuleMap">
+        select
+            id,
+            throttle,
+            `force`,
+            state,
+            scene,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            transfer_rule
+    </select>
+
+</mapper>

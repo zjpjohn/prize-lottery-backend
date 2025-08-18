@@ -1,0 +1,25 @@
+server:
+  port: 9092
+spring:
+  profiles:
+    active: @profileActive@
+  application:
+    name: lottery-compute
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        refresh-enabled: true
+      discovery:
+        group: SPRING_CLOUD_GROUP
+  jackson:
+    date-format: yyyy/MM/dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml

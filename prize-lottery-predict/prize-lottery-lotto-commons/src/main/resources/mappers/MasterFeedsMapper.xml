@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.MasterFeedsMapper">
+
+    <resultMap id="MasterFeedsMap" type="com.prize.lottery.po.master.MasterFeedsPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="master_id" property="masterId"/>
+        <result column="field" property="field"/>
+        <result column="feed_type" property="feedType"/>
+        <result column="rate_text" property="rateText"/>
+        <result column="hit_text" property="hitText"/>
+        <result column="field_hit" property="fieldHit"/>
+        <result column="field_rate" property="fieldRate"/>
+        <result column="period" property="period"/>
+        <result column="renew" property="renew"/>
+        <result column="renew_period" property="renewPeriod"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="MasterFeedVoMap" type="com.prize.lottery.vo.MasterFeedVo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="field" property="field"/>
+        <result column="feed_type" property="feedType"/>
+        <result column="rate_text" property="rateText"/>
+        <result column="hit_text" property="hitText"/>
+        <result column="period" property="period"/>
+        <result column="renew" property="renew"/>
+        <result column="renew_period" property="renewPeriod"/>
+        <result column="state" property="state"/>
+        <result column="gmt_modify" property="timestamp"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+            <result column="browse" property="browse"/>
+            <result column="subscribe" property="subscribe"/>
+        </association>
+    </resultMap>
+
+    <insert id="addMasterFeeds" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        master_feeds(
+        type,
+        master_id,
+        field,
+        feed_type,
+        rate_text,
+        hit_text,
+        field_hit,
+        field_rate,
+        period,
+        renew,
+        gmt_create,
+        gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.masterId},
+            #{item.field},
+            #{item.feedType},
+            #{item.rateText},
+            #{item.hitText},
+            #{item.fieldHit},
+            #{item.fieldRate},
+            #{item.period},
+            #{item.renew},
+            #{item.gmtCreate},
+            #{item.gmtModify})
+        </foreach>
+        on duplicate key update
+        field=values(field),
+        feed_type=values(feed_type),
+        rate_text=values(rate_text),
+        hit_text=values(hit_text),
+        field_hit=values(field_hit),
+        field_rate=values(field_rate),
+        period=values(period),
+        renew=values(renew),
+        renew_period=values(renew_period),
+        gmt_modify=values(gmt_modify)
+    </insert>
+
+    <update id="editMasterFeeds" parameterType="com.prize.lottery.po.master.MasterFeedsPo">
+        update master_feeds
+        set
+        <if test="field!=null">
+            field=#{field},
+        </if>
+        <if test="feedType!=null">
+            feed_type=#{feedType},
+        </if>
+        <if test="rateText!=null">
+            rate_text=#{rateText},
+        </if>
+        <if test="hitText!=null">
+            hit_text=#{hitText},
+        </if>
+        <if test="fieldHit!=null">
+            field_hit=#{fieldHit},
+        </if>
+        <if test="fieldRate!=null">
+            field_rate=#{fieldRate},
+        </if>
+        <if test="period!=null">
+            period=#{period},
+        </if>
+        <if test="renew!=null">
+            renew=#{renew},
+        </if>
+        <if test="renewPeriod!=null">
+            renew_period=#{renewPeriod},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        gmt_modify=#{gmtModify}
+        where
+        id=#{id}
+    </update>
+
+    <select id="getMasterFeedsByUk" resultMap="MasterFeedsMap">
+        select
+            id,
+            type,
+            master_id,
+            field,
+            feed_type,
+            rate_text,
+            hit_text,
+            field_hit,
+            field_rate,
+            period,
+            renew,
+            renew_period,
+            state,
+            gmt_create,
+            gmt_modify
+        from
+            master_feeds
+        where
+              type = #{type}
+          and master_id = #{masterId}
+    </select>
+
+    <select id="getFeedsMaxPeriods" resultType="java.util.HashMap">
+        select
+            type,
+            max(period) as period
+        from
+            master_feeds
+        group by
+            type
+    </select>
+
+    <select id="getFeedsMaxPeriod" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            period
+        from
+            master_feeds
+        where
+            type = #{type}
+        order by
+            period desc limit 1
+    </select>
+
+    <delete id="removeMasterFeeds">
+        delete
+        from
+        master_feeds
+        where
+        type=#{type}
+        and field_rate=#{rate}
+        <if test="hit!=null">
+            and field_hit=#{hit}
+        </if>
+        <if test="time">
+            and gmt_modify &lt;#{time}
+        </if>
+    </delete>
+
+    <delete id="removeTypedFeedsLtPeriods">
+        <foreach collection="list" item="item" separator=";">
+            delete
+            from master_feeds
+            where type=#{item.type}
+            and period &lt;#{item.period}
+        </foreach>
+    </delete>
+
+    <delete id="removeFeedsLtPeriod">
+        delete
+        from
+            master_feeds
+        where
+              type = #{type}
+          and period &lt; #{period}
+    </delete>
+
+    <delete id="removeFeedsRecord">
+        delete
+        from
+            master_feeds
+        where
+              type = #{type}
+          and master_id = #{masterId}
+    </delete>
+
+    <select id="getMasterFeedList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="MasterFeedVoMap">
+        select mf.id,
+        mf.type,
+        mf.master_id,
+        mi.name,
+        mi.avatar,
+        mi.browse,
+        mi.subscribe,
+        mf.field,
+        mf.feed_type,
+        mf.rate_text,
+        mf.hit_text,
+        mf.period,
+        mf.renew,
+        mf.renew_period,
+        mf.state,
+        mf.gmt_modify
+        from master_feeds mf,
+        master_info mi
+        <where>
+            mf.master_id=mi.seq
+            <if test="condition.state!=null">
+                and mf.state=#{condition.state}
+            </if>
+            <if test="condition.type!=null">
+                and mf.type=#{condition.type}
+            </if>
+            <if test="condition.feedType!=null">
+                and mf.feed_type=#{condition.feedType}
+            </if>
+            <if test="condition.time!=null">
+                and mf.gmt_modify &lt;=#{condition.time}
+            </if>
+            <if test="condition.startTime!=null">
+                and mf.gmt_modify &gt;=#{condition.startTime}
+            </if>
+        </where>
+        order by mf.gmt_modify desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countMasterFeeds" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from master_feeds
+        <where>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.feedType!=null">
+                and feed_type=#{condition.feedType}
+            </if>
+            <if test="condition.time!=null">
+                and gmt_modify &lt;=#{condition.time}
+            </if>
+            <if test="condition.startTime!=null">
+                and gmt_modify &gt;=#{condition.startTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>

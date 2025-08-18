@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.OrderInfoMapper">
+
+    <resultMap id="OrderInfoMap" type="com.prize.lottery.infrast.persist.po.OrderInfoPo">
+        <id column="id" property="id"/>
+        <result column="biz_no" property="bizNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="type" property="type"/>
+        <result column="std_price" property="stdPrice"/>
+        <result column="real_price" property="realPrice"/>
+        <result column="quantity" property="quantity"/>
+        <result column="amount" property="amount"/>
+        <result column="channel" property="channel"/>
+        <result column="remark" property="remark"/>
+        <result column="attach" property="attach"/>
+        <result column="content" property="content"/>
+        <result column="state" property="state"/>
+        <result column="settled" property="settled"/>
+        <result column="expire_time" property="expireTime"/>
+        <result column="pay_time" property="payTime"/>
+        <result column="close_time" property="closeTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="OrderStatisticsMap" type="com.prize.lottery.infrast.persist.po.OrderStatisticsPo">
+        <id column="id" property="id"/>
+        <result column="day" property="day"/>
+        <result column="success_amt" property="successAmt"/>
+        <result column="success_cnt" property="successCnt"/>
+        <result column="failure_amt" property="failureAmt"/>
+        <result column="failure_cnt" property="failureCnt"/>
+        <result column="closed_amt" property="closedAmt"/>
+        <result column="closed_cnt" property="closedCnt"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="OrderMetricsVoMap" type="com.prize.lottery.infrast.persist.vo.OrderMetricsVo">
+        <result column="yesterday_amt" property="yesterdayAmt"/>
+        <result column="yesterday_cnt" property="yesterdayCnt"/>
+        <result column="week_amt" property="weekAmt"/>
+        <result column="week_cnt" property="weekCnt"/>
+        <result column="month_amt" property="monthAmt"/>
+        <result column="month_cnt" property="monthCnt"/>
+        <result column="last_month_amt" property="lastMonthAmt"/>
+        <result column="last_month_cnt" property="lastMonthCnt"/>
+    </resultMap>
+
+    <insert id="addOrderInfo" parameterType="com.prize.lottery.infrast.persist.po.OrderInfoPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into order_info(biz_no,
+                               user_id,
+                               type,
+                               std_price,
+                               real_price,
+                               quantity,
+                               amount,
+                               channel,
+                               remark,
+                               attach,
+                               content,
+                               state,
+                               settled,
+                               expire_time,
+                               gmt_create,
+                               gmt_modify
+                              )
+        values (#{bizNo},
+                #{userId},
+                #{type},
+                #{stdPrice},
+                #{realPrice},
+                #{quantity},
+                #{amount},
+                #{channel},
+                #{remark},
+                #{attach},
+                #{content},
+                #{state},
+                #{settled},
+                #{expireTime},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editOrderInfo" parameterType="com.prize.lottery.infrast.persist.po.OrderInfoPo">
+        update order_info
+        set
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="settled!=null">
+            settled=#{settled},
+        </if>
+        <if test="payTime!=null">
+            pay_time=#{payTime},
+        </if>
+        <if test="closeTime!=null">
+            close_time=#{closeTime},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getOrderInfoByNo" parameterType="java.lang.String" resultMap="OrderInfoMap">
+        select
+            id,
+            biz_no,
+            user_id,
+            type,
+            std_price,
+            real_price,
+            quantity,
+            amount,
+            channel,
+            remark,
+            attach,
+            content,
+            state,
+            settled,
+            pay_time,
+            close_time,
+            expire_time,
+            gmt_create
+        from
+            order_info
+        where
+            biz_no = #{bizNo}
+    </select>
+
+    <select id="getExpiredWaitOrders" resultMap="OrderInfoMap">
+        select
+            id,
+            biz_no,
+            user_id,
+            type,
+            std_price,
+            real_price,
+            quantity,
+            amount,
+            channel,
+            remark,
+            attach,
+            content,
+            state,
+            settled,
+            expire_time,
+            pay_time,
+            close_time,
+            gmt_create
+        from
+            order_info
+        where
+              expire_time &lt; current_time
+          and state = 1
+        order by
+            gmt_create desc
+    </select>
+
+    <select id="getWaitPayOrder" parameterType="java.lang.Integer" resultMap="OrderInfoMap">
+        select
+            id,
+            biz_no,
+            user_id,
+            type,
+            std_price,
+            real_price,
+            quantity,
+            amount,
+            channel,
+            remark,
+            attach,
+            content,
+            state,
+            settled,
+            expire_time,
+            pay_time,
+            close_time,
+            gmt_create,
+            gmt_modify
+        from
+            order_info
+        where
+              type = #{type}
+          and state = 1
+          and expire_time &gt; current_time
+        order by
+            biz_no desc limit 1
+    </select>
+
+    <select id="getOrderInfoList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="OrderInfoMap">
+        select
+        id,
+        biz_no,
+        user_id,
+        type,
+        std_price,
+        real_price,
+        quantity,
+        amount,
+        channel,
+        remark,
+        attach,
+        content,
+        state,
+        settled,
+        expire_time,
+        pay_time,
+        close_time,
+        gmt_create
+        from
+        order_info
+        <where>
+            <if test="condition.settled!=null">
+                and settled=#{condition.settled}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;=#{condition.end}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countOrderInfos" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        order_info
+        <where>
+            <if test="condition.settled!=null">
+                and settled=#{condition.settled}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.type!=null">
+                and type=#{condition.type}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;=#{condition.end}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addOrderStatistics" parameterType="com.prize.lottery.infrast.persist.po.OrderStatisticsPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into order_statistics(day,
+                                     success_amt,
+                                     success_cnt,
+                                     failure_amt,
+                                     failure_cnt,
+                                     closed_amt,
+                                     closed_cnt,
+                                     gmt_create,
+                                     gmt_modify
+                                    )
+        values (#{day},
+                #{successAmt},
+                #{successCnt},
+                #{failureAmt},
+                #{failureCnt},
+                #{closedAmt},
+                #{closedCnt},
+                current_time,
+                current_time
+               )
+        on duplicate key
+            update
+                success_amt=
+                    values(success_amt),
+                success_cnt=
+                    values(success_cnt),
+                failure_amt=
+                    values(failure_amt),
+                failure_cnt=
+                    values(failure_cnt),
+                closed_amt=
+                    values(closed_amt),
+                closed_cnt=
+                    values(closed_cnt),
+                gmt_modify= current_time
+    </insert>
+
+    <select id="getOrderMetricsVo" parameterType="com.prize.lottery.infrast.persist.dto.MetricsTimeDto"
+            resultMap="OrderMetricsVoMap">
+        select
+            ifnull(sum(if(day = #{yesterday}, success_amt, 0)), 0)                                as yesterday_amt,
+            ifnull(sum(if(day = #{yesterday}, success_cnt, 0)), 0)                                as yesterday_cnt,
+            ifnull(sum(if(day &gt;= #{weekStart}, success_amt, 0)), 0)                            as week_amt,
+            ifnull(sum(if(day &gt;= #{weekStart}, success_cnt, 0)), 0)                            as week_cnt,
+            ifnull(sum(if(day &gt;= #{monthStart}, success_amt, 0)), 0)                           as month_amt,
+            ifnull(sum(if(day &gt;= #{monthStart}, success_cnt, 0)), 0)                           as month_cnt,
+            ifnull(sum(if(day &gt;= #{lastStart} and day &lt; #{monthStart}, success_amt, 0)), 0) as last_month_amt,
+            ifnull(sum(if(day &gt;= #{lastStart} and day &lt; #{monthStart}, success_cnt, 0)), 0) as last_month_cnt
+        from
+            order_statistics
+    </select>
+
+    <select id="getLatestOrderMetrics" parameterType="java.lang.Integer" resultMap="OrderStatisticsMap">
+        select
+            id, day, success_amt, success_cnt, failure_amt, failure_cnt, closed_amt, closed_cnt, gmt_create
+        from
+            order_statistics
+        order by
+            day desc
+            limit
+            #{limit}
+    </select>
+
+    <select id="getStatisticsList" resultMap="OrderStatisticsMap">
+        select
+            id, day, success_amt, success_cnt, failure_amt, failure_cnt, closed_amt, closed_cnt, gmt_create
+        from
+            order_statistics
+        where
+            day &gt;=
+              #{startDay}
+          and day
+         &lt; #{endDay}
+    </select>
+
+    <select id="getDateOrderStatistics" resultMap="OrderStatisticsMap">
+        select
+            #{metricDate} as day,
+            ifnull(sum(if(state = 0, amount, 0)), 0)    as failure_amt,
+            ifnull(count(if(state = 0, true, null)), 0) as failure_cnt,
+            ifnull(sum(if(state = 2, amount, 0)), 0)    as success_amt,
+            ifnull(count(if(state = 2, true, null)), 0) as success_cnt,
+            ifnull(sum(if(state = 3, amount, 0)), 0)    as closed_amt,
+            ifnull(count(if(state = 3, true, null)), 0) as closed_cnt
+        from
+            order_info
+        where
+            datediff(
+            gmt_create
+          ,
+            #{metricDate}) = 0
+    </select>
+
+    <select id="getOrderSumMetrics" resultMap="OrderStatisticsMap">
+        select
+            max(id)                     as id,
+            ifnull(sum(success_amt), 0) as success_amt,
+            ifnull(sum(success_cnt), 0) as success_cnt
+        from
+            order_statistics
+        where
+            day &gt;=
+              #{startDay}
+          and day
+         &lt; #{endDay}
+    </select>
+
+</mapper>

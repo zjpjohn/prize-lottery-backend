@@ -1,0 +1,9 @@
+com:
+  cloud:
+    web:
+      auth:
+        token:
+          header: Authentication
+          secret: ba72c1e3556644fb832e8602c7a31a89
+          issuer: prize-lottery
+          expire: 168 

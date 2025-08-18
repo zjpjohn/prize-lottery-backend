@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Fc3dRecommendMapper">
+
+    <resultMap id="Fc3dRecommendMap" type="com.prize.lottery.po.fc3d.Fc3dRecommendPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="dan1" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d1" property="data"/>
+            <result column="hit_d1" property="hitData"/>
+            <result column="d1_hit" property="dataHit"/>
+        </association>
+        <association property="dan2" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d2" property="data"/>
+            <result column="hit_d2" property="hitData"/>
+            <result column="d2_hit" property="dataHit"/>
+        </association>
+        <association property="dan3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d3" property="data"/>
+            <result column="hit_d3" property="hitData"/>
+            <result column="d3_hit" property="dataHit"/>
+        </association>
+        <association property="com5" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="c5" property="data"/>
+            <result column="hit_c5" property="hitData"/>
+            <result column="c5_hit" property="dataHit"/>
+        </association>
+        <association property="com6" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="c6" property="data"/>
+            <result column="hit_c6" property="hitData"/>
+            <result column="c6_hit" property="dataHit"/>
+        </association>
+        <association property="com7" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="c7" property="data"/>
+            <result column="hit_c7" property="hitData"/>
+            <result column="c7_hit" property="dataHit"/>
+        </association>
+        <association property="kill1" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k1" property="data"/>
+            <result column="hit_k1" property="hitData"/>
+            <result column="k1_hit" property="dataHit"/>
+        </association>
+        <association property="kill2" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k2" property="data"/>
+            <result column="hit_k2" property="hitData"/>
+            <result column="k2_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <sql id="recommendSql">
+        id
+        ,period,d1,d2,d3,c5,c6,c7,k1,k2,gmt_create
+    </sql>
+
+    <sql id="recommendHitSql">
+        id
+        ,period,
+        hit_d1,d1_hit,
+        hit_d2,d2_hit,
+        hit_d3,d3_hit,
+        hit_c5,c5_hit,
+        hit_c6,c6_hit,
+        hit_c7,c7_hit,
+        hit_k1,k1_hit,
+        hit_k2,k2_hit,
+        calc_time
+    </sql>
+
+    <insert id="addFc3dRecommend" parameterType="com.prize.lottery.po.fc3d.Fc3dRecommendPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into fc3d_recommend(period,
+                                   d1,
+                                   d2,
+                                   d3,
+                                   c5,
+                                   c6,
+                                   c7,
+                                   k1,
+                                   k2
+                                  )
+        values (#{period},
+                #{dan1.data},
+                #{dan2.data},
+                #{dan3.data},
+                #{com5.data},
+                #{com6.data},
+                #{com7.data},
+                #{kill1.data},
+                #{kill2.data}
+               ) on duplicate key
+        update
+            d1=
+        values (d1), d2=
+        values (d2), d3=
+        values (d3), c5=
+        values (c5), c6=
+        values (c6), c7=
+        values (c7), k1=
+        values (k1), k2=
+        values (k2)
+    </insert>
+
+    <update id="editFc3dRecommend" parameterType="com.prize.lottery.po.fc3d.Fc3dRecommendPo">
+        update fc3d_recommend
+        set
+            hit_d1=#{dan1.hitData},
+            d1_hit=#{dan1.dataHit},
+            hit_d2=#{dan2.hitData},
+            d2_hit=#{dan2.dataHit},
+            hit_d3=#{dan3.hitData},
+            d3_hit=#{dan3.dataHit},
+            hit_c5=#{com5.hitData},
+            c5_hit=#{com5.dataHit},
+            hit_c6=#{com6.hitData},
+            c6_hit=#{com6.dataHit},
+            hit_c7=#{com7.hitData},
+            c7_hit=#{com7.dataHit},
+            hit_k1=#{kill1.hitData},
+            k1_hit=#{kill1.dataHit},
+            hit_k2=#{kill2.hitData},
+            k2_hit=#{kill2.dataHit},
+            calc_time=current_time
+        where
+            id = #{id}
+    </update>
+
+    <select id="getFc3dRecommendByPeriod" parameterType="java.lang.String" resultMap="Fc3dRecommendMap">
+        select
+        <include refid="recommendSql"/>
+        from fc3d_recommend
+        where period=#{period}
+    </select>
+
+    <select id="getFc3dRecommendHitByPeriod" parameterType="java.lang.String" resultMap="Fc3dRecommendMap">
+        select
+        <include refid="recommendHitSql"/>
+        from fc3d_recommend
+        where period=#{period}
+    </select>
+
+    <select id="getFc3dRecommendList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Fc3dRecommendMap">
+        select
+        <include refid="recommendHitSql"/>,
+        IF(calc_time is null,d1,'') as d1,
+        IF(calc_time is null,d2,'') as d2,
+        IF(calc_time is null,d3,'') as d3,
+        IF(calc_time is null,c5,'') as c5,
+        IF(calc_time is null,c6,'') as c6,
+        IF(calc_time is null,c7,'') as c7,
+        IF(calc_time is null,k1,'') as k1,
+        IF(calc_time is null,k2,'') as k2
+        from fc3d_recommend
+        <where>
+            <if test="condition.period!=null">
+                period=#{condition.period}
+            </if>
+            <if test="condition.opened!=null">
+                and calc_time is not null
+            </if>
+        </where>
+        order by period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countFc3dRecommends" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from fc3d_recommend
+        <where>
+            <if test="condition.period!=null">
+                period=#{condition.period}
+            </if>
+            <if test="condition.opened!=null">
+                and calc_time is not null
+            </if>
+        </where>
+    </select>
+
+    <select id="newestFc3dRecommendPeriod" resultType="com.prize.lottery.value.Period">
+        select
+            period,
+            if(calc_time is null, 0, 1) calculated
+        from
+            fc3d_recommend
+        order by
+            period desc limit 1
+    </select>
+
+
+</mapper>

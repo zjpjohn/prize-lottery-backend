@@ -1,0 +1,30 @@
+package com.prize.lottery.application.handler;
+
+import com.lmax.disruptor.EventHandler;
+import com.prize.lottery.application.service.IProxyCalcHandler;
+import com.prize.lottery.enums.LotteryEnum;
+import com.prize.lottery.infrast.event.StatsCalcEvent;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class CensusVipMasterHandler implements EventHandler<StatsCalcEvent> {
+
+    private final IProxyCalcHandler proxyCalcHandler;
+
+    @Override
+    public void onEvent(StatsCalcEvent event, long sequence, boolean endOfBatch) throws Exception {
+        LotteryEnum type   = event.getType();
+        String      period = event.getPeriod();
+        try {
+            proxyCalcHandler.calcVipMasterChart(type, period);
+        } catch (Exception error) {
+            log.error(error.getMessage(), error);
+        }
+
+    }
+}

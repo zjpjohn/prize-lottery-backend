@@ -1,0 +1,42 @@
+server:
+  port: 8090
+spring:
+  profiles:
+    active: @profileActive@
+  application:
+    name: lottery-gateway
+  jackson:
+    date-format: yyyy/MM/dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    loadbalancer:
+      cache:
+        enabled: true
+        caffeine:
+          spec: initialCapacity=256,expireAfterWrite=3s
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+    nacos:
+      config:
+        file-extension: yml
+        refresh-enabled: true
+      discovery:
+        group: SPRING_CLOUD_GROUP
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+    persist-authorization: true
+
+com:
+  cloud:
+    gateway:
+      route:
+        data-id: lottery-api-route-${spring.profiles.active}.json
+        group: DEFAULT_GROUP
+      access:
+        data-id: lottery-api-access-${spring.profiles.active}.json
+        group: DEFAULT_GROUP

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.ExpertAcctMapper">
+
+    <resultMap id="ExpertAcctMap" type="com.prize.lottery.infrast.persist.po.ExpertAcctPo">
+        <id column="user_id" property="userId"/>
+        <result column="master_id" property="masterId"/>
+        <result column="acct_pwd" property="acctPwd"/>
+        <result column="income" property="income"/>
+        <result column="withdraw" property="withdraw"/>
+        <result column="with_latest" property="withLatest"/>
+        <result column="with_rmb" property="withRmb"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="ExpertIncomeMap" type="com.prize.lottery.infrast.persist.po.ExpertIncomePo">
+        <id column="id" property="id"/>
+        <result column="seq_no" property="seqNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="pay_id" property="payId"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="profit" property="profit"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="ExpertMetricsMap" type="com.prize.lottery.infrast.persist.po.ExpertMetricsPo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="day" property="day"/>
+        <result column="users" property="users"/>
+        <result column="amount" property="amount"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="ExpertWithdrawMap" type="com.prize.lottery.infrast.persist.po.ExpertWithdrawPo">
+        <id column="id" property="id"/>
+        <result column="seq_no" property="seqNo"/>
+        <result column="trans_no" property="transNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="withdraw" property="withdraw"/>
+        <result column="money" property="money"/>
+        <result column="channel" property="channel"/>
+        <result column="state" property="state"/>
+        <result column="message" property="message"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="saveExpertAcct" parameterType="com.prize.lottery.infrast.persist.po.ExpertAcctPo">
+        insert into
+        expert_acct(
+        user_id,master_id,acct_pwd,state,gmt_create,gmt_modify)
+        values
+        (
+        #{userId},#{masterId},#{acctPwd},#{state},current_time,current_time)
+        on duplicate key update
+        <if test="acctPwd!=null">
+            acct_pwd=#{acctPwd},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        gmt_modify=current_time
+    </insert>
+
+
+    <select id="getExpertAcctByUserId" resultMap="ExpertAcctMap">
+        select
+            user_id,
+            master_id,
+            acct_pwd,
+            income,
+            withdraw,
+            with_rmb,
+            with_latest,
+            state,
+            gmt_create
+        from
+            expert_acct
+        where
+            user_id = #{userId}
+    </select>
+
+    <select id="getExpertAcctByMasterId" resultMap="ExpertAcctMap">
+        select
+            user_id,
+            master_id,
+            acct_pwd,
+            income,
+            withdraw,
+            with_rmb,
+            with_latest,
+            state,
+            gmt_create
+        from
+            expert_acct
+        where
+            master_id = #{masterId}
+    </select>
+
+    <update id="saveExpertBalance" parameterType="com.prize.lottery.infrast.persist.po.ExpertAcctPo">
+        update expert_acct
+        set
+        <if test="income!=null">
+            income=income + #{income},
+        </if>
+        <if test="withdraw!=null">
+            withdraw=withdraw + #{withdraw},
+        </if>
+        <if test="withRmb!=null">
+            with_rmb=with_rmb + #{withRmb},
+        </if>
+        <if test="withLatest!=null">
+            with_latest=#{withLatest},
+        </if>
+        gmt_modify=current_time
+        where
+        user_id=#{userId}
+    </update>
+
+    <insert id="addExpertIncome" parameterType="com.prize.lottery.infrast.persist.po.ExpertIncomePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into expert_income(seq_no,
+                                  user_id,
+                                  pay_id,
+                                  period,
+                                  type,
+                                  profit,
+                                  gmt_create
+                                 )
+        values (#{seqNo},
+                #{userId},
+                #{payId},
+                #{period},
+                #{type},
+                #{profit},
+                current_time
+               )
+    </insert>
+
+    <select id="getExpertIncomeList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="ExpertIncomeMap">
+        select id,seq_no,user_id,pay_id,period,type,profit,gmt_create
+        from expert_income
+        where
+        user_id=#{condition.userId}
+        <if test="condition.type!=null">
+            and type=#{condition.type}
+        </if>
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countExpertIncomes" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from expert_income
+        where
+        user_id=#{condition.userId}
+        <if test="condition.type!=null">
+            and type=#{condition.type}
+        </if>
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+    </select>
+
+    <insert id="addExpertMetrics" parameterType="com.prize.lottery.infrast.persist.po.ExpertMetricsPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert
+        ignore into expert_metrics(user_id,
+                                          day,
+                                          users,
+                                          amount,
+                                          gmt_create
+                                         )
+        values (
+        #{userId},
+        #{day},
+        #{users},
+        #{amount},
+        current_time
+        )
+    </insert>
+
+    <select id="getLatestMetrics" parameterType="java.lang.Long" resultMap="ExpertMetricsMap">
+        select
+            id,
+            user_id, day, users, amount, gmt_create
+        from
+            expert_metrics
+        where
+            user_id =
+            #{userId}
+        order by
+            gmt_create desc
+            limit 1
+    </select>
+
+    <select id="getExpertMetricsList" resultMap="ExpertMetricsMap">
+        select
+            id,
+            user_id, day, users, amount, gmt_create
+        from
+            expert_metrics
+        where
+            user_id =
+                        #{userId}
+          and day &gt;= #{startDay}
+          and day &lt;= #{endDay}
+    </select>
+
+    <insert id="addExpertWithdraw" parameterType="com.prize.lottery.infrast.persist.po.ExpertWithdrawPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into expert_withdraw(seq_no,
+                                    user_id,
+                                    withdraw,
+                                    money,
+                                    channel,
+                                    state,
+                                    gmt_create,
+                                    gmt_modify
+                                   )
+        values (#{seqNo},
+                #{userId},
+                #{withdraw},
+                #{money},
+                #{channel},
+                #{state},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editExpertWithdraw" parameterType="com.prize.lottery.infrast.persist.po.ExpertWithdrawPo">
+        update expert_withdraw
+        set
+        <if test="transNo!=null">
+            trans_no=#{transNo},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="message!=null">
+            message=#{message},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getWithdrawById" parameterType="java.lang.Long" resultMap="ExpertWithdrawMap">
+        select
+            id,
+            seq_no,
+            trans_no,
+            user_id,
+            withdraw,
+            money,
+            channel,
+            state,
+            message,
+            gmt_create
+        from
+            expert_withdraw
+        where
+            id = #{id}
+    </select>
+
+    <select id="getWithdrawBySeqNo" parameterType="java.lang.String" resultMap="ExpertWithdrawMap">
+        select
+            id,
+            seq_no,
+            trans_no,
+            user_id,
+            withdraw,
+            money,
+            channel,
+            state,
+            message,
+            gmt_create
+        from
+            expert_withdraw
+        where
+            seq_no = #{seqNo}
+    </select>
+
+    <select id="latestWithdraw" parameterType="java.lang.Long" resultMap="ExpertWithdrawMap">
+        select
+            id,
+            seq_no,
+            trans_no,
+            user_id,
+            withdraw,
+            money,
+            channel,
+            state,
+            message,
+            gmt_create
+        from
+            expert_withdraw
+        where
+            user_id = #{userId}
+        order by
+            gmt_create desc limit 1
+    </select>
+
+    <select id="getExpertWithdrawList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="ExpertWithdrawMap">
+        select
+        id, seq_no, trans_no, user_id, withdraw, money, channel, state, message, gmt_create, gmt_modify
+        from
+        expert_withdraw
+        <where>
+            <if test="condition.seqNo!=null">
+                and seq_no=#{condition.seqNo}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countExpertWithdraws" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        expert_withdraw
+        <where>
+            <if test="condition.seqNo!=null">
+                and seq_no=#{condition.seqNo}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+    </select>
+
+</mapper>

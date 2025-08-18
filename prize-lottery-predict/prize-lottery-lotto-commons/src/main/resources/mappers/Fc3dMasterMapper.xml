@@ -1,0 +1,1924 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Fc3dMasterMapper">
+
+    <resultMap id="Fc3dMasterRankMap" type="com.prize.lottery.po.fc3d.Fc3dMasterRankPo">
+        <id column="id" property="id"/>
+        <result column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="isVip"/>
+        <association property="rank" javaType="com.prize.lottery.value.RankValue">
+            <result column="weight" property="weight"/>
+            <result column="rank" property="rank"/>
+        </association>
+        <association property="dan1" javaType="com.prize.lottery.value.RankValue">
+            <result column="d1_wgt" property="weight"/>
+            <result column="d1_rank" property="rank"/>
+        </association>
+        <association property="dan2" javaType="com.prize.lottery.value.RankValue">
+            <result column="d2_wgt" property="weight"/>
+            <result column="d2_rank" property="rank"/>
+        </association>
+        <association property="dan3" javaType="com.prize.lottery.value.RankValue">
+            <result column="d3_wgt" property="weight"/>
+            <result column="d3_rank" property="rank"/>
+        </association>
+        <association property="com5" javaType="com.prize.lottery.value.RankValue">
+            <result column="c5_wgt" property="weight"/>
+            <result column="c5_rank" property="rank"/>
+        </association>
+        <association property="com6" javaType="com.prize.lottery.value.RankValue">
+            <result column="c6_wgt" property="weight"/>
+            <result column="c6_rank" property="rank"/>
+        </association>
+        <association property="com7" javaType="com.prize.lottery.value.RankValue">
+            <result column="c7_wgt" property="weight"/>
+            <result column="c7_rank" property="rank"/>
+        </association>
+        <association property="kill1" javaType="com.prize.lottery.value.RankValue">
+            <result column="k1_wgt" property="weight"/>
+            <result column="k1_rank" property="rank"/>
+        </association>
+        <association property="kill2" javaType="com.prize.lottery.value.RankValue">
+            <result column="k2_wgt" property="weight"/>
+            <result column="k2_rank" property="rank"/>
+        </association>
+        <association property="comb3" javaType="com.prize.lottery.value.RankValue">
+            <result column="cb3_wgt" property="weight"/>
+            <result column="cb3_rank" property="rank"/>
+        </association>
+        <association property="comb4" javaType="com.prize.lottery.value.RankValue">
+            <result column="cb4_wgt" property="weight"/>
+            <result column="cb4_rank" property="rank"/>
+        </association>
+        <association property="comb5" javaType="com.prize.lottery.value.RankValue">
+            <result column="cb5_wgt" property="weight"/>
+            <result column="cb5_rank" property="rank"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Fc3dMasterRankVoMap" type="com.prize.lottery.vo.fc3d.Fc3dMasterRankVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="vip"/>
+        <result column="hot" property="hot"/>
+        <result column="rank" property="rank"/>
+        <result column="last_rank" property="lastRank"/>
+        <result column="browse" property="browse"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="rate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hit_count" property="count"/>
+            <result column="hit_series" property="series"/>
+            <result column="hit_rate" property="rate"/>
+        </association>
+        <association property="dan3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d3_series" property="series"/>
+            <result column="d3_count" property="count"/>
+            <result column="d3_rate" property="rate"/>
+        </association>
+        <association property="com7" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c7_series" property="series"/>
+            <result column="c7_count" property="count"/>
+            <result column="c7_rate" property="rate"/>
+        </association>
+        <association property="kill1" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k1_series" property="series"/>
+            <result column="k1_count" property="count"/>
+            <result column="k1_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Fc3dMasterRateMap" type="com.prize.lottery.po.fc3d.Fc3dMasterRatePo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="master_id" property="masterId"/>
+        <association property="d1Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d1_ne_hit" property="series"/>
+            <result column="d1_ne_rate" property="rate"/>
+            <result column="d1_ne_count" property="count"/>
+        </association>
+        <association property="d1Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d1_me_hit" property="series"/>
+            <result column="d1_me_rate" property="rate"/>
+            <result column="d1_me_count" property="count"/>
+        </association>
+        <association property="d1Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d1_hi_hit" property="series"/>
+            <result column="d1_hi_rate" property="rate"/>
+            <result column="d1_hi_count" property="count"/>
+        </association>
+        <association property="d2Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d2_ne_hit" property="series"/>
+            <result column="d2_ne_rate" property="rate"/>
+            <result column="d2_ne_count" property="count"/>
+        </association>
+        <association property="d2Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d2_me_hit" property="series"/>
+            <result column="d2_me_rate" property="rate"/>
+            <result column="d2_me_count" property="count"/>
+        </association>
+        <association property="d2Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d2_hi_hit" property="series"/>
+            <result column="d2_hi_rate" property="rate"/>
+            <result column="d2_hi_count" property="count"/>
+        </association>
+        <association property="d3Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d3_ne_hit" property="series"/>
+            <result column="d3_ne_rate" property="rate"/>
+            <result column="d3_ne_count" property="count"/>
+        </association>
+        <association property="d3Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d3_me_hit" property="series"/>
+            <result column="d3_me_rate" property="rate"/>
+            <result column="d3_me_count" property="count"/>
+        </association>
+        <association property="d3Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d3_hi_hit" property="series"/>
+            <result column="d3_hi_rate" property="rate"/>
+            <result column="d3_hi_count" property="count"/>
+        </association>
+        <association property="c5Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c5_ne_hit" property="series"/>
+            <result column="c5_ne_rate" property="rate"/>
+            <result column="c5_ne_full_rate" property="fullRate"/>
+            <result column="c5_ne_count" property="count"/>
+        </association>
+        <association property="c5Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c5_me_hit" property="series"/>
+            <result column="c5_me_rate" property="rate"/>
+            <result column="c5_me_full_rate" property="fullRate"/>
+            <result column="c5_me_count" property="count"/>
+        </association>
+        <association property="c5Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c5_hi_hit" property="series"/>
+            <result column="c5_hi_rate" property="rate"/>
+            <result column="c5_hi_full_rate" property="fullRate"/>
+            <result column="c5_hi_count" property="count"/>
+        </association>
+        <association property="c6Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c6_ne_hit" property="series"/>
+            <result column="c6_ne_rate" property="rate"/>
+            <result column="c6_ne_full_rate" property="fullRate"/>
+            <result column="c6_ne_count" property="count"/>
+        </association>
+        <association property="c6Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c6_me_hit" property="series"/>
+            <result column="c6_me_rate" property="rate"/>
+            <result column="c6_me_full_rate" property="fullRate"/>
+            <result column="c6_me_count" property="count"/>
+        </association>
+        <association property="c6Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c6_hi_hit" property="series"/>
+            <result column="c6_hi_rate" property="rate"/>
+            <result column="c6_hi_full_rate" property="fullRate"/>
+            <result column="c6_hi_count" property="count"/>
+        </association>
+        <association property="c7Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c7_ne_hit" property="series"/>
+            <result column="c7_ne_rate" property="rate"/>
+            <result column="c7_ne_full_rate" property="fullRate"/>
+            <result column="c7_ne_count" property="count"/>
+        </association>
+        <association property="c7Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c7_me_hit" property="series"/>
+            <result column="c7_me_rate" property="rate"/>
+            <result column="c7_me_full_rate" property="fullRate"/>
+            <result column="c7_me_count" property="count"/>
+        </association>
+        <association property="c7Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c7_hi_hit" property="series"/>
+            <result column="c7_hi_rate" property="rate"/>
+            <result column="c7_hi_full_rate" property="fullRate"/>
+            <result column="c7_hi_count" property="count"/>
+        </association>
+        <association property="k1Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k1_ne_hit" property="series"/>
+            <result column="k1_ne_rate" property="rate"/>
+            <result column="k1_ne_count" property="count"/>
+        </association>
+        <association property="k1Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k1_me_hit" property="series"/>
+            <result column="k1_me_rate" property="rate"/>
+            <result column="k1_me_count" property="count"/>
+        </association>
+        <association property="k1Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k1_hi_hit" property="series"/>
+            <result column="k1_hi_rate" property="rate"/>
+            <result column="k1_hi_count" property="count"/>
+        </association>
+        <association property="k2Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k2_ne_hit" property="series"/>
+            <result column="k2_ne_rate" property="rate"/>
+            <result column="k2_ne_count" property="count"/>
+        </association>
+        <association property="k2Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k2_me_hit" property="series"/>
+            <result column="k2_me_rate" property="rate"/>
+            <result column="k2_me_count" property="count"/>
+        </association>
+        <association property="k2Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k2_hi_hit" property="series"/>
+            <result column="k2_hi_rate" property="rate"/>
+            <result column="k2_hi_count" property="count"/>
+        </association>
+        <association property="cb3Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="cb3_ne_hit" property="series"/>
+            <result column="cb3_ne_rate" property="rate"/>
+            <result column="cb3_ne_count" property="count"/>
+        </association>
+        <association property="cb3Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="cb3_me_hit" property="series"/>
+            <result column="cb3_me_rate" property="rate"/>
+            <result column="cb3_me_count" property="count"/>
+        </association>
+        <association property="cb3Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="cb3_hi_hit" property="series"/>
+            <result column="cb3_hi_rate" property="rate"/>
+            <result column="cb3_hi_count" property="count"/>
+        </association>
+        <association property="cb4Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="cb4_ne_hit" property="series"/>
+            <result column="cb4_ne_rate" property="rate"/>
+            <result column="cb4_ne_count" property="count"/>
+        </association>
+        <association property="cb4Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="cb4_me_hit" property="series"/>
+            <result column="cb4_me_rate" property="rate"/>
+            <result column="cb4_me_count" property="count"/>
+        </association>
+        <association property="cb4Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="cb4_hi_hit" property="series"/>
+            <result column="cb4_hi_rate" property="rate"/>
+            <result column="cb4_hi_count" property="count"/>
+        </association>
+        <association property="cb5Ne" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="cb5_ne_hit" property="series"/>
+            <result column="cb5_ne_rate" property="rate"/>
+            <result column="cb5_ne_count" property="count"/>
+        </association>
+        <association property="cb5Me" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="cb5_me_hit" property="series"/>
+            <result column="cb5_me_rate" property="rate"/>
+            <result column="cb5_me_count" property="count"/>
+        </association>
+        <association property="cb5Hi" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="cb5_hi_hit" property="series"/>
+            <result column="cb5_hi_rate" property="rate"/>
+            <result column="cb5_hi_count" property="count"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Fc3dGladMasterMap" type="com.prize.lottery.vo.fc3d.Fc3dICaiGladVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="dan3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d3_hi_hit" property="series"/>
+            <result column="d3_hi_count" property="count"/>
+            <result column="d3_hi_rate" property="rate"/>
+        </association>
+        <association property="com6" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c6_hi_hit" property="series"/>
+            <result column="c6_hi_count" property="count"/>
+            <result column="c6_hi_rate" property="rate"/>
+            <result column="c6_hi_full_rate" property="fullRate"/>
+        </association>
+        <association property="com7" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c7_hi_hit" property="series"/>
+            <result column="c7_hi_count" property="count"/>
+            <result column="c7_hi_rate" property="rate"/>
+            <result column="c7_hi_full_rate" property="fullRate"/>
+        </association>
+        <association property="kill1" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k1_hi_hit" property="series"/>
+            <result column="k1_hi_count" property="count"/>
+            <result column="k1_hi_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Fc3dMasterMulRankMap" type="com.prize.lottery.vo.fc3d.Fc3dMasterMulRankVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="is_vip" property="vip"/>
+        <result column="hot" property="hot"/>
+        <result column="rank" property="rank"/>
+        <result column="last_rank" property="lastRank"/>
+        <result column="browse" property="browse"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="dan3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d3_hi_hit" property="series"/>
+            <result column="d3_hi_count" property="count"/>
+            <result column="d3_hi_rate" property="rate"/>
+        </association>
+        <association property="com6" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c6_hi_hit" property="series"/>
+            <result column="c6_hi_count" property="count"/>
+            <result column="c6_hi_rate" property="rate"/>
+            <result column="c6_hi_full_rate" property="fullRate"/>
+        </association>
+        <association property="com7" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c7_hi_hit" property="series"/>
+            <result column="c7_hi_count" property="count"/>
+            <result column="c7_hi_rate" property="rate"/>
+            <result column="c7_hi_full_rate" property="fullRate"/>
+        </association>
+        <association property="kill1" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k1_hi_hit" property="series"/>
+            <result column="k1_hi_count" property="count"/>
+            <result column="k1_hi_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Fc3dMasterDetailMap" type="com.prize.lottery.vo.fc3d.Fc3dMasterDetail">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="vip" property="vip"/>
+        <result column="gmt_create" property="timestamp"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="seq" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+            <result column="browse" property="browse"/>
+            <result column="subscribe" property="subscribe"/>
+            <result column="searches" property="searches"/>
+        </association>
+        <association property="dan3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d3_hi_hit" property="series"/>
+            <result column="d3_hi_count" property="count"/>
+            <result column="d3_hi_rate" property="rate"/>
+        </association>
+        <association property="com6" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c6_hi_hit" property="series"/>
+            <result column="c6_hi_count" property="count"/>
+            <result column="c6_hi_rate" property="rate"/>
+            <result column="c6_hi_full_rate" property="fullRate"/>
+        </association>
+        <association property="com7" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c7_hi_hit" property="series"/>
+            <result column="c7_hi_count" property="count"/>
+            <result column="c7_hi_rate" property="rate"/>
+            <result column="c7_hi_full_rate" property="fullRate"/>
+        </association>
+        <association property="kill1" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k1_hi_hit" property="series"/>
+            <result column="k1_hi_count" property="count"/>
+            <result column="k1_hi_rate" property="rate"/>
+        </association>
+        <association property="kill2" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k2_hi_hit" property="series"/>
+            <result column="k2_hi_count" property="count"/>
+            <result column="k2_hi_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="HomeMasterVoMap" type="com.prize.lottery.vo.HomeMasterVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="rank" property="rank"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="rate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hit_count" property="count"/>
+            <result column="hit_rate" property="rate"/>
+            <result column="hit_series" property="series"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Fc3dMasterSubscribeMap" type="com.prize.lottery.vo.fc3d.Fc3dMasterSubscribeVo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="dan3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d3_hi_hit" property="series"/>
+            <result column="d3_hi_count" property="count"/>
+            <result column="d3_hi_rate" property="rate"/>
+        </association>
+        <association property="com7" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c7_hi_hit" property="series"/>
+            <result column="c7_hi_count" property="count"/>
+            <result column="c7_hi_rate" property="rate"/>
+        </association>
+        <association property="kill1" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k1_hi_hit" property="series"/>
+            <result column="k1_hi_count" property="count"/>
+            <result column="k1_hi_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="LottoMasterVoMap" type="com.prize.lottery.vo.LotteryMasterVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="rank" property="rank"/>
+        <result column="i_rank" property="iRank"/>
+        <result column="last_i_rank" property="lastIRank"/>
+        <result column="homed" property="homed"/>
+        <result column="hot" property="hot"/>
+        <result column="is_vip" property="vip"/>
+        <result column="source" property="source"/>
+        <result column="browse" property="browse"/>
+        <result column="subscribe" property="subscribe"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="hit" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hit_count" property="count"/>
+            <result column="hit_series" property="series"/>
+            <result column="hit_rate" property="rate"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Fc3dMasterSchemaMap" type="com.prize.lottery.vo.fc3d.Fc3dMasterSchemaVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="d3_hit" property="d3Hit"/>
+        <result column="c5_hit" property="c5Hit"/>
+        <result column="latest" property="latest"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+        <association property="d3" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="d3_me_count" property="count"/>
+            <result column="d3_me_rate" property="rate"/>
+            <result column="d3_me_hit" property="series"/>
+        </association>
+        <association property="c5" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="c5_me_count" property="count"/>
+            <result column="c5_me_rate" property="rate"/>
+            <result column="c5_me_hit" property="series"/>
+        </association>
+        <association property="k1" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k1_me_count" property="count"/>
+            <result column="k1_me_rate" property="rate"/>
+            <result column="k1_me_hit" property="series"/>
+        </association>
+        <association property="k2" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="k2_me_count" property="count"/>
+            <result column="k2_me_rate" property="rate"/>
+            <result column="k2_me_hit" property="series"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Fc3dMasterRateVoMap" type="com.prize.lottery.vo.fc3d.Fc3dMasterRateVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="d3_rate" property="dan3"/>
+        <result column="d3_avg" property="d3Avg"/>
+        <result column="c5_rate" property="com5"/>
+        <result column="c5_avg" property="c5Avg"/>
+        <result column="c6_rate" property="com6"/>
+        <result column="c6_avg" property="c6Avg"/>
+        <result column="c7_rate" property="com7"/>
+        <result column="c7_avg" property="c7Avg"/>
+        <result column="k1_rate" property="kill1"/>
+        <result column="k1_avg" property="k1Avg"/>
+        <result column="k2_rate" property="kill2"/>
+        <result column="k2_avg" property="k2Avg"/>
+    </resultMap>
+
+    <resultMap id="MasterGladRateVoMap" type="com.prize.lottery.vo.MasterGladRateVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="hit_count" property="hitCount"/>
+        <result column="hit_rate" property="rate"/>
+    </resultMap>
+
+    <resultMap id="MasterFeedRateVoMap" type="com.prize.lottery.vo.MasterFeedRateVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="field" property="field"/>
+        <result column="timestamp" property="timestamp"/>
+        <result column="hit_rate" property="rate"/>
+        <result column="hit_count" property="hitCount"/>
+        <result column="hit" property="hit"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <insert id="addFc3dMasterRates" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        fc3d_master_rate(
+        period,master_id,
+        d1_ne_hit,d1_ne_rate,d1_ne_count,
+        d1_me_hit,d1_me_rate,d1_me_count,
+        d1_hi_hit,d1_hi_rate,d1_hi_count,
+        d2_ne_hit,d2_ne_rate,d2_ne_count,
+        d2_me_hit,d2_me_rate,d2_me_count,
+        d2_hi_hit,d2_hi_rate,d2_hi_count,
+        d3_ne_hit,d3_ne_rate,d3_ne_count,
+        d3_me_hit,d3_me_rate,d3_me_count,
+        d3_hi_hit,d3_hi_rate,d3_hi_count,
+        c5_ne_hit,c5_ne_rate,c5_ne_full_rate,c5_ne_count,
+        c5_me_hit,c5_me_rate,c5_me_full_rate,c5_me_count,
+        c5_hi_hit,c5_hi_rate,c5_hi_full_rate,c5_hi_count,
+        c6_ne_hit,c6_ne_rate,c6_ne_full_rate,c6_ne_count,
+        c6_me_hit,c6_me_rate,c6_me_full_rate,c6_me_count,
+        c6_hi_hit,c6_hi_rate,c6_hi_full_rate,c6_hi_count,
+        c7_ne_hit,c7_ne_rate,c7_ne_full_rate,c7_ne_count,
+        c7_me_hit,c7_me_rate,c7_me_full_rate,c7_me_count,
+        c7_hi_hit,c7_hi_rate,c7_hi_full_rate,c7_hi_count,
+        k1_ne_hit,k1_ne_rate,k1_ne_count,
+        k1_me_hit,k1_me_rate,k1_me_count,
+        k1_hi_hit,k1_hi_rate,k1_hi_count,
+        k2_ne_hit,k2_ne_rate,k2_ne_count,
+        k2_me_hit,k2_me_rate,k2_me_count,
+        k2_hi_hit,k2_hi_rate,k2_hi_count,
+        cb3_ne_hit,cb3_ne_rate,cb3_ne_count,
+        cb3_me_hit,cb3_me_rate,cb3_me_count,
+        cb3_hi_hit,cb3_hi_rate,cb3_hi_count,
+        cb4_ne_hit,cb4_ne_rate,cb4_ne_count,
+        cb4_me_hit,cb4_me_rate,cb4_me_count,
+        cb4_hi_hit,cb4_hi_rate,cb4_hi_count,
+        cb5_ne_hit,cb5_ne_rate,cb5_ne_count,
+        cb5_me_hit,cb5_me_rate,cb5_me_count,
+        cb5_hi_hit,cb5_hi_rate,cb5_hi_count,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},#{item.masterId},
+            #{item.d1Ne.series},#{item.d1Ne.rate},#{item.d1Ne.count},
+            #{item.d1Me.series},#{item.d1Me.rate},#{item.d1Me.count},
+            #{item.d1Hi.series},#{item.d1Hi.rate},#{item.d1Hi.count},
+            #{item.d2Ne.series},#{item.d2Ne.rate},#{item.d2Ne.count},
+            #{item.d2Me.series},#{item.d2Me.rate},#{item.d2Me.count},
+            #{item.d2Hi.series},#{item.d2Hi.rate},#{item.d2Hi.count},
+            #{item.d3Ne.series},#{item.d3Ne.rate},#{item.d3Ne.count},
+            #{item.d3Me.series},#{item.d3Me.rate},#{item.d3Me.count},
+            #{item.d3Hi.series},#{item.d3Hi.rate},#{item.d3Hi.count},
+            #{item.c5Ne.series},#{item.c5Ne.rate},#{item.c5Ne.fullRate},#{item.c5Ne.count},
+            #{item.c5Me.series},#{item.c5Me.rate},#{item.c5Me.fullRate},#{item.c5Me.count},
+            #{item.c5Hi.series},#{item.c5Hi.rate},#{item.c5Hi.fullRate},#{item.c5Hi.count},
+            #{item.c6Ne.series},#{item.c6Ne.rate},#{item.c6Ne.fullRate},#{item.c6Ne.count},
+            #{item.c6Me.series},#{item.c6Me.rate},#{item.c6Me.fullRate},#{item.c6Me.count},
+            #{item.c6Hi.series},#{item.c6Hi.rate},#{item.c6Hi.fullRate},#{item.c6Hi.count},
+            #{item.c7Ne.series},#{item.c7Ne.rate},#{item.c7Ne.fullRate},#{item.c7Ne.count},
+            #{item.c7Me.series},#{item.c7Me.rate},#{item.c7Me.fullRate},#{item.c7Me.count},
+            #{item.c7Hi.series},#{item.c7Hi.rate},#{item.c7Hi.fullRate},#{item.c7Hi.count},
+            #{item.k1Ne.series},#{item.k1Ne.rate},#{item.k1Ne.count},
+            #{item.k1Me.series},#{item.k1Me.rate},#{item.k1Me.count},
+            #{item.k1Hi.series},#{item.k1Hi.rate},#{item.k1Hi.count},
+            #{item.k2Ne.series},#{item.k2Ne.rate},#{item.k2Ne.count},
+            #{item.k2Me.series},#{item.k2Me.rate},#{item.k2Me.count},
+            #{item.k2Hi.series},#{item.k2Hi.rate},#{item.k2Hi.count},
+            #{item.cb3Ne.series},#{item.cb3Ne.rate},#{item.cb3Ne.count},
+            #{item.cb3Me.series},#{item.cb3Me.rate},#{item.cb3Me.count},
+            #{item.cb3Hi.series},#{item.cb3Hi.rate},#{item.cb3Hi.count},
+            #{item.cb4Ne.series},#{item.cb4Ne.rate},#{item.cb4Ne.count},
+            #{item.cb4Me.series},#{item.cb4Me.rate},#{item.cb4Me.count},
+            #{item.cb4Hi.series},#{item.cb4Hi.rate},#{item.cb4Hi.count},
+            #{item.cb4Ne.series},#{item.cb4Ne.rate},#{item.cb4Ne.count},
+            #{item.cb4Me.series},#{item.cb4Me.rate},#{item.cb4Me.count},
+            #{item.cb4Hi.series},#{item.cb4Hi.rate},#{item.cb4Hi.count},
+            current_time)
+        </foreach>
+    </insert>
+
+    <insert id="addFc3dMasterRanks" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        fc3d_master_rank(period,master_id,
+        weight,`rank`,
+        d1_wgt,d1_rank,
+        d2_wgt,d2_rank,
+        d3_wgt,d3_rank,
+        k1_wgt,k1_rank,
+        k2_wgt,k2_rank,
+        c5_wgt,c5_rank,
+        c6_wgt,c6_rank,
+        c7_wgt,c7_rank,
+        cb3_wgt,cb3_rank,
+        cb4_wgt,cb4_rank,
+        cb5_wgt,cb5_rank,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},#{item.masterId},
+            #{item.rank.weight},#{item.rank.rank},
+            #{item.dan1.weight},#{item.dan1.rank},
+            #{item.dan2.weight},#{item.dan2.rank},
+            #{item.dan3.weight},#{item.dan3.rank},
+            #{item.kill1.weight},#{item.kill1.rank},
+            #{item.kill2.weight},#{item.kill2.rank},
+            #{item.com5.weight},#{item.com5.rank},
+            #{item.com5.weight},#{item.com6.rank},
+            #{item.com7.weight},#{item.com7.rank},
+            #{item.comb3.weight},#{item.comb3.rank},
+            #{item.comb4.weight},#{item.comb4.rank},
+            #{item.comb5.weight},#{item.comb5.rank},
+            current_time)
+        </foreach>
+    </insert>
+
+    <update id="editFc3dVipMasters">
+        update fc3d_master_rank
+        set
+        is_vip=1
+        where period=#{period}
+        and master_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </update>
+
+    <insert id="addFc3dHomeMasters" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        fc3d_home_master(period,master_id,type,hit_count,hit_rate,hit_series,`rank`,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},
+            #{item.masterId},
+            #{item.type},
+            #{item.rate.count},
+            #{item.rate.rate},
+            #{item.rate.series},
+            #{item.rank},
+            current_time)
+        </foreach>
+    </insert>
+
+    <select id="latestFc3dHomeMasterPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            fc3d_home_master
+        order by
+            period desc,
+            id desc
+        limit 1
+    </select>
+
+    <select id="hasExtractHomeMaster" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            fc3d_home_master
+                        where
+                            period = #{period}
+                        limit 1
+                    ), 0)
+    </select>
+
+    <sql id="masterRankSql">
+        id,`period`,master_id,`rank`,
+        d1_rank,d2_rank,d3_rank,c5_rank,
+        c6_rank,c7_rank,k1_rank,k2_rank,
+        cb3_rank,cb4_rank,cb5_rank,gmt_create
+    </sql>
+
+    <select id="latestFc3dRatePeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            fc3d_master_rate
+        order by
+            period desc,
+            id desc
+        limit 1
+    </select>
+
+    <select id="latestMasterRatePeriod" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            period
+        from
+            fc3d_master_rate
+        where
+            master_id = #{masterId}
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="getUnRankedMasterPeriods" resultType="java.lang.String">
+        select distinct
+            frate.period
+        from
+            fc3d_master_rate frate
+        where
+                (
+                    select
+                        count(1)
+                    from
+                        fc3d_master_rank frank
+                    where
+                        frank.period = frate.period
+                ) = 0
+    </select>
+
+    <select id="getFc3dMasterRankByPeriod" parameterType="java.lang.String" resultMap="Fc3dMasterRankMap">
+        select
+        <include refid="masterRankSql"/>
+        from fc3d_master_rank
+        where period=#{period}
+    </select>
+
+    <select id="getFc3dRankedMasterRates" resultMap="Fc3dMasterRateMap">
+        select
+            frate.id,
+            frate.period,
+            frate.master_id,
+            frate.${type}_ne_rate,
+            frate.${type}_ne_hit,
+            frate.${type}_ne_count,
+            frate.${type}_me_rate,
+            frate.${type}_me_hit,
+            frate.${type}_me_count,
+            frate.${type}_hi_rate,
+            frate.${type}_hi_hit,
+            frate.${type}_hi_count,
+            frank.${type}_rank `rank`
+        from
+            fc3d_master_rate frate,
+            fc3d_master_rank frank
+        where
+              frate.period = #{period}
+          and frate.period = frank.period
+          and frate.master_id = frank.master_id
+        order by
+            `rank` asc
+        limit #{limit}
+    </select>
+
+    <select id="getLatestMasterRate" parameterType="java.lang.String" resultMap="Fc3dMasterRateMap">
+        select
+            id,
+            period,
+            master_id,
+            d1_ne_hit,
+            d1_ne_rate,
+            d1_ne_count,
+            d2_ne_hit,
+            d2_ne_rate,
+            d2_ne_count,
+            d3_me_hit,
+            d3_me_rate,
+            d3_me_count,
+            c5_me_hit,
+            c5_me_rate,
+            c5_me_count,
+            c6_me_hit,
+            c6_me_rate,
+            c6_me_count,
+            c7_hi_hit,
+            c7_hi_rate,
+            c7_hi_count,
+            k1_hi_hit,
+            k1_hi_rate,
+            k1_hi_count,
+            k2_me_hit,
+            k2_me_rate,
+            k2_me_count,
+            cb3_ne_hit,
+            cb3_ne_rate,
+            cb3_ne_count,
+            cb4_ne_hit,
+            cb4_ne_rate,
+            cb4_ne_count,
+            cb5_ne_hit,
+            cb5_ne_rate,
+            cb5_ne_count,
+            gmt_create
+        from
+            fc3d_master_rate
+        where
+            master_id = #{masterId}
+        order by
+            period desc
+        limit 1
+    </select>
+
+    <select id="getFc3dVipMasterByPeriod" resultMap="Fc3dMasterRateMap">
+        select
+            id,
+            period,
+            master_id,
+            d1_ne_rate,
+            d1_me_rate,
+            d1_hi_rate,
+            d2_ne_rate,
+            d2_me_rate,
+            d2_hi_rate,
+            d3_ne_rate,
+            d3_me_rate,
+            d3_hi_rate,
+            c5_ne_rate,
+            c5_ne_full_rate,
+            c5_me_rate,
+            c5_me_full_rate,
+            c5_hi_rate,
+            c5_hi_full_rate,
+            c6_ne_rate,
+            c6_ne_full_rate,
+            c6_me_rate,
+            c6_me_full_rate,
+            c6_hi_rate,
+            c6_hi_full_rate,
+            c6_ne_rate,
+            c6_ne_full_rate,
+            c7_ne_rate,
+            c7_ne_full_rate,
+            c7_me_rate,
+            c7_me_full_rate,
+            c7_hi_rate,
+            c7_hi_full_rate,
+            k1_ne_rate,
+            k1_me_rate,
+            k1_hi_rate,
+            k2_ne_rate,
+            k2_me_rate,
+            k2_hi_rate
+        from
+            fc3d_master_rate
+        where
+            period = #{period}
+        order by
+                    61.95 * (
+                            (c7_ne_rate * 0.5 + c7_ne_full_rate * 0.6) * 0.4 +
+                            (c7_me_rate * 0.5 + c7_me_full_rate * 0.6) * 0.35 +
+                            (c7_hi_rate * 0.5 + c7_hi_full_rate * 0.6) * 0.25
+                    ) +
+                    61.95 * (k1_ne_rate * 0.4 + k1_me_rate * 0.35 + k1_hi_rate * 0.25) +
+                    17.97 * (k2_ne_rate * 0.4 + k2_me_rate * 0.35 + k2_hi_rate * 0.25) +
+                    35.99 * (
+                                (c6_ne_rate * 0.5 + c6_ne_full_rate * 0.6) * 0.4 +
+                                (c6_me_rate * 0.5 + c6_me_full_rate * 0.6) * 0.35 +
+                                (c6_hi_rate * 0.5 + c6_hi_full_rate * 0.6) * 0.25
+                        ) +
+                    15.9 * (
+                                (c5_ne_rate * 0.5 + c5_ne_full_rate * 0.6) * 0.4 +
+                                (c5_me_rate * 0.5 + c5_me_full_rate * 0.6) * 0.35 +
+                                (c5_hi_rate * 0.5 + c5_hi_full_rate * 0.6) * 0.25
+                        ) +
+                    17.9 * (d3_ne_rate * 0.4 + d3_me_rate * 0.35 + d3_hi_rate * 0.25) +
+                    15.5 * (d2_ne_rate * 0.4 + d2_me_rate * 0.35 + d2_hi_rate * 0.25) +
+                    13.1 * (d1_ne_rate * 0.4 + d1_me_rate * 0.35 + d1_hi_rate * 0.25)
+                desc
+        limit #{limit}
+    </select>
+
+    <select id="hasExtractVipPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            fc3d_master_rank
+                        where
+                              period = #{period}
+                          and is_vip = 1
+                        order by
+                            id desc
+                        limit 1
+                    ), 0)
+    </select>
+
+    <select id="extractVipMasters" resultType="com.prize.lottery.po.fc3d.Fc3dMasterRankPo">
+        (
+        select
+        id,
+        period,
+        master_id masterId
+        from
+        fc3d_master_rank
+        where period=#{period}
+        order by `rank` asc
+        limit #{limit}
+        )
+        <foreach collection="types" item="type">
+            union
+            (
+            select
+            id,
+            period,
+            master_id masterId
+            from
+            fc3d_master_rank
+            where period=#{period}
+            order by ${type}_rank asc
+            limit #{iLimit}
+            )
+        </foreach>
+    </select>
+
+    <select id="latestFc3dRankPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            fc3d_master_rank
+        order by
+            period desc,
+            id desc
+        limit 1
+    </select>
+
+    <select id="isFc3dVipMaster" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            fc3d_master_rank
+                        where
+                              period = #{period}
+                          and master_id = #{masterId}
+                          and is_vip = 1
+                        limit 1
+                    )
+                , 0)
+    </select>
+
+    <select id="getFc3dGladMasters" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Fc3dGladMasterMap">
+        select
+            fi.id,
+            fi.master_id,
+            fi.period,
+            mi.name,
+            mi.avatar,
+            fr.`rank`,
+            fm.d3_hi_hit,
+            fm.d3_hi_count,
+            fm.d3_hi_rate,
+            fm.c6_hi_hit,
+            fm.c6_hi_count,
+            fm.c6_hi_rate,
+            fm.c6_hi_full_rate,
+            fm.c7_hi_hit,
+            fm.c7_hi_count,
+            fm.c7_hi_rate,
+            fm.c7_hi_full_rate,
+            fm.k1_hi_hit,
+            fm.k1_hi_count,
+            fm.k1_hi_rate
+        from
+            fc3d_icai fi,
+            fc3d_master_rate fm,
+            fc3d_master_rank fr,
+            master_info mi
+        where
+              fi.period = #{condition.period}
+          and fi.master_id = fm.master_id
+          and fi.master_id = fr.master_id
+          and fm.period = #{condition.period}
+          and fr.period = #{condition.period}
+          and fi.master_id = mi.seq
+          and fi.d3_hit = 3
+        order by
+            fr.`rank` asc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countFc3dGladMasters" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            fc3d_icai fi,
+            fc3d_master_rate fm,
+            fc3d_master_rank fr
+        where
+              fi.period = #{condition.period}
+          and fi.master_id = fm.master_id
+          and fi.master_id = fr.master_id
+          and fm.period = #{condition.period}
+          and fr.period = #{condition.period}
+          and fi.d3_hit = 3
+    </select>
+
+    <select id="getFc3dRandomMasters" resultMap="Fc3dMasterMulRankMap">
+        select
+        rankl.*,
+        rankr.`rank` last_rank
+        from
+        (
+        select
+        frank.id,
+        frank.period,
+        frank.master_id,
+        mi.name,
+        mi.avatar,
+        mi.browse,
+        frank.is_vip,
+        frank.hot,
+        frank.`rank`,
+        frate.d3_hi_hit,
+        frate.d3_hi_rate,
+        frate.d3_hi_count,
+        frate.c6_hi_hit,
+        frate.c6_hi_rate,
+        frate.c6_hi_count,
+        frate.c6_hi_full_rate,
+        frate.c7_hi_hit,
+        frate.c7_hi_rate,
+        frate.c7_hi_count,
+        frate.c7_hi_full_rate,
+        frate.k1_hi_hit,
+        frate.k1_hi_rate,
+        frate.k1_hi_count
+        from
+        fc3d_master_rank frank,
+        fc3d_master_rate frate,
+        master_lottery ml,
+        master_info mi
+        where
+        frank.period=#{period}
+        and frank.master_id=frate.master_id
+        and frank.period=frate.period
+        and frank.master_id=mi.seq
+        and frank.master_id=ml.master_id
+        and ml.type='fc3d'
+        and frank.rank in
+        <foreach collection="ranks" item="rank" separator="," open="(" close=")">
+            #{rank}
+        </foreach>
+        order by frank.`rank`
+        ) rankl
+        left join fc3d_master_rank rankr
+        on rankl.master_id =rankr.master_id and rankr.period=#{last}
+    </select>
+
+    <select id="getFc3dMasterDetail" parameterType="java.lang.String" resultMap="Fc3dMasterDetailMap">
+        select
+            mil.*,
+            fm.*
+        from
+            (
+                select
+                    mi.seq,
+                    mi.name,
+                    mi.avatar,
+                    mi.browse,
+                    mi.subscribe,
+                    mi.searches,
+                    mi.gmt_create
+                from
+                    master_info mi,
+                    master_lottery ml
+                where
+                      mi.seq = #{masterId}
+                  and mi.seq = ml.master_id
+                  and ml.type = 'fc3d'
+            ) mil
+                left join
+                (
+                    select
+                        period,
+                        master_id,
+                        d3_hi_hit,
+                        d3_hi_count,
+                        d3_hi_rate,
+                        c6_hi_hit,
+                        c6_hi_count,
+                        c6_hi_rate,
+                        c6_hi_full_rate,
+                        c7_hi_hit,
+                        c7_hi_count,
+                        c7_hi_rate,
+                        c7_hi_full_rate,
+                        k1_hi_hit,
+                        k1_hi_count,
+                        k1_hi_rate,
+                        k2_hi_hit,
+                        k2_hi_count,
+                        k2_hi_rate
+                    from
+                        fc3d_master_rate
+                    where
+                        master_id = #{masterId}
+                    order by
+                        period desc
+                    limit 1
+                ) fm
+                on fm.master_id = mil.seq
+    </select>
+
+    <select id="getFc3dMasterMulRankList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Fc3dMasterMulRankMap">
+        select
+            rankl.*,
+            rankr.`rank` last_rank
+        from
+            (
+                select
+                    frank.id,
+                    frank.period,
+                    frank.master_id,
+                    mi.name,
+                    mi.avatar,
+                    mi.browse,
+                    frank.is_vip,
+                    frank.hot,
+                    frank.`rank`,
+                    frate.d3_hi_hit,
+                    frate.d3_hi_rate,
+                    frate.d3_hi_count,
+                    frate.c6_hi_hit,
+                    frate.c6_hi_rate,
+                    frate.c6_hi_count,
+                    frate.c6_hi_full_rate,
+                    frate.c7_hi_hit,
+                    frate.c7_hi_rate,
+                    frate.c7_hi_count,
+                    frate.c7_hi_full_rate,
+                    frate.k1_hi_hit,
+                    frate.k1_hi_rate,
+                    frate.k1_hi_count
+                from
+                    fc3d_master_rank frank,
+                    fc3d_master_rate frate,
+                    master_info mi
+                where
+                      frank.period = #{condition.period}
+                  and frank.master_id = frate.master_id
+                  and frank.period = frate.period
+                  and frank.master_id = mi.seq
+                order by
+                    frank.`rank` asc
+                limit #{offset}, #{limit}
+            ) rankl
+                left join fc3d_master_rank rankr
+                          on rankl.master_id = rankr.master_id and rankr.period = #{condition.last}
+    </select>
+
+    <select id="countFc3dMasterMulRanks" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            fc3d_master_rank
+        where
+            period = #{condition.period}
+    </select>
+
+    <select id="countFc3dMasterRanks" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from
+        fc3d_master_rank
+        where
+        period=#{condition.period}
+        <if test="condition.vip!=null">
+            and is_vip=#{condition.vip}
+        </if>
+    </select>
+
+    <select id="getFc3dMasterRankList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Fc3dMasterRankVoMap">
+        select
+        rankl.*,
+        rankr.${condition.type}_rank last_rank
+        from (
+        select frate.id,
+        frate.period,
+        frate.master_id,
+        mi.name name,
+        mi.avatar,
+        mi.browse,
+        frank.is_vip,
+        frank.hot,
+        <if test="condition.type=='d1'">
+            frank.d1_rank `rank`,
+            frate.d1_me_hit hit_series,
+            frate.d1_me_rate hit_rate,
+            frate.d1_me_count hit_count,
+            frate.d3_hi_hit d3_series,
+            frate.d3_hi_rate d3_rate,
+            frate.d3_hi_count d3_count,
+            frate.c7_hi_hit c7_series,
+            frate.c7_hi_rate c7_rate,
+            frate.c7_hi_count c7_count,
+            frate.k1_hi_hit k1_series,
+            frate.k1_hi_rate k1_rate,
+            frate.k1_hi_count k1_count
+        </if>
+        <if test="condition.type=='d2'">
+            frank.d2_rank `rank`,
+            frate.d2_me_hit hit_series,
+            frate.d2_me_rate hit_rate,
+            frate.d2_me_count hit_count,
+            frate.d3_hi_hit d3_series,
+            frate.d3_hi_rate d3_rate,
+            frate.d3_hi_count d3_count,
+            frate.c7_hi_hit c7_series,
+            frate.c7_hi_rate c7_rate,
+            frate.c7_hi_count c7_count,
+            frate.k1_hi_hit k1_series,
+            frate.k1_hi_rate k1_rate,
+            frate.k1_hi_count k1_count
+        </if>
+        <if test="condition.type=='d3'">
+            frank.d3_rank `rank`,
+            frate.d3_hi_hit hit_series,
+            frate.d3_hi_rate hit_rate,
+            frate.d3_hi_count hit_count,
+            frate.c7_hi_hit c7_series,
+            frate.c7_hi_rate c7_rate,
+            frate.c7_hi_count c7_count,
+            frate.k1_hi_hit k1_series,
+            frate.k1_hi_rate k1_rate,
+            frate.k1_hi_count k1_count
+        </if>
+        <if test="condition.type=='c5'">
+            frank.c5_rank `rank`,
+            frate.c5_me_hit hit_series,
+            frate.c5_me_rate hit_rate,
+            frate.c5_me_count hit_count,
+            frate.d3_hi_hit d3_series,
+            frate.d3_hi_rate d3_rate,
+            frate.d3_hi_count d3_count,
+            frate.c7_hi_hit c7_series,
+            frate.c7_hi_rate c7_rate,
+            frate.c7_hi_count c7_count,
+            frate.k1_hi_hit k1_series,
+            frate.k1_hi_rate k1_rate,
+            frate.k1_hi_count k1_count
+        </if>
+        <if test="condition.type=='c6'">
+            frank.c6_rank `rank`,
+            frate.c6_hi_hit hit_series,
+            frate.c6_hi_rate hit_rate,
+            frate.c6_hi_count hit_count,
+            frate.d3_hi_hit d3_series,
+            frate.d3_hi_rate d3_rate,
+            frate.d3_hi_count d3_count,
+            frate.c7_hi_hit c7_series,
+            frate.c7_hi_rate c7_rate,
+            frate.c7_hi_count c7_count,
+            frate.k1_hi_hit k1_series,
+            frate.k1_hi_rate k1_rate,
+            frate.k1_hi_count k1_count
+        </if>
+        <if test="condition.type=='c7'">
+            frank.c7_rank `rank`,
+            frate.c7_hi_hit hit_series,
+            frate.c7_hi_rate hit_rate,
+            frate.c7_hi_count hit_count,
+            frate.d3_hi_hit d3_series,
+            frate.d3_hi_rate d3_rate,
+            frate.d3_hi_count d3_count,
+            frate.k1_hi_hit k1_series,
+            frate.k1_hi_rate k1_rate,
+            frate.k1_hi_count k1_count
+        </if>
+        <if test="condition.type=='k1'">
+            frank.k1_rank `rank`,
+            frate.k1_hi_hit hit_series,
+            frate.k1_hi_rate hit_rate,
+            frate.k1_hi_count hit_count,
+            frate.d3_hi_hit d3_series,
+            frate.d3_hi_rate d3_rate,
+            frate.d3_hi_count d3_count,
+            frate.c7_hi_hit c7_series,
+            frate.c7_hi_rate c7_rate,
+            frate.c7_hi_count c7_count
+        </if>
+        <if test="condition.type=='k2'">
+            frank.k2_rank `rank`,
+            frate.k2_me_hit hit_series,
+            frate.k2_me_rate hit_rate,
+            frate.k2_me_count hit_count,
+            frate.d3_hi_hit d3_series,
+            frate.d3_hi_rate d3_rate,
+            frate.d3_hi_count d3_count,
+            frate.c7_hi_hit c7_series,
+            frate.c7_hi_rate c7_rate,
+            frate.c7_hi_count c7_count,
+            frate.k1_hi_hit k1_series,
+            frate.k1_hi_rate k1_rate,
+            frate.k1_hi_count k1_count
+        </if>
+        <if test="condition.type=='cb5'">
+            frank.cb5_rank `rank`,
+            frate.cb5_hi_hit hit_series,
+            frate.cb5_hi_rate hit_rate,
+            frate.cb5_hi_count hit_count,
+            frate.d3_hi_hit d3_series,
+            frate.d3_hi_rate d3_rate,
+            frate.d3_hi_count d3_count,
+            frate.c7_hi_hit c7_series,
+            frate.c7_hi_rate c7_rate,
+            frate.c7_hi_count c7_count,
+            frate.k1_hi_hit k1_series,
+            frate.k1_hi_rate k1_rate,
+            frate.k1_hi_count k1_count
+        </if>
+        from
+        fc3d_master_rate frate,
+        fc3d_master_rank frank,
+        master_lottery ml,
+        master_info mi
+        where
+        frank.period=#{condition.period}
+        and
+        frate.period=frank.period
+        and
+        frank.master_id=frate.master_id
+        and
+        frate.master_id=mi.seq
+        and frank.master_id=ml.master_id
+        and ml.type='fc3d'
+        <if test="condition.vip!=null">
+            and
+            frank.is_vip=#{condition.vip}
+        </if>
+        order by `rank`
+        limit #{offset},#{limit}
+        ) rankl
+        left join fc3d_master_rank rankr
+        on
+        rankr.master_id=rankl.master_id
+        and
+        rankr.period=#{condition.last}
+    </select>
+
+    <select id="getLotteryMasterByIds" resultMap="LottoMasterVoMap">
+        select
+        frank.id,
+        frank.master_id,
+        frank.period,
+        mi.name,
+        mi.avatar,
+        mi.browse,
+        mi.subscribe,
+        frank.rank i_rank,
+        frate.c7_me_hit hit_series,
+        frate.c7_me_count hit_count,
+        frate.c7_me_rate hit_rate
+        from
+        fc3d_master_rank frank,
+        fc3d_master_rate frate,
+        master_info mi
+        where
+        frank.period = #{period}
+        and frate.period = #{period}
+        and frank.master_id = frate.master_id
+        and mi.seq=frank.master_id
+        and frank.master_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+        order by i_rank asc
+    </select>
+
+    <select id="getFc3dLottoMasterList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LottoMasterVoMap">
+        select flm.*,
+        fmr.${condition.type}_rank last_i_rank,
+        if(fhm.id is not null,1 ,0) homed
+        from
+        (
+        select
+        frank.id,
+        frank.master_id,
+        frank.period,
+        frank.`rank`,
+        mi.name,
+        mi.avatar,
+        ml.source,
+        mi.browse,
+        mi.subscribe,
+        frank.hot,
+        frank.is_vip,
+        frank.${condition.type}_rank i_rank,
+        frate.${condition.type}_me_hit hit_series,
+        frate.${condition.type}_me_count hit_count,
+        frate.${condition.type}_me_rate hit_rate
+        from
+        fc3d_master_rank frank,
+        fc3d_master_rate frate,
+        master_lottery ml,
+        master_info mi
+        where
+        frank.period=#{condition.period}
+        and frate.period=#{condition.period}
+        and frank.master_id=frate.master_id
+        and ml.master_id=frank.master_id
+        and mi.seq=ml.master_id
+        and ml.type='fc3d'
+        <if test="condition.vip!=null">
+            and frank.is_vip=1
+        </if>
+        <if test="condition.hot!=null">
+            and frank.hot=1
+        </if>
+        order by i_rank asc
+        limit #{offset},#{limit}
+        ) flm
+        left join fc3d_master_rank fmr on fmr.master_id=flm.master_id and fmr.period=#{condition.last}
+        left join fc3d_home_master fhm on fhm.master_id=flm.master_id and fhm.period=flm.period and
+        fhm.type=#{condition.type}
+    </select>
+
+    <select id="countFc3dLottoMasters" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        fc3d_master_rank frank,
+        fc3d_master_rate frate,
+        master_lottery ml,
+        master_info mi
+        where
+        frank.period=#{condition.period}
+        and frate.period=#{condition.period}
+        and frank.master_id=frate.master_id
+        and ml.master_id=frank.master_id
+        and mi.seq=ml.master_id
+        and ml.type='fc3d'
+        <if test="condition.vip!=null">
+            and frank.is_vip=1
+        </if>
+        <if test="condition.hot!=null">
+            and frank.hot=1
+        </if>
+    </select>
+
+    <sql id="masterRateSql">
+        id,master_id,period,
+        d1_ne_rate,d1_me_rate,d1_hi_rate,
+        d2_ne_rate,d2_me_rate,d2_hi_rate,
+        d3_ne_rate,d3_me_rate,d3_hi_rate,
+        c5_ne_rate,c5_ne_full_rate,c5_me_rate,c5_me_full_rate,c5_hi_rate,c5_hi_full_rate,
+        c6_ne_rate,c6_ne_full_rate,c6_me_rate,c6_me_full_rate,c6_hi_rate,c6_hi_full_rate,
+        c7_ne_rate,c7_ne_full_rate,c7_me_rate,c7_me_full_rate,c7_hi_rate,c7_hi_full_rate,
+        k1_ne_rate,k1_me_rate,k1_hi_rate,
+        k2_ne_rate,k2_me_rate,k2_hi_rate,
+        cb3_ne_rate,cb3_me_rate,cb3_hi_rate,
+        cb4_ne_rate,cb4_me_rate,cb4_hi_rate,
+        cb5_ne_rate,cb5_me_rate,cb5_hi_rate
+    </sql>
+
+    <select id="hasExistRatePeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            fc3d_master_rate
+                        where
+                            period = #{period}
+                        limit 1
+                    ), 0)
+    </select>
+
+    <select id="hasExistRankPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            fc3d_master_rank
+                        where
+                            period = #{period}
+                        limit 1
+                    ), 0)
+    </select>
+
+    <select id="getFc3dMasterRates" parameterType="java.lang.String" resultMap="Fc3dMasterRateMap">
+        select
+        <include refid="masterRateSql"/>
+        from fc3d_master_rate
+        where period=#{period}
+    </select>
+
+    <select id="getFc3dHomeMasters" parameterType="java.lang.String" resultMap="HomeMasterVoMap">
+        select
+            fhm.id,
+            fhm.period,
+            fhm.master_id,
+            mi.name,
+            mi.avatar,
+            fhm.type,
+            fhm.hit_count,
+            fhm.hit_rate,
+            fhm.hit_series,
+            fhm.rank,
+            fhm.gmt_create
+        from
+            fc3d_home_master fhm,
+            master_info mi
+        where
+              fhm.period = #{period}
+          and fhm.master_id = mi.seq
+        order by
+            type asc,
+            `rank` asc
+    </select>
+
+    <select id="latestHomedMasterPeriod" resultType="java.lang.String">
+        select
+            period
+        from
+            fc3d_home_master
+        order by
+            period desc,
+            id desc
+        limit 1
+    </select>
+
+    <select id="getFc3dMasterSubscribeList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Fc3dMasterSubscribeMap">
+        select
+            msi.*,
+            fmr.d3_hi_hit,
+            fmr.d3_hi_count,
+            fmr.d3_hi_rate,
+            fmr.c7_hi_hit,
+            fmr.c7_hi_count,
+            fmr.c7_hi_rate,
+            fmr.k1_hi_hit,
+            fmr.k1_hi_count,
+            fmr.k1_hi_rate
+        from
+            (
+                select
+                    ms.id,
+                    ms.user_id,
+                    ms.type,
+                    ms.master_id,
+                    mi.name,
+                    mi.avatar,
+                    ms.gmt_create
+                from
+                    master_subscribe ms,
+                    master_info mi
+                where
+                      ms.type = 'fc3d'
+                  and ms.master_id = mi.seq
+                  and ms.user_id = #{condition.userId}
+                order by
+                    gmt_create desc
+                limit #{offset},#{limit}
+            ) msi
+                left join fc3d_master_rate fmr
+                          on fmr.master_id = msi.master_id
+                              and fmr.period = #{condition.period}
+    </select>
+
+    <select id="countFc3dMasterSubscribes" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            master_subscribe
+        where
+              type = 'fc3d'
+          and user_id = #{condition.userId}
+    </select>
+
+    <select id="getFc3dSchemaMasters" resultMap="Fc3dMasterSchemaMap">
+        select
+            frate.period,
+            ml.master_id,
+            mi.`name`,
+            mi.avatar,
+            ml.latest,
+            ficai.d3_hit,
+            ficai.c5_hit,
+            frate.d3_me_count,
+            frate.d3_me_hit,
+            frate.d3_me_rate,
+            frate.c5_me_count,
+            frate.c5_me_hit,
+            frate.c5_me_rate,
+            frate.k1_me_count,
+            frate.k1_me_hit,
+            frate.k1_me_rate,
+            frate.k2_me_count,
+            frate.k2_me_hit,
+            frate.k2_me_rate
+        from
+            fc3d_master_rate frate,
+            fc3d_icai ficai,
+            master_lottery ml,
+            master_info mi
+        where
+              frate.master_id = ficai.master_id
+          and frate.period = #{period}
+          and frate.period = ficai.period
+          and ml.master_id = frate.master_id
+          and ml.type = 'fc3d'
+          and mi.seq = frate.master_id
+          and ficai.d3_hit &gt;= 2
+        order by
+                    frate.d3_me_rate * 0.55 + frate.k1_me_rate * 0.95 + frate.k2_me_rate * 0.55 desc,
+                    ficai.d3_hit desc
+        limit #{limit}
+    </select>
+
+    <select id="getFc3dMasterRateVo" resultMap="Fc3dMasterRateVoMap">
+        select
+            period,
+            master_id,
+            d3_hi_rate d3_rate,
+            c5_hi_rate c5_rate,
+            c6_hi_rate c6_rate,
+            c7_hi_rate c7_rate,
+            k1_hi_rate k1_rate,
+            k2_hi_rate k2_rate,
+            d3_avg,
+            c5_avg,
+            c6_avg,
+            c7_avg,
+            k1_avg,
+            k2_avg
+        from
+            fc3d_master_rate,
+            (
+                select
+                    round(avg(d3_hi_rate), 2) d3_avg,
+                    round(avg(c5_hi_rate), 2) c5_avg,
+                    round(avg(c6_hi_rate), 2) c6_avg,
+                    round(avg(c7_hi_rate), 2) c7_avg,
+                    round(avg(k1_hi_rate), 2) k1_avg,
+                    round(avg(k2_hi_rate), 2) k2_avg
+                from
+                    fc3d_master_rate
+                where
+                    period = #{period}
+            ) r_avg
+        where
+              period = #{period}
+          and master_id = #{masterId}
+    </select>
+
+    <select id="getFc3dD3HitBestMaster" parameterType="java.lang.String" resultMap="MasterGladRateVoMap">
+        select
+            icai.master_id,
+            icai.period,
+            rate.d3_hi_count hit_count,
+            rate.d3_hi_rate  hit_rate
+        from
+            fc3d_icai icai,
+            fc3d_master_rate rate
+        where
+              icai.period = #{period}
+          and icai.d3_hit = 3
+          and icai.master_id = rate.master_id
+          and icai.period = rate.period
+        order by
+            rate.d3_hi_rate desc
+        limit 1
+    </select>
+
+    <select id="getFc3dC7BestMasters" parameterType="java.lang.String" resultMap="MasterGladRateVoMap">
+        select
+            icai.master_id,
+            icai.period,
+            rate.c7_hi_count hit_count,
+            rate.c7_hi_rate  hit_rate
+        from
+            fc3d_icai icai,
+            fc3d_master_rate rate
+        where
+              icai.period = #{period}
+          and icai.c7_hit = 3
+          and icai.master_id = rate.master_id
+          and icai.period = rate.period
+        order by
+            rate.c7_hi_rate desc,
+            rate.c6_hi_rate desc
+        limit 2
+    </select>
+
+    <select id="getFc3dMasterFeeds" parameterType="java.lang.String" resultMap="MasterFeedRateVoMap">
+        (
+            select
+                icai.period      as period,
+                'c7'             as field,
+                icai.master_id   as master_id,
+                icai.c7_hit      as hit,
+                rate.c7_hi_count as hit_count,
+                rate.c7_hi_rate  as hit_rate,
+                icai.gmt_create  as timestamp,
+                mi.`name`        as name,
+                mi.avatar        as avatar
+            from
+                fc3d_icai icai,
+                fc3d_master_rate rate,
+                master_info mi
+            where
+                  icai.period = #{period}
+              and mi.seq = icai.master_id
+              and icai.master_id = rate.master_id
+              and icai.period = rate.period
+              and icai.c7_hit >= 3
+            order by
+                rate.c7_hi_rate desc,
+                rate.c6_hi_rate desc
+            limit 6
+        )
+        union all
+        (
+            select
+                icai.period      as period,
+                'k1'             as field,
+                icai.master_id   as master_id,
+                icai.k1_hit      as hit,
+                rate.k1_hi_count as hit_count,
+                rate.k1_hi_rate  as hit_rate,
+                icai.gmt_create  as timestamp,
+                mi.`name`        as name,
+                mi.avatar        as avatar
+            from
+                fc3d_icai icai,
+                fc3d_master_rate rate,
+                master_info mi
+            where
+                  icai.period = #{period}
+              and mi.seq = icai.master_id
+              and icai.master_id = rate.master_id
+              and icai.period = rate.period
+              and icai.k1_hit = 1
+            order by
+                rate.k1_hi_rate desc,
+                rate.d3_hi_rate desc
+            limit 6
+        )
+        union all
+        (
+            select
+                icai.period      as period,
+                'd3'             as field,
+                icai.master_id   as master_id,
+                icai.d3_hit      as hit,
+                rate.d3_hi_count as hit_count,
+                rate.d3_hi_rate  as hit_rate,
+                icai.gmt_create  as timestamp,
+                mi.`name`        as name,
+                mi.avatar        as avatar
+            from
+                fc3d_icai icai,
+                fc3d_master_rate rate,
+                master_info mi
+            where
+                  icai.period = #{period}
+              and mi.seq = icai.master_id
+              and icai.master_id = rate.master_id
+              and icai.period = rate.period
+              and icai.d3_hit >= 2
+            order by
+                rate.d3_hi_rate desc
+            limit 6
+        )
+    </select>
+
+    <select id="getFc3dMasterFeed" resultMap="MasterFeedRateVoMap">
+        <if test="field=='c7'">
+            select
+            icai.period as period,
+            'c7' as field,
+            icai.master_id as master_id,
+            icai.c7_hit as hit,
+            rate.c7_hi_count as hit_count,
+            rate.c7_hi_rate as hit_rate,
+            icai.gmt_create as timestamp,
+            mi.`name` as name,
+            mi.avatar as avatar
+            from
+            fc3d_icai icai,
+            fc3d_master_rate rate,
+            master_info mi
+            where
+            icai.period = #{period}
+            and icai.master_id=#{masterId}
+            and mi.seq = icai.master_id
+            and icai.master_id = rate.master_id
+            and icai.period = rate.period
+        </if>
+        <if test="field=='k1'">
+            select
+            icai.period as period,
+            'k1' as field,
+            icai.master_id as master_id,
+            icai.k1_hit as hit,
+            rate.k1_hi_count as hit_count,
+            rate.k1_hi_rate as hit_rate,
+            icai.gmt_create as timestamp,
+            mi.`name` as name,
+            mi.avatar as avatar
+            from
+            fc3d_icai icai,
+            fc3d_master_rate rate,
+            master_info mi
+            where
+            icai.period = #{period}
+            and icai.master_id=#{masterId}
+            and mi.seq = icai.master_id
+            and icai.master_id = rate.master_id
+            and icai.period = rate.period
+        </if>
+        <if test="field=='d3'">
+            select
+            icai.period as period,
+            'd3' as field,
+            icai.master_id as master_id,
+            icai.d3_hit as hit,
+            rate.d3_hi_count as hit_count,
+            rate.d3_hi_rate as hit_rate,
+            icai.gmt_create as timestamp,
+            mi.`name` as name,
+            mi.avatar as avatar
+            from
+            fc3d_icai icai,
+            fc3d_master_rate rate,
+            master_info mi
+            where
+            icai.period = #{period}
+            and icai.master_id=#{masterId}
+            and mi.seq = icai.master_id
+            and icai.master_id = rate.master_id
+            and icai.period = rate.period
+        </if>
+    </select>
+
+    <select id="getWorseMasters" parameterType="com.prize.lottery.dto.WorseMasterFilter"
+            resultType="java.lang.String">
+        (
+        SELECT
+        master_id
+        FROM
+        fc3d_master_rank
+        WHERE
+        period IN
+        <foreach collection="periods" item="period" open="(" close=")" separator=",">
+            #{period}
+        </foreach>
+        AND `rank` &gt; #{throttle}
+        GROUP BY
+        master_id
+        HAVING
+        COUNT(master_id) &gt;= #{size}
+        )
+        <foreach collection="items" item="item">
+            union (
+            SELECT
+            master_id
+            FROM
+            fc3d_master_rank
+            WHERE
+            period IN
+            <foreach collection="periods" item="period" open="(" close=")" separator=",">
+                #{period}
+            </foreach>
+            AND ${item}_rank &gt; #{throttle}
+            GROUP BY
+            master_id
+            HAVING
+            COUNT(master_id) &gt;= #{size}
+            )
+        </foreach>
+    </select>
+
+    <delete id="delMasterRanks" parameterType="java.util.List">
+        delete
+        from fc3d_master_rank
+        where master_id in
+        <foreach collection="list" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+    <delete id="delMasterRates" parameterType="java.util.List">
+        delete
+        from fc3d_master_rate
+        where master_id in
+        <foreach collection="list" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+</mapper>

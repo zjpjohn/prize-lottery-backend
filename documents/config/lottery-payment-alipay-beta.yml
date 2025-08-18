@@ -1,0 +1,11 @@
+cloud:
+  payment:
+    alipay:
+      server-url: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+      app-id: 
+      notify-url: https://beta.api.icaiwa.com/pay/notify/alipay
+      sandbox: 1
+      pay: true
+      transfer: false
+      private-key: 
+      public-key: 

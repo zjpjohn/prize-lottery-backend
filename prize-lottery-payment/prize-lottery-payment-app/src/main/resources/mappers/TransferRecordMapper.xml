@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.TransferRecordMapper">
+
+    <resultMap id="TransferBatchMap" type="com.prize.lottery.infrast.persist.po.TransferBatchPo">
+        <id column="id" property="id"/>
+        <result column="biz_no" property="bizNo"/>
+        <result column="batch_no" property="batchNo"/>
+        <result column="batch_name" property="batchName"/>
+        <result column="remark" property="remark"/>
+        <result column="scene" property="scene"/>
+        <result column="channel" property="channel"/>
+        <result column="total" property="total"/>
+        <result column="total_num" property="totalNum"/>
+        <result column="state" property="state"/>
+        <result column="audit" property="audit"/>
+        <result column="close_reason" property="closeReason"/>
+        <result column="oper_id" property="operId"/>
+        <result column="oper_type" property="operType"/>
+        <result column="success_amount" property="successAmount"/>
+        <result column="success_num" property="successNum"/>
+        <result column="fail_amount" property="failAmount"/>
+        <result column="fail_num" property="failNum"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="TransferRecordMap" type="com.prize.lottery.infrast.persist.po.TransferRecordPo">
+        <id column="id" property="id"/>
+        <result column="biz_no" property="bizNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="open_id" property="openId"/>
+        <result column="channel" property="channel"/>
+        <result column="scene" property="scene"/>
+        <result column="remark" property="remark"/>
+        <result column="batch_no" property="batchNo"/>
+        <result column="trans_no" property="transNo"/>
+        <result column="amount" property="amount"/>
+        <result column="state" property="state"/>
+        <result column="audit" property="audit"/>
+        <result column="fail_reason" property="failReason"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="TransferAuditMap" type="com.prize.lottery.infrast.persist.po.TransferAuditPo">
+        <id column="id" property="id"/>
+        <result column="audit_no" property="auditNo"/>
+        <result column="trans_no" property="transNo"/>
+        <result column="state" property="state"/>
+        <result column="step" property="step"/>
+        <result column="reason" property="reason"/>
+        <result column="audit_id" property="auditId"/>
+        <result column="auditor" property="auditor"/>
+        <result column="last_no" property="lastNo"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="TransferStatisticsMap" type="com.prize.lottery.infrast.persist.po.TransferStatisticsPo">
+        <id column="id" property="id"/>
+        <result column="day" property="day"/>
+        <result column="success_amt" property="successAmt"/>
+        <result column="success_cnt" property="successCnt"/>
+        <result column="failure_amt" property="failureAmt"/>
+        <result column="failure_cnt" property="failureCnt"/>
+        <result column="rejected_amt" property="rejectedAmt"/>
+        <result column="rejected_cnt" property="rejectedCnt"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addTransferBatch" parameterType="com.prize.lottery.infrast.persist.po.TransferBatchPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into transfer_batch(biz_no,
+                                   batch_no,
+                                   batch_name,
+                                   remark,
+                                   scene,
+                                   channel,
+                                   total,
+                                   total_num,
+                                   state,
+                                   audit,
+                                   oper_id,
+                                   oper_type,
+                                   latest_time,
+                                   gmt_create,
+                                   gmt_modify
+                                  )
+        values (#{bizNo},
+                #{batchNo},
+                #{batchName},
+                #{remark},
+                #{scene},
+                #{channel},
+                #{total},
+                #{totalNum},
+                #{state},
+                #{audit},
+                #{operId},
+                #{operType},
+                #{latestTime},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editTransferBatch" parameterType="com.prize.lottery.infrast.persist.po.TransferBatchPo">
+        update transfer_batch
+        set
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="audit!=null">
+            audit=#{audit},
+        </if>
+        <if test="closeReason!=null">
+            close_reason=#{closeReason},
+        </if>
+        <if test="successAmount!=null">
+            success_amount=#{successAmount},
+        </if>
+        <if test="successNum!=null">
+            success_num=#{successNum},
+        </if>
+        <if test="failAmount!=null">
+            fail_amount=#{failAmount},
+        </if>
+        <if test="failNum!=null">
+            fail_num=#{failNum},
+        </if>
+        <if test="latestTime!=null">
+            latest_time=#{latestTime},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getTransferBatchById" parameterType="java.lang.Long" resultMap="TransferBatchMap">
+        select
+            id,
+            biz_no,
+            batch_no,
+            batch_name,
+            remark,
+            scene,
+            channel,
+            total,
+            total_num,
+            state,
+            audit,
+            oper_id,
+            oper_type,
+            close_reason,
+            success_amount,
+            success_num,
+            fail_amount,
+            fail_num,
+            latest_time,
+            gmt_create
+        from
+            transfer_batch
+        where
+            id = #{id}
+    </select>
+
+    <select id="getTransferBatch" parameterType="java.lang.String" resultMap="TransferBatchMap">
+        select
+            id,
+            biz_no,
+            batch_no,
+            batch_name,
+            remark,
+            scene,
+            channel,
+            total,
+            total_num,
+            state,
+            audit,
+            oper_id,
+            oper_type,
+            close_reason,
+            success_amount,
+            success_num,
+            fail_amount,
+            fail_num,
+            latest_time,
+            gmt_create
+        from
+            transfer_batch
+        where
+            batch_no = #{batchNo}
+    </select>
+
+    <select id="getTransferBatchList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="TransferRecordMap">
+        select
+        id,
+        biz_no,
+        batch_no,
+        batch_name,
+        remark,
+        scene,
+        channel,
+        total,
+        total_num,
+        state,
+        audit,
+        oper_id,
+        oper_type,
+        close_reason,
+        success_amount,
+        success_num,
+        fail_amount,
+        fail_num,
+        latest_time,
+        gmt_create,
+        gmt_modify
+        from transfer_batch
+        <where>
+            <if test="condition.channel!=null">
+                and channel=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.scene!=null">
+                and scene=#{condition.scene}
+            </if>
+            <if test="condition.operId!=null">
+                and oper_id=#{condition.operId}
+            </if>
+            <if test="condition.operType!=null">
+                and oper_type=#{condition.operType}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countTransferBatches" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from transfer_batch
+        <where>
+            <if test="condition.channel!=null">
+                and channel=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.scene!=null">
+                and scene=#{condition.scene}
+            </if>
+            <if test="condition.operId!=null">
+                and oper_id=#{condition.operId}
+            </if>
+            <if test="condition.operType!=null">
+                and oper_type=#{condition.operType}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addTransferRecords" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        transfer_record(biz_no,
+        user_id,
+        open_id,
+        channel,
+        scene,
+        batch_no,
+        trans_no,
+        amount,
+        state,
+        audit,
+        remark,
+        latest_time,
+        gmt_create,
+        gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.bizNo},
+            #{item.userId},
+            #{item.openId},
+            #{item.channel},
+            #{item.scene},
+            #{item.batchNo},
+            #{item.transNo},
+            #{item.amount},
+            #{item.state},
+            #{item.audit},
+            #{item.remark},
+            #{item.latestTime},
+            current_time,
+            current_time)
+        </foreach>
+    </insert>
+
+    <update id="editTransferRecords" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update transfer_record
+            set
+            <if test="item.state!=null">
+                state=#{item.state},
+            </if>
+            <if test="item.audit!=null">
+                audit=#{item.audit},
+            </if>
+            <if test="item.failReason!=null">
+                fail_reason=#{item.failReason},
+            </if>
+            <if test="item.latestTime!=null">
+                latest_time=#{item.latestTime},
+            </if>
+            gmt_modify=current_time
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <select id="getTransferRecordById" parameterType="java.lang.Long" resultMap="TransferRecordMap">
+        select
+            id,
+            biz_no,
+            user_id,
+            open_id,
+            channel,
+            scene,
+            batch_no,
+            trans_no,
+            amount,
+            state,
+            audit,
+            remark,
+            fail_reason,
+            latest_time,
+            gmt_create
+        from
+            transfer_record
+        where
+            id = #{id}
+    </select>
+
+    <select id="getTransferRecord" parameterType="java.lang.String" resultMap="TransferRecordMap">
+        select
+            id,
+            biz_no,
+            user_id,
+            open_id,
+            channel,
+            scene,
+            batch_no,
+            trans_no,
+            amount,
+            state,
+            audit,
+            remark,
+            fail_reason,
+            latest_time,
+            gmt_create
+        from
+            transfer_record
+        where
+            trans_no = #{transNo}
+    </select>
+
+    <select id="getTransferRecordsByBatchNo" parameterType="java.lang.String" resultMap="TransferRecordMap">
+        select
+            id,
+            biz_no,
+            user_id,
+            open_id,
+            channel,
+            scene,
+            batch_no,
+            trans_no,
+            amount,
+            state,
+            audit,
+            remark,
+            fail_reason,
+            latest_time,
+            gmt_create
+        from
+            transfer_record
+        where
+            batch_no = #{batchNo}
+    </select>
+
+    <select id="getTransferRecordByBizNo" parameterType="java.lang.String" resultMap="TransferRecordMap">
+        select
+            id,
+            biz_no,
+            user_id,
+            open_id,
+            channel,
+            scene,
+            batch_no,
+            trans_no,
+            amount,
+            state,
+            audit,
+            remark,
+            fail_reason,
+            latest_time,
+            gmt_create
+        from
+            transfer_record
+        where
+            biz_no = #{bizNo}
+    </select>
+
+    <select id="getTransferRecordList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="TransferRecordMap">
+        select
+        id,
+        biz_no,
+        user_id,
+        open_id,
+        channel,
+        scene,
+        batch_no,
+        trans_no,
+        amount,
+        state,
+        audit,
+        remark,
+        fail_reason,
+        latest_time,
+        gmt_create,
+        gmt_modify
+        from transfer_record
+        <where>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.channel!=null">
+                and channel=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.audit!=null">
+                and audit=#{condition.audit}
+            </if>
+            <if test="condition.scene!=null">
+                and scene=#{condition.scene}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countTransferRecords" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from transfer_record
+        <where>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.channel!=null">
+                and channel=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.audit!=null">
+                and audit=#{condition.audit}
+            </if>
+            <if test="condition.scene!=null">
+                and scene=#{condition.scene}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+    </select>
+
+    <select id="getProcessingTransferList" parameterType="java.time.LocalDateTime" resultMap="TransferRecordMap">
+        select
+            id,
+            biz_no,
+            user_id,
+            open_id,
+            channel,
+            scene,
+            batch_no,
+            trans_no,
+            amount,
+            state,
+            audit,
+            remark,
+            fail_reason,
+            latest_time,
+            gmt_create
+        from
+            transfer_record
+        where
+              state = 2
+          and audit in (0, 2)
+          and gmt_create &lt;= #{time}
+    </select>
+
+    <insert id="addTransferAudit" parameterType="com.prize.lottery.infrast.persist.po.TransferAuditPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        transfer_audit(
+        audit_no,
+        trans_no,
+        state,
+        step,
+        reason,
+        audit_id,
+        auditor,
+        <if test="lastNo!=null">
+            last_no,
+        </if>
+        <if test="nextAudit!=null">
+            next_audit,
+        </if>
+        gmt_create)
+        values
+        (
+        #{auditNo},
+        #{transNo},
+        #{state},
+        #{step},
+        #{reason},
+        #{auditId},
+        #{auditor},
+        <if test="lastNo!=null">
+            #{lastNo},
+        </if>
+        <if test="nextAudit!=null">
+            #{nextAudit},
+        </if>
+        current_time)
+    </insert>
+
+    <select id="getAuditInfoById" parameterType="java.lang.Long" resultMap="TransferAuditMap">
+        select
+            id,
+            audit_no,
+            trans_no,
+            state,
+            step,
+            reason,
+            audit_id,
+            auditor,
+            last_no,
+            next_audit,
+            gmt_create
+        from
+            transfer_audit
+        where
+            id = #{id}
+    </select>
+
+    <select id="getAuditInfo" parameterType="java.lang.String" resultMap="TransferAuditMap">
+        select
+            id,
+            audit_no,
+            trans_no,
+            state,
+            step,
+            reason,
+            audit_id,
+            auditor,
+            last_no,
+            next_audit,
+            gmt_create
+        from
+            transfer_audit
+        where
+            audit_no = #{auditNo}
+    </select>
+
+    <select id="getAuditListByTansNo" parameterType="java.lang.String" resultMap="TransferAuditMap">
+        select
+            id,
+            audit_no,
+            trans_no,
+            state,
+            step,
+            reason,
+            audit_id,
+            auditor,
+            last_no,
+            next_audit,
+            gmt_create
+        from
+            transfer_audit
+        where
+            trans_no = #{transNo}
+    </select>
+
+    <insert id="addTransferStatistics" parameterType="com.prize.lottery.infrast.persist.po.TransferStatisticsPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into transfer_statistics(day,
+                                        success_amt,
+                                        success_cnt,
+                                        failure_amt,
+                                        failure_cnt,
+                                        rejected_amt,
+                                        rejected_cnt,
+                                        gmt_create,
+                                        gmt_modify
+                                       )
+        values (#{day},
+                #{successAmt},
+                #{successCnt},
+                #{failureAmt},
+                #{failureCnt},
+                #{rejectedAmt},
+                #{rejectedCnt},
+                current_time,
+                current_time
+               ) on duplicate key
+        update
+            success_amt=
+        values (success_amt), success_cnt=
+        values (success_cnt), failure_amt=
+        values (failure_amt), failure_cnt=
+        values (failure_cnt), rejected_amt=
+        values (rejected_amt), rejected_cnt=
+        values (rejected_cnt), gmt_modify= current_time
+    </insert>
+
+    <select id="getLatestTransferMetrics" parameterType="java.lang.Integer" resultMap="TransferStatisticsMap">
+        select
+            id, day, success_amt, success_cnt, failure_amt, failure_cnt, rejected_amt, rejected_cnt, gmt_create
+        from
+            transfer_statistics
+        order by
+            day desc
+            limit
+            #{limit}
+    </select>
+
+    <select id="getStatisticsList" resultMap="TransferStatisticsMap">
+        select
+            id, day, success_amt, success_cnt, failure_amt, failure_cnt, rejected_amt, rejected_cnt, gmt_create
+        from
+            transfer_statistics
+        where
+            day &gt;=
+             #{startDay}
+          and day
+         &lt;#{endDay}
+    </select>
+
+    <select id="getDateTransferStatistics" resultMap="TransferStatisticsMap">
+        select
+            #{metricDate} as day,
+            ifnull(sum(if(state = 3, amount, 0)), 0)    as success_amt,
+            ifnull(count(if(state = 3, true, null)), 0) as success_cnt,
+            ifnull(sum(if(state = 4, amount, 0)), 0)    as failure_amt,
+            ifnull(count(if(state = 4, true, null)), 0) as failure_cnt,
+            ifnull(sum(if(audit = 3, amount, 0)), 0)    as rejected_amt,
+            ifnull(count(if(audit = 3, true, null)), 0) as rejected_cnt
+        from
+            transfer_record
+        where
+            datediff(
+            gmt_create
+          ,
+            #{metricDate}) = 0
+    </select>
+
+    <select id="getTransferSumStatistics" resultMap="TransferStatisticsMap">
+        select
+            max(id)                     as id,
+            ifnull(sum(success_amt), 0) as success_amt,
+            ifnull(sum(success_cnt), 0) as success_cnt
+        from
+            transfer_statistics
+        where
+            day &gt;=
+             #{startDay}
+          and day
+         &lt;#{endDay}
+    </select>
+
+</mapper>

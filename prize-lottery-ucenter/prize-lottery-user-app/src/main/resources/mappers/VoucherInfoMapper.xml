@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.VoucherInfoMapper">
+
+    <resultMap id="VoucherInfoMap" type="com.prize.lottery.infrast.persist.po.VoucherInfoPo">
+        <id column="id" property="id"/>
+        <result column="seq_no" property="seqNo"/>
+        <result column="name" property="name"/>
+        <result column="remark" property="remark"/>
+        <result column="voucher" property="voucher"/>
+        <result column="state" property="state"/>
+        <result column="disposable" property="disposable"/>
+        <result column="interval" property="interval"/>
+        <result column="expire" property="expire"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserVoucherMap" type="com.prize.lottery.infrast.persist.po.UserVoucherPo">
+        <id column="user_id" property="userId"/>
+        <result column="all_num" property="allNum"/>
+        <result column="used_num" property="usedNum"/>
+        <result column="expired_num" property="expiredNum"/>
+        <result column="total" property="total"/>
+        <result column="used" property="used"/>
+        <result column="expired" property="expired"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserVoucherLogMap" type="com.prize.lottery.infrast.persist.po.UserVoucherLogPo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="biz_no" property="bizNo"/>
+        <result column="voucher" property="voucher"/>
+        <result column="used" property="used"/>
+        <result column="state" property="state"/>
+        <result column="expired" property="expired"/>
+        <result column="expire_at" property="expireAt"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserDrawVoMap" type="com.prize.lottery.infrast.persist.vo.UserDrawVo">
+        <id column="user_id" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="avatar" property="avatar"/>
+        <result column="biz_no" property="bizNo"/>
+        <result column="voucher" property="voucher"/>
+        <result column="timestamp" property="timestamp"/>
+    </resultMap>
+
+    <insert id="addVoucherInfo" parameterType="com.prize.lottery.infrast.persist.po.VoucherInfoPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        voucher_info(
+        seq_no,
+        name,
+        <if test="remark!=null">
+            remark,
+        </if>
+        voucher,
+        state,
+        disposable,
+        <if test="interval!=null">
+            `interval`,
+        </if>
+        expire,
+        gmt_create,
+        gmt_modify)
+        values
+        (#{seqNo},
+        #{name},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        #{voucher},
+        #{state},
+        #{disposable},
+        <if test="interval!=null">
+            #{interval},
+        </if>
+        #{expire},
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editVoucherInfo" parameterType="com.prize.lottery.infrast.persist.po.VoucherInfoPo">
+        update voucher_info
+        set
+        <if test="name!=null">
+            name=#{name},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        <if test="voucher!=null">
+            voucher=#{voucher},
+        </if>
+        <if test="disposable!=null">
+            disposable=#{disposable},
+        </if>
+        <if test="interval!=null">
+            `interval`=#{interval},
+        </if>
+        <if test="expire!=null">
+            expire=#{expire},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getVoucherById" parameterType="java.lang.Long" resultMap="VoucherInfoMap">
+        select
+            id,
+            seq_no,
+            name,
+            remark,
+            voucher,
+            state,
+            disposable,
+            `interval`,
+            expire,
+            gmt_create
+        from
+            voucher_info
+        where
+            id = #{id}
+    </select>
+
+    <select id="getVoucherByNo" parameterType="java.lang.String" resultMap="VoucherInfoMap">
+        select
+            id,
+            seq_no,
+            name,
+            remark,
+            voucher,
+            state,
+            disposable,
+            `interval`,
+            expire,
+            gmt_create
+        from
+            voucher_info
+        where
+            seq_no = #{seqNo}
+    </select>
+
+    <select id="getVoucherByNoList" parameterType="java.util.List" resultMap="VoucherInfoMap">
+        select
+        id, seq_no, name, remark, voucher, state, disposable, `interval`, expire, gmt_create
+        from voucher_info
+        where seq_no in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getUsingVouchers" resultMap="VoucherInfoMap">
+        select
+            id,
+            seq_no,
+            name,
+            remark,
+            voucher,
+            state,
+            disposable,
+            `interval`,
+            expire,
+            gmt_create
+        from
+            voucher_info
+        where
+            state = 2
+        order by
+            gmt_create desc
+    </select>
+
+    <select id="getVoucherInfoList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="VoucherInfoMap">
+        select
+        id, seq_no, name, remark, voucher, state, disposable, `interval`, expire, gmt_create, gmt_modify
+        from voucher_info
+        <where>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.disposable!=null">
+                and disposable=#{condition.disposable}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countVoucherInfos" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from voucher_info
+        <where>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.disposable!=null">
+                and disposable=#{condition.disposable}
+            </if>
+        </where>
+    </select>
+
+    <insert id="saveUserVoucher" parameterType="java.util.List">
+        insert into
+        user_voucher(
+        user_id,
+        all_num,
+        used_num,
+        expired_num,
+        total,
+        used,
+        expired,
+        gmt_create,
+        gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.userId},
+            #{item.allNum},
+            #{item.usedNum},
+            #{item.expiredNum},
+            #{item.total},
+            #{item.used},
+            #{item.expired},
+            current_time,
+            current_time)
+        </foreach>
+        on duplicate key update
+        all_num=all_num+ values(all_num),
+        used_num=used_num+ values(used_num),
+        expired_num=expired_num+values(expired_num),
+        total=total+values(total),
+        used=used+values(used),
+        expired=expired+values(expired),
+        gmt_modify=current_time
+    </insert>
+
+    <select id="getUserVoucher" parameterType="java.lang.Long" resultMap="UserVoucherMap">
+        select
+            user_id,
+            all_num,
+            used_num,
+            expired_num,
+            total,
+            used,
+            expired,
+            gmt_create
+        from
+            user_voucher
+        where
+            user_id = #{userId}
+    </select>
+
+    <insert id="addUserVoucherLogs" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        user_voucher_log(
+        user_id,
+        biz_no,
+        voucher,
+        used,
+        state,
+        expired,
+        expire_at,
+        gmt_create,
+        gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.userId},
+            #{item.bizNo},
+            #{item.voucher},
+            #{item.used},
+            #{item.state},
+            #{item.expired},
+            <if test="item.expireAt!=null">
+                #{item.expireAt},
+            </if>
+            <if test="item.expireAt==null">
+                null,
+            </if>
+            #{item.gmtCreate},
+            current_time)
+        </foreach>
+    </insert>
+
+    <update id="editUserVoucherLogs" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update user_voucher_log
+            set
+            <if test="item.used!=null">
+                used=#{item.used},
+            </if>
+            <if test="item.state!=null">
+                state=#{item.state},
+            </if>
+            <if test="item.expired!=null">
+                expired=#{item.expired},
+            </if>
+            <if test="item.expireAt!=null">
+                expire_at=#{item.expireAt},
+            </if>
+            gmt_modify=current_time
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <select id="getLatestUserVoucher" resultMap="UserVoucherLogMap">
+        select
+            id,
+            user_id,
+            biz_no,
+            voucher,
+            used,
+            state,
+            expired,
+            expire_at,
+            gmt_create
+        from
+            user_voucher_log
+        where
+              user_id = #{userId}
+          and biz_no = #{bizNo}
+        order by
+            gmt_create desc limit 1
+    </select>
+
+    <select id="getLatestUserVouchers" resultMap="UserVoucherLogMap">
+        select
+        id,
+        user_id,
+        biz_no,
+        voucher,
+        used,
+        state,
+        expired,
+        expire_at,
+        gmt_create
+        from
+        user_voucher_log
+        where
+        id in (
+        select
+        max(id)
+        from
+        user_voucher_log
+        where
+        user_id=#{userId}
+        and biz_no in
+        <foreach collection="bizNos" item="bizNo" separator="," open="(" close=")">
+            #{bizNo}
+        </foreach>
+        group by biz_no
+        )
+    </select>
+
+    <select id="getUnUsedVoucher" resultMap="UserVoucherLogMap">
+        select
+            id,
+            user_id,
+            biz_no,
+            voucher,
+            used,
+            state,
+            expired,
+            expire_at,
+            gmt_create
+        from
+            user_voucher_log
+        where
+              user_id = #{userId}
+          and state in (0, 1)
+        order by
+            gmt_create asc
+            limit #{limit}
+    </select>
+
+    <select id="getVoucherLogList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="UserVoucherLogMap">
+        select
+        id, user_id, biz_no, voucher, used, state, expired, expire_at, gmt_create, gmt_modify
+        from
+        user_voucher_log
+        <where>
+            <if test="condition.bizNo!=null">
+                and biz_no=#{condition.bizNo}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.expired!=null">
+                and expired=#{condition.expired}
+            </if>
+        </where>
+        order by expired asc,state asc, gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countVoucherLogs" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        user_voucher_log
+        <where>
+            <if test="condition.bizNo!=null">
+                and biz_no=#{condition.bizNo}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.expired!=null">
+                and expired=#{condition.expired}
+            </if>
+        </where>
+    </select>
+
+    <select id="getExpiredUserVouchers" parameterType="java.lang.Integer" resultMap="UserVoucherLogMap">
+        select
+            id,
+            user_id,
+            biz_no,
+            voucher,
+            used,
+            state,
+            expired,
+            expire_at,
+            gmt_create
+        from
+            user_voucher_log
+        where
+              expired = 1
+          and state in (0, 1)
+          and expire_at &lt; current_time
+        order by
+            gmt_create desc
+            limit #{limit}
+    </select>
+
+    <select id="getLatestUserDraws" parameterType="java.lang.Integer" resultMap="UserDrawVoMap">
+        select
+            uvl.user_id,
+            ui.avatar,
+            uvl.biz_no,
+            uvl.voucher,
+            ui.nickname    as `name`,
+            uvl.gmt_create as `timestamp`
+        from
+            user_voucher_log uvl,
+            user_info ui
+        where
+              ui.id = uvl.user_id
+          and uvl.id in (
+                            select
+                                max(id)
+                            from
+                                user_voucher_log
+                            where
+                                ui.gmt_create &gt; date_sub(current_time, interval 7 day)
+                            group by
+                                user_id
+                        )
+        order by
+            uvl.gmt_create desc
+            limit #{limit}
+    </select>
+
+</mapper>

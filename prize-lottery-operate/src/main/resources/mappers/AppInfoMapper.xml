@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.AppInfoMapper">
+
+    <resultMap id="AppInfoMap" type="com.prize.lottery.infrast.persist.po.AppInfoPo">
+        <id column="id" property="id"/>
+        <result column="seq_no" property="seqNo"/>
+        <result column="name" property="name"/>
+        <result column="logo" property="logo"/>
+        <result column="share_uri" property="shareUri"/>
+        <result column="open_install" property="openInstall"/>
+        <result column="copyright" property="copyright"/>
+        <result column="corp" property="corp"/>
+        <result column="telephone" property="telephone"/>
+        <result column="address" property="address"/>
+        <result column="record" property="record"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="AppVersionMap" type="com.prize.lottery.infrast.persist.po.AppVersionPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="app_ver" property="appVer"/>
+        <result column="app_dir" property="appDir"/>
+        <result column="app_unity" property="appUnity"/>
+        <result column="app_v7a" property="appV7a"/>
+        <result column="app_v8a" property="appV8a"/>
+        <result column="force" property="force"/>
+        <result column="depiction" property="depiction"/>
+        <result column="upgrades" property="upgrades"/>
+        <result column="images" property="images"/>
+        <result column="state" property="state"/>
+        <result column="online" property="online"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="AppConfMap" type="com.prize.lottery.infrast.persist.po.AppConfPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="conf_key" property="confKey"/>
+        <result column="conf_val" property="confVal"/>
+        <result column="val_type" property="type"/>
+        <result column="remark" property="remark"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="AssistantAppMap" type="com.prize.lottery.infrast.persist.valobj.AssistantApp">
+        <id column="app_no" property="appNo"/>
+        <collection property="versions" ofType="java.lang.String" javaType="java.util.Set">
+            <result column="version"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="AppCommentMap" type="com.prize.lottery.infrast.persist.po.AppCommentPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="name" property="name"/>
+        <result column="avatar" property="avatar"/>
+        <result column="rate" property="rate"/>
+        <result column="comment" property="comment"/>
+        <result column="cmt_time" property="cmtTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmtModify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="AppContactMap" type="com.prize.lottery.infrast.persist.po.AppContactPo">
+        <id column="id" property="id"/>
+        <result column="app_no" property="appNo"/>
+        <result column="name" property="name"/>
+        <result column="qr_img" property="qrImg"/>
+        <result column="remark" property="remark"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addAppInfo" parameterType="com.prize.lottery.infrast.persist.po.AppInfoPo"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into
+        app_info(seq_no,
+        `name`,
+        logo,
+        copyright,
+        corp,
+        telephone,
+        address,
+        record,
+        <if test="shareUri!=null">
+            share_uri,
+        </if>
+        <if test="openInstall!=null">
+            open_install,
+        </if>
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values (#{seqNo},
+        #{name},
+        #{logo},
+        #{copyright},
+        #{corp},
+        #{telephone},
+        #{address},
+        #{record},
+        <if test="shareUri!=null">
+            #{shareUri},
+        </if>
+        <if test="openInstall!=null">
+            #{openInstall},
+        </if>
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editAppInfo" parameterType="com.prize.lottery.infrast.persist.po.AppInfoPo">
+        update app_info
+        set
+        <if test="name!=null and name!=''">
+            `name`=#{name},
+        </if>
+        <if test="logo!=null and logo!=''">
+            logo=#{logo},
+        </if>
+        <if test="shareUri!=null">
+            share_uri=#{shareUri},
+        </if>
+        <if test="openInstall!=null">
+            open_install=#{openInstall},
+        </if>
+        <if test="copyright!=null and copyright!=''">
+            copyright=#{copyright},
+        </if>
+        <if test="corp!=null and corp!=''">
+            corp=#{corp},
+        </if>
+        <if test="telephone!=null and telephone!=''">
+            telephone=#{telephone},
+        </if>
+        <if test="address!=null and address!=''">
+            address=#{address},
+        </if>
+        <if test="record!=null and record!=''">
+            record=#{record},
+        </if>
+        <if test="remark!=null and remark!=''">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where id=#{id}
+    </update>
+
+    <sql id="appInfoSql">
+        id
+        ,seq_no,`name`,logo,share_uri,open_install,copyright,corp,telephone,address,record,remark,gmt_create,gmt_modify
+    </sql>
+
+    <select id="getAppInfoById" parameterType="java.lang.Long" resultMap="AppInfoMap">
+        select
+        <include refid="appInfoSql"/>
+        from
+        app_info
+        where
+        id=#{id}
+    </select>
+
+    <select id="hasExistAppName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            app_info
+                        where
+                            `name` = #{name}
+                        limit 1 ), 0)
+    </select>
+
+    <select id="getAppInfo" parameterType="java.lang.String" resultMap="AppInfoMap">
+        select
+        <include refid="appInfoSql"/>
+        from
+        app_info
+        where
+        seq_no=#{seqNo}
+    </select>
+
+    <select id="getAppListByNos" parameterType="java.util.List" resultMap="AppInfoMap">
+        select
+        id, seq_no, name, logo, telephone, record, gmt_create
+        from
+        app_info
+        where
+        seq_no in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getAllAppInfoList" resultMap="AppInfoMap">
+        select
+        <include refid="appInfoSql"/>
+        from
+        app_info
+    </select>
+
+    <insert id="addAppVersion" parameterType="com.prize.lottery.infrast.persist.po.AppVersionPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into app_version(app_no,
+                                app_ver,
+                                app_dir,
+                                app_unity,
+                                app_v7a,
+                                app_v8a,
+                                `force`,
+                                depiction,
+                                upgrades,
+                                images,
+                                gmt_create,
+                                gmt_modify
+                               )
+        values (#{appNo},
+                #{appVer},
+                #{appDir},
+                #{appUnity},
+                #{appV7a},
+                #{appV8a},
+                #{force},
+                #{depiction},
+                #{upgrades},
+                #{images},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editAppVersion" parameterType="com.prize.lottery.infrast.persist.po.AppVersionPo">
+        update app_version
+        set
+        <if test="appVer!=null">
+            app_ver=#{appVer},
+        </if>
+        <if test="appDir!=null">
+            app_dir=#{appDir},
+        </if>
+        <if test="appUnity!=null">
+            app_unity=#{appUnity},
+        </if>
+        <if test="appV7a!=null">
+            app_v7a=#{appV7a},
+        </if>
+        <if test="appV8a!=null">
+            app_v8a=#{appV8a},
+        </if>
+        <if test="force!=null">
+            `force`=#{force},
+        </if>
+        <if test="depiction!=null">
+            depiction=#{depiction},
+        </if>
+        <if test="upgrades!=null">
+            upgrades=#{upgrades},
+        </if>
+        <if test="images!=null">
+            images=#{images},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="online!=null">
+            online=#{online},
+        </if>
+        gmt_modify=current_time
+        where id=#{id}
+    </update>
+
+    <update id="issueAppMainVersion">
+        update app_version
+        set
+            state=2
+        where
+              app_no = #{appNo}
+          and state = 3;
+        update app_version
+        set
+            state=3
+        where
+              app_no = #{appNo}
+          and app_ver = #{appVer};
+    </update>
+
+    <sql id="appVersionSql">
+        id
+        ,app_no,app_ver,app_dir,app_unity,app_v7a,app_v8a,`force`,state,`online`,gmt_create
+    </sql>
+
+    <select id="getAppVersionById" resultMap="AppVersionMap">
+        select
+        id,app_no,app_ver,app_dir,app_unity,app_v7a,app_v8a,`force`,state,`online`,gmt_create
+        <if test="detail">
+            ,upgrades,images,depiction
+        </if>
+        from
+        app_version
+        where
+        id=#{id}
+    </select>
+
+    <select id="hasExistAppVersion" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            app_version
+                        where
+                              app_no = #{appNo}
+                          and app_ver = #{appVer}
+                        limit 1 ), 0)
+    </select>
+
+    <select id="getAppVersionByUk" resultMap="AppVersionMap">
+        select
+        <include refid="appVersionSql"/>,upgrades,images,depiction
+        from
+        app_version
+        where
+        app_no=#{appNo}
+        and
+        app_ver=#{appVer}
+    </select>
+
+    <select id="getMainAppVersion" resultMap="AppVersionMap">
+        select
+        <include refid="appVersionSql"/>,upgrades,images,depiction
+        from
+        app_version
+        where
+        app_no=#{appNo}
+        and
+        state=3
+    </select>
+
+    <select id="getAppAvailableVersion" parameterType="java.lang.String" resultMap="AppVersionMap">
+        select
+            id,
+            app_no,
+            app_ver,
+            app_dir,
+            app_unity,
+            app_v7a,
+            app_v8a,
+            `force`,
+            state,
+            online,
+            gmt_create
+        from
+            app_version
+        where
+              app_no = #{appNo}
+          and state in (2, 3)
+        order by
+            state desc,
+            app_ver desc limit 1
+    </select>
+
+    <select id="getAssistantApp" parameterType="java.lang.String" resultMap="AssistantAppMap">
+        select
+            ai.seq_no  as app_no,
+            av.app_ver as version
+        from
+            app_info ai
+                left join app_version av on ai.seq_no = av.app_no
+        where
+            ai.seq_no = #{appNo}
+    </select>
+
+    <select id="getAppVersionsByApp" parameterType="java.lang.String" resultMap="AppVersionMap">
+        select
+            av.id,
+            av.app_no,
+            av.app_ver,
+            av.state,
+            av.online
+        from
+            app_version av,
+            app_info ai
+        where
+              ai.seq_no = #{appNo}
+          and ai.id = av.app_no
+    </select>
+
+    <select id="getAppVersionList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="AppVersionMap">
+        select
+        <include refid="appVersionSql"/>
+        from
+        app_version
+        where
+        app_no=#{condition.appNo}
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+        order by gmt_create desc,app_ver desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAppVersions" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        app_version
+        where
+        app_no=#{condition.appNo}
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+    </select>
+
+    <insert id="addAppConf" parameterType="com.prize.lottery.infrast.persist.po.AppConfPo" keyProperty="id"
+            useGeneratedKeys="true">
+        insert ignore into
+        app_conf(
+        app_no,
+        conf_key,
+        conf_val,
+        val_type,
+        <if test="remark!=null">
+            remark,
+        </if>
+        state,
+        gmt_create,
+        gmt_modify)
+        values
+        (#{appNo},
+        #{confKey},
+        #{confVal},
+        #{type},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        #{state},
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="editAppConf" parameterType="com.prize.lottery.infrast.persist.po.AppConfPo">
+        update
+        app_conf
+        set
+        <if test="confKey!=null">
+            conf_key=#{confKey},
+        </if>
+        <if test="confVal!=null">
+            conf_val=#{confVal},
+        </if>
+        <if test="type!=null">
+            val_type=#{type},
+        </if>
+
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getAppConfById" parameterType="java.lang.Long" resultMap="AppConfMap">
+        select
+            id,
+            app_no,
+            conf_key,
+            conf_val,
+            val_type,
+            remark,
+            state
+        from
+            app_conf
+        where
+            id = #{id}
+    </select>
+
+    <select id="getAppConfListByApp" resultMap="AppConfMap">
+        select id, app_no, conf_key, conf_val, val_type, remark, state
+        from
+        app_conf
+        where
+        app_no=#{appNo}
+        <if test="state!=null">
+            and state=#{state}
+        </if>
+    </select>
+
+    <select id="getAppConfList" parameterType="com.cloud.arch.page.PageCondition" resultMap="AppConfMap">
+        select id, app_no, conf_key, conf_val, val_type, remark, state, gmt_create, gmt_modify
+        from
+        app_conf
+        <where>
+            <if test="condition.appNo!=null">
+                and app_no=#{condition.appNo}
+            </if>
+            <if test="condition.tate!=null">
+                and state=#{condition.tate}
+            </if>
+            <if test="condition.type!=null">
+                and val_type=#{condition.type}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAppConfs" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        app_conf
+        <where>
+            <if test="condition.appNo!=null">
+                and app_no=#{condition.appNo}
+            </if>
+            <if test="condition.tate!=null">
+                and state=#{condition.tate}
+            </if>
+            <if test="condition.type!=null">
+                and val_type=#{condition.type}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addAppComments" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into app_comment(app_no, name, avatar, rate, comment, cmt_time, gmt_create,gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.appNo},#{item.name},#{item.avatar},#{item.rate},#{item.comment},#{item.cmtTime},current_time,current_time)
+        </foreach>
+    </insert>
+
+    <update id="editAppComment" parameterType="com.prize.lottery.infrast.persist.po.AppCommentPo">
+        update app_comment
+        set
+        <if test="rate!=null">
+            rate=#{rate},
+        </if>
+        <if test="comment!=null">
+            comment=#{comment},
+        </if>
+        <if test="cmtTime!=null">
+            cmt_time=#{cmtTime},
+        </if>
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getAppComment" parameterType="java.lang.Long" resultMap="AppCommentMap">
+        select
+            id,
+            app_no,
+            name,
+            avatar,
+            rate,
+            comment,
+            cmt_time,
+            gmt_create
+        from
+            app_comment
+        where
+            id = #{id}
+    </select>
+
+    <select id="getLatestAppComments" parameterType="java.lang.String" resultMap="AppCommentMap">
+        select
+            id,
+            app_no,
+            name,
+            avatar,
+            rate,
+            comment,
+            cmt_time,
+            gmt_create,
+            gmt_modify
+        from
+            app_comment
+        where
+            app_no = #{appNo}
+        order by
+            cmt_time desc limit 10
+    </select>
+
+    <select id="getAppCommentList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="AppCommentMap">
+        select
+            id,
+            app_no,
+            name,
+            avatar,
+            rate,
+            comment,
+            cmt_time,
+            gmt_create,
+            gmt_modify
+        from
+            app_comment
+        where
+            app_no = #{condition.appNo}
+        order by
+            gmt_create desc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countAppComments" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            app_comment
+        where
+            app_no = #{condition.appNo}
+    </select>
+
+    <insert id="addAppContact" parameterType="com.prize.lottery.infrast.persist.po.AppContactPo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert
+        ignore into
+               app_contact(app_no,name,qr_img,remark,state,gmt_create,gmt_modify)
+        values (
+        #{appNo},
+        #{name},
+        #{qrImg},
+        #{remark},
+        #{state},
+        current_time,
+        current_time
+        )
+    </insert>
+
+    <update id="editAppContact" parameterType="com.prize.lottery.infrast.persist.po.AppContactPo">
+        update app_contact
+        set
+        <if test="name!=null">
+            name=#{name},
+        </if>
+        <if test="qrImg!=null">
+            qr_img=#{qrImg},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <select id="getAppContact" parameterType="java.lang.Long" resultMap="AppContactMap">
+        select
+            id,
+            app_no,
+            name,
+            qr_img,
+            remark,
+            state,
+            gmt_create,
+            gmt_modify
+        from
+            app_contact
+        where
+            id = #{id}
+    </select>
+
+    <delete id="delAppContacts" parameterType="java.lang.String">
+        delete
+        from
+            app_contact
+        where
+            app_no = #{appNo}
+    </delete>
+
+    <select id="getUsingAppContacts" parameterType="java.lang.String" resultMap="AppContactMap">
+        select
+            id,
+            app_no,
+            name,
+            qr_img,
+            remark,
+            state,
+            gmt_create
+        from
+            app_contact
+        where
+              state = 2
+          and app_no = #{appNo}
+    </select>
+
+    <select id="getAppContactList" parameterType="com.cloud.arch.page.PageCondition" resultMap="AppContactMap">
+        select
+        id,
+        app_no,
+        name,
+        qr_img,
+        remark,
+        state,
+        gmt_create,
+        gmt_modify
+        from app_contact
+        where
+        app_no=#{condition.appNo}
+        <if test="condition.name!=null">
+            name like concat(#{condition.name},'%')
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAppContacts" parameterType="com.cloud.arch.page.PageCondition" resultType="java.lang.Integer">
+        select count(1)
+        from app_contact
+        where
+        app_no=#{condition.appNo}
+        <if test="condition.name!=null">
+            name like concat(#{condition.name},'%')
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.UserStatisticsMapper">
+
+    <resultMap id="UserStatisticsMap" type="com.prize.lottery.infrast.persist.po.UserStatisticsPo">
+        <id column="id" property="id"/>
+        <result column="day" property="day"/>
+        <result column="register" property="register"/>
+        <result column="active" property="active"/>
+        <result column="launch" property="launch"/>
+        <result column="launch_avg" property="launchAvg"/>
+        <result column="invite" property="invite"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserMetricsVoMap" type="com.prize.lottery.infrast.persist.vo.UserMetricsVo">
+        <result column="yesterday_incr" property="yesterdayIncr"/>
+        <result column="yesterday_act" property="yesterdayAct"/>
+        <result column="yesterday_launch" property="yesterdayLaunch"/>
+        <result column="week_incr" property="weekIncr"/>
+        <result column="week_act" property="weekAct"/>
+        <result column="week_launch" property="weekLaunch"/>
+        <result column="month_incr" property="monthIncr"/>
+        <result column="month_act" property="monthAct"/>
+        <result column="month_launch" property="monthLaunch"/>
+        <result column="last_incr" property="lastIncr"/>
+        <result column="last_act" property="lastAct"/>
+        <result column="last_launch" property="lastLaunch"/>
+    </resultMap>
+
+    <insert id="addUserStatistics" parameterType="com.prize.lottery.infrast.persist.po.UserStatisticsPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        user_statistics(
+        day,
+        <if test="register!=null">
+            register,
+        </if>
+        <if test="active!=null">
+            active,
+        </if>
+        <if test="launch!=null">
+            launch,
+        </if>
+        <if test="launchAvg!=null">
+            launch_avg,
+        </if>
+        <if test="invite!=null">
+            invite,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values
+        (
+        #{day},
+        <if test="register!=null">
+            #{register},
+        </if>
+        <if test="active!=null">
+            #{active},
+        </if>
+        <if test="launch!=null">
+            #{launch},
+        </if>
+        <if test="launchAvg!=null">
+            #{launchAvg},
+        </if>
+        <if test="invite!=null">
+            #{invite},
+        </if>
+        current_time,
+        current_time)
+        on duplicate key update
+        <if test="register!=null">
+            register=values(register),
+        </if>
+        <if test="active!=null">
+            active=values(active),
+        </if>
+        <if test="launch!=null">
+            launch=values(launch),
+        </if>
+        <if test="launchAvg!=null">
+            launch_avg=values(launch_avg),
+        </if>
+        <if test="invite!=null">
+            invite=values(invite),
+        </if>
+        gmt_modify=current_time
+    </insert>
+
+    <select id="getStatisticsByDay" parameterType="java.time.LocalDate" resultMap="UserStatisticsMap">
+        select
+            id,
+            day,
+            register,
+            active,
+            launch,
+            launch_avg,
+            invite,
+            gmt_create,
+            gmt_modify
+        from
+            user_statistics
+        where
+            day = #{day}
+    </select>
+
+    <select id="getLatestMetricsList" parameterType="java.lang.Integer" resultMap="UserStatisticsMap">
+        select
+            id,
+            day,
+            register,
+            active,
+            launch,
+            launch_avg,
+            invite,
+            gmt_create
+        from
+            user_statistics
+        order by
+            day desc
+        limit #{limit}
+    </select>
+
+    <select id="getStatisticsList" resultMap="UserStatisticsMap">
+        select
+            id,
+            day,
+            register,
+            active,
+            launch,
+            launch_avg,
+            invite
+        from
+            user_statistics
+        where
+              day &gt;= #{startDay}
+          and day &lt;= #{endDay}
+    </select>
+
+    <select id="reportUserMetrics" parameterType="java.time.LocalDate" resultMap="UserStatisticsMap">
+        select
+            launcher.day        as day,
+            launcher.active     as active,
+            launcher.launch     as launch,
+            launcher.launch_avg as launch_avg,
+            (
+                select
+                    count(1)
+                from
+                    user_info
+                where
+                    date(gmt_create) = #{day}
+
+            )                   as register,
+            (
+                select
+                    count(1)
+                from
+                    user_invite_log
+                where
+                    date(gmt_create) = #{day}
+
+            )                   as invite
+        from
+            (
+                select
+                    launch_date                     as day,
+                    count(distinct device_id)       as active,
+                    ifnull(sum(launches), 0)        as launch,
+                    ifnull(round(avg(launches)), 0) as launch_avg
+                from
+                    app_launcher
+                where
+                    launch_date = #{day}
+            ) as launcher
+    </select>
+
+    <select id="getUserMetricsVo" resultMap="UserMetricsVoMap">
+        select
+            ifnull(sum(if(day = date_sub(current_date, interval 1 day), register, 0)),
+                   0) as yesterday_incr,
+            ifnull(sum(if(day = date_sub(current_date, interval 1 day), launch, 0)),
+                   0) as yesterday_launch,
+            ifnull(sum(if(day &gt;= date_sub(current_date, interval 7 day), register, 0)),
+                   0) as week_incr,
+            ifnull(sum(if(day &gt;= date_sub(current_date, interval 7 day), launch, 0)),
+                   0) as week_launch,
+            ifnull(sum(if(day &gt;= date_sub(current_date, interval 30 day), register, 0)),
+                   0) as month_incr,
+            ifnull(sum(if(day &gt;= date_sub(current_date, interval 30 day), launch, 0)),
+                   0) as month_launch,
+            ifnull(sum(if(day &lt; date_sub(current_date, interval 30 day)
+                              and day &gt;= date_sub(current_date, interval 60 day), register, 0)),
+                   0) as last_incr,
+            ifnull(sum(if(day &lt; date_sub(current_date, interval 30 day)
+                              and day &gt;= date_sub(current_date, interval 60 day), launch, 0)),
+                   0) as last_launch
+        from
+            user_statistics
+    </select>
+
+    <select id="getActiveMetricsVo" resultMap="UserMetricsVoMap">
+        select
+            count(
+                    distinct
+                    if(
+                                launch_date = date_sub(current_date, interval 1 day),
+                                device_id,
+                                null
+                    )
+            ) as yesterday_act,
+            count(
+                    distinct
+                    if(
+                                launch_date &gt;= date_sub(current_date, interval 7 day),
+                                device_id,
+                                null
+                    )
+            ) as week_act,
+            count(
+                    distinct
+                    if(
+                                launch_date &gt;= date_sub(current_date, interval 30 day),
+                                device_id,
+                                null
+                    )
+            ) as month_act,
+            count(
+                    distinct
+                    if(
+                                    launch_date &gt;= date_sub(current_date, interval 60 day)
+                                and launch_date &lt; date_sub(current_date, interval 30 day),
+                                    device_id,
+                                    null
+                    )
+            ) as last_act
+        from
+            app_launcher
+    </select>
+
+    <select id="getUserTotalStatistics" resultType="com.prize.lottery.application.query.vo.UserTotalMetricsVo">
+        select
+            user.users       as totalUser,
+            metrics.register as totalIncr,
+            metrics.active   as totalActive,
+            metrics.launch   as totalLaunch
+        from
+            (
+                select
+                    ifnull(sum(register), 0) as register,
+                    ifnull(sum(active), 0)   as active,
+                    ifnull(sum(launch), 0)   as launch
+                from
+                    user_statistics
+                where
+                      day &gt;= #{startDay}
+                  and day &lt; #{endDay}
+            ) as metrics,
+            (
+                select
+                    count(1) as users
+                from
+                    user_info
+            ) as user
+    </select>
+
+</mapper>

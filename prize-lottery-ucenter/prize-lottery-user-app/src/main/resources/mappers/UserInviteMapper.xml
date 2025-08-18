@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.UserInviteMapper">
+
+    <resultMap id="UserInviteMap" type="com.prize.lottery.infrast.persist.po.UserInvitePo">
+        <id column="user_id" property="userId"/>
+        <result column="agent" property="agent"/>
+        <result column="code" property="code"/>
+        <result column="inv_uri" property="invUri"/>
+        <result column="invites" property="invites"/>
+        <result column="rewards" property="rewards"/>
+        <result column="income" property="income"/>
+        <result column="user_amt" property="userAmt"/>
+        <result column="withdraw" property="withdraw"/>
+        <result column="with_latest" property="withLatest"/>
+        <result column="with_rmb" property="withRmb"/>
+        <result column="version" property="version"/>
+        <result column="state" property="state"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="AgentUserInviteVoMap"
+               type="com.prize.lottery.infrast.persist.vo.AgentUserInviteVo"
+               extends="UserInviteMap">
+        <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+    </resultMap>
+
+    <resultMap id="UserInviteLogMap" type="com.prize.lottery.infrast.persist.po.UserInviteLogPo">
+        <id column="user_id" property="userId"/>
+        <result column="inv_uid" property="invUid"/>
+        <result column="inv_agent" property="invAgent"/>
+        <result column="inv_reward" property="invReward"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="UserAgentApplyMap" type="com.prize.lottery.infrast.persist.po.AgentApplyPo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserAgentApplyVoMap" type="com.prize.lottery.infrast.persist.vo.UserAgentApplyVo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+        <result column="code" property="code"/>
+        <result column="agent" property="agent"/>
+        <result column="u_state" property="userState"/>
+    </resultMap>
+
+    <resultMap id="AgentRuleMap" type="com.prize.lottery.infrast.persist.po.AgentRulePo">
+        <id column="id" property="id"/>
+        <result column="agent" property="agent"/>
+        <result column="profited" property="profited"/>
+        <result column="ratio" property="ratio"/>
+        <result column="reward" property="reward"/>
+        <result column="state" property="state"/>
+        <result column="start_time" property="startTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="AgentInvitedUserMap" type="com.prize.lottery.infrast.persist.vo.AgentInvitedUserVo">
+        <id column="user_id" property="userId"/>
+        <result column="nickname" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="inv_agent" property="agent"/>
+        <result column="inv_reward" property="reward"/>
+        <result column="gmt_create" property="inviteTime"/>
+    </resultMap>
+
+    <resultMap id="AgentIncomeMap" type="com.prize.lottery.infrast.persist.po.AgentIncomePo">
+        <id column="id" property="id"/>
+        <result column="seq_no" property="seqNo"/>
+        <result column="inv_uid" property="invUid"/>
+        <result column="user_id" property="userId"/>
+        <result column="amount" property="amount"/>
+        <result column="ratio" property="ratio"/>
+        <result column="channel" property="channel"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="AgentMetricsMap" type="com.prize.lottery.infrast.persist.po.AgentMetricsPo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="day" property="day"/>
+        <result column="users" property="users"/>
+        <result column="amount" property="amount"/>
+        <result column="invites" property="invites"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="AgentWithdrawMap" type="com.prize.lottery.infrast.persist.po.AgentWithdrawPo">
+        <id column="id" property="id"/>
+        <result column="seq_no" property="seqNo"/>
+        <result column="trans_no" property="transNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="withdraw" property="withdraw"/>
+        <result column="money" property="money"/>
+        <result column="channel" property="channel"/>
+        <result column="state" property="state"/>
+        <result column="message" property="message"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addUserInvite" parameterType="com.prize.lottery.infrast.persist.po.UserInvitePo">
+        insert into user_invite(user_id,
+                                agent,
+                                code,
+                                inv_uri,
+                                version,
+                                state,
+                                gmt_create,
+                                gmt_modify
+                               )
+        values (#{userId},
+                #{agent},
+                #{code},
+                #{invUri},
+                1,
+                #{state},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editUserInvite" parameterType="com.prize.lottery.infrast.persist.po.UserInvitePo">
+        update user_invite
+        set
+        <if test="agent!=null">
+            agent=#{agent},
+        </if>
+        <if test="invites!=null">
+            invites=invites+#{invites},
+        </if>
+        <if test="rewards!=null">
+            rewards=rewards+#{rewards},
+        </if>
+        <if test="income!=null">
+            income=income+#{income},
+        </if>
+        <if test="userAmt!=null">
+            user_amt=user_amt+#{userAmt},
+        </if>
+        <if test="withdraw!=null">
+            withdraw=withdraw+#{withdraw},
+        </if>
+        <if test="withRmb!=null">
+            with_rmb=with_rmb+#{withRmb},
+        </if>
+        <if test="withLatest!=null">
+            with_latest=#{withLatest},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        version=version+1,
+        gmt_modify=current_time
+        where user_id=#{userId}
+    </update>
+
+    <select id="getUserInvite" parameterType="java.lang.Long" resultMap="UserInviteMap">
+        select
+            user_id,
+            agent,
+            code,
+            inv_uri,
+            invites,
+            rewards,
+            income,
+            user_amt,
+            withdraw,
+            with_rmb,
+            with_latest,
+            version,
+            state,
+            gmt_create,
+            gmt_modify
+        from
+            user_invite
+        where
+            user_id = #{userId}
+    </select>
+
+    <select id="getUserInviteByCode" parameterType="java.lang.String" resultMap="UserInviteMap">
+        select
+            user_id,
+            agent,
+            code,
+            inv_uri,
+            invites,
+            rewards,
+            income,
+            user_amt,
+            withdraw,
+            with_rmb,
+            with_latest,
+            version,
+            state,
+            gmt_create,
+            gmt_modify
+        from
+            user_invite
+        where
+            code = #{code}
+    </select>
+
+    <select id="getAgentUserIdList" resultType="java.lang.Long">
+        select
+            user_id
+        from
+            user_invite
+        where
+            agent in (1, 2, 3)
+    </select>
+
+    <insert id="addUserInviteLog" parameterType="com.prize.lottery.infrast.persist.po.UserInviteLogPo">
+        insert into user_invite_log(user_id,
+                                    inv_uid,
+                                    inv_agent,
+                                    inv_reward,
+                                    gmt_create
+                                   )
+        values (#{userId},
+                #{invUid},
+                #{invAgent},
+                #{invReward},
+                current_time
+               )
+    </insert>
+
+    <select id="getInviteLogsByInvId" parameterType="java.lang.Long" resultMap="UserInviteLogMap">
+        select
+            user_id,
+            inv_uid,
+            inv_agent,
+            inv_reward,
+            gmt_create
+        from
+            user_invite_log
+        where
+            inv_uid = #{invUid}
+    </select>
+
+    <select id="getInviteLogByUserId" parameterType="java.lang.Long" resultMap="UserInviteLogMap">
+        select
+            user_id,
+            inv_uid,
+            inv_agent,
+            inv_reward,
+            gmt_create
+        from
+            user_invite_log
+        where
+            user_id = #{userId}
+    </select>
+
+    <insert id="addAgentApply" parameterType="com.prize.lottery.infrast.persist.po.UserInvitePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into agent_apply(user_id,
+                                state,
+                                gmt_create,
+                                gmt_modify
+                               )
+        values (#{userId},
+                #{state},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editAgentApply" parameterType="com.prize.lottery.infrast.persist.po.AgentApplyPo">
+        update agent_apply
+        set
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        state=#{state},
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getAgentApply" parameterType="java.lang.Long" resultMap="UserAgentApplyMap">
+        select
+            id,
+            user_id,
+            state,
+            remark,
+            gmt_create
+        from
+            agent_apply
+        where
+            id = #{id}
+    </select>
+
+    <select id="hasApplyingAgentApply" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select
+                           1
+                       from
+                           agent_apply
+                       where
+                             user_id = #{userId}
+                         and state = 1
+                       limit 1 ), 0)
+    </select>
+
+    <select id="getApplyingAgentApply" parameterType="java.lang.Long" resultMap="UserAgentApplyMap">
+        select
+            id,
+            user_id,
+            state,
+            remark,
+            gmt_create
+        from
+            agent_apply
+        where
+              user_id = #{userId}
+          and state = 1
+    </select>
+
+    <select id="getUserAgentApplies" parameterType="java.lang.Long" resultMap="UserAgentApplyMap">
+        select
+            id,
+            user_id,
+            state,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            agent_apply
+        where
+            user_id = #{userId}
+        order by
+            gmt_create desc
+    </select>
+
+    <select id="getAgentApplyList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="UserAgentApplyVoMap">
+        select
+        uaa.id,
+        uaa.user_id,
+        uaa.state,
+        uaa.remark,
+        uaa.gmt_create,
+        uaa.gmt_modify,
+        uinv.agent,
+        uinv.code,
+        uinv.state u_state,
+        ui.nickname,
+        ui.phone
+        from
+        agent_apply uaa,
+        user_invite uinv,
+        user_info ui
+        where
+        uaa.user_id=ui.id
+        and uaa.user_id=uinv.user_id
+        <if test="condition.agent!=null">
+            and uinv.agent=#{condition.agent}
+        </if>
+        <if test="condition.state!=null">
+            and uaa.state=#{condition.state}
+        </if>
+        <if test="condition.phone!=null">
+            and ui.phone like concat(#{condition.phone},'%')
+        </if>
+        order by uaa.gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAgentApplies" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        agent_apply uaa,
+        user_invite uinv,
+        user_info ui
+        where
+        uaa.user_id=ui.id
+        and uaa.user_id=uinv.user_id
+        <if test="condition.agent!=null">
+            and uinv.agent=#{condition.agent}
+        </if>
+        <if test="condition.state!=null">
+            and uaa.state=#{condition.state}
+        </if>
+        <if test="condition.phone!=null">
+            and ui.phone like concat(#{condition.phone},'%')
+        </if>
+    </select>
+
+    <insert id="addAgentRule" parameterType="com.prize.lottery.infrast.persist.po.AgentRulePo"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into
+        agent_rule(
+        agent,
+        profited,
+        ratio,
+        reward,
+        state,
+        <if test="startTime!=null">start_time,</if>
+        gmt_create,
+        gmt_modify)
+        values
+        (
+        #{agent},
+        #{profited},
+        #{ratio},
+        #{reward},
+        #{state},
+        <if test="startTime!=null">#{startTime},</if>
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="autoRevokeAgentRule" parameterType="com.prize.lottery.infrast.persist.po.AgentRulePo">
+        update agent_rule
+        set
+            state=1,
+            gmt_modify=current_time
+        where
+              state = #{state}
+          and agent = #{agent}
+    </update>
+
+    <update id="editAgentRule" parameterType="com.prize.lottery.infrast.persist.po.AgentRulePo">
+        update agent_rule
+        set
+        <if test="profited!=null">
+            profited=#{profited},
+        </if>
+        <if test="ratio!=null">
+            ratio=#{ratio},
+        </if>
+        <if test="reward!=null">
+            reward=#{reward},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="startTime!=null">
+            start_time=#{startTime},
+        </if>
+        gmt_modify=current_time
+        where id=#{id}
+    </update>
+
+    <update id="dropdownAgentRule">
+        update agent_rule
+        set
+            state=1,
+            start_time=null,
+            gmt_modify=current_time
+        where
+              agent = #{agent}
+          and state = #{state}
+    </update>
+
+    <delete id="deleteAgentRule" parameterType="java.lang.Long">
+        delete
+        from
+            agent_rule
+        where
+            id = #{id}
+    </delete>
+
+    <delete id="clearAgentRules">
+        delete
+        from
+            agent_rule
+        where
+            state = 0
+    </delete>
+
+    <select id="getAgentRuleById" parameterType="java.lang.Long" resultMap="AgentRuleMap">
+        select
+            id,
+            agent,
+            profited,
+            ratio,
+            reward,
+            state,
+            start_time,
+            gmt_create,
+            gmt_modify
+        from
+            agent_rule
+        where
+            id = #{id}
+    </select>
+
+    <select id="getAllUsingAgentRules" resultMap="AgentRuleMap">
+        select
+            id,
+            agent,
+            profited,
+            ratio,
+            reward,
+            state,
+            start_time,
+            gmt_create
+        from
+            agent_rule
+        where
+            state = 3
+        order by
+            agent asc
+    </select>
+
+    <select id="getPreOrUsingAgentRule" resultMap="AgentRuleMap">
+        select
+            id,
+            agent,
+            profited,
+            ratio,
+            reward,
+            state,
+            start_time,
+            gmt_create
+        from
+            agent_rule
+        where
+              agent = #{agent}
+          and state = #{state}
+    </select>
+
+    <select id="getAgentRuleList" parameterType="com.cloud.arch.page.PageCondition" resultMap="AgentRuleMap">
+        select id, agent, profited, ratio, reward, state, start_time, gmt_create, gmt_modify
+        from
+        agent_rule
+        <where>
+            <if test="condition.agent!=null">
+                agent=#{condition.agent}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAgentRules" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        agent_rule
+        <where>
+            <if test="condition.agent!=null">
+                agent=#{condition.agent}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+        </where>
+    </select>
+
+    <select id="getAgentUserInfo" parameterType="java.lang.Long" resultMap="AgentUserInviteVoMap">
+        select
+            uinv.user_id,
+            uinv.agent,
+            uinv.code,
+            uinv.inv_uri,
+            uinv.invites,
+            uinv.rewards,
+            uinv.income,
+            uinv.state,
+            uinv.withdraw,
+            uinv.with_rmb,
+            uinv.with_latest,
+            uinv.gmt_create,
+            ui.nickname,
+            ui.phone
+        from
+            user_invite uinv,
+            user_info ui
+        where
+              uinv.user_id = #{userId}
+          and uinv.user_id = ui.id
+    </select>
+
+    <select id="getAgentUserList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="AgentUserInviteVoMap">
+        select
+        uinv.user_id,
+        uinv.agent,
+        uinv.code,
+        uinv.inv_uri,
+        uinv.invites,
+        uinv.rewards,
+        uinv.state,
+        uinv.gmt_create,
+        ui.nickname,
+        ui.phone
+        from
+        user_invite uinv,
+        user_info ui
+        where
+        uinv.user_id=ui.id
+        <if test="condition.agent==null">
+            and uinv.agent in (1,2,3)
+        </if>
+        <if test="condition.agent!=null">
+            and uinv.agent=#{condition.agent}
+        </if>
+        <if test="condition.state!=null">
+            and uinv.state=#{condition.state}
+        </if>
+        <if test="condition.phone!=null">
+            and ui.phone like concat(#{condition.phone},'%')
+        </if>
+        order by uinv.invites desc,uinv.gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAgentUsers" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        user_invite uinv,
+        user_info ui
+        where
+        uinv.user_id=ui.id
+        <if test="condition.agent==null">
+            and uinv.agent in (1,2,3)
+        </if>
+        <if test="condition.agent!=null">
+            and uinv.agent=#{condition.agent}
+        </if>
+        <if test="condition.state!=null">
+            and uinv.state=#{condition.state}
+        </if>
+        <if test="condition.phone!=null">
+            and ui.phone like concat(#{condition.phone},'%')
+        </if>
+    </select>
+
+    <select id="getAgentInvitesTopN" parameterType="java.lang.Integer" resultMap="AgentUserInviteVoMap">
+        select
+            uinv.user_id,
+            ui.nickname,
+            ui.phone,
+            uinv.agent,
+            uinv.invites,
+            uinv.rewards,
+            uinv.gmt_create
+        from
+            user_invite uinv,
+            user_info ui
+        where
+            uinv.user_id = ui.id
+        order by
+            uinv.invites desc
+            limit #{limit}
+    </select>
+
+    <select id="getAgentInvitedUsers" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="AgentInvitedUserMap">
+        select
+            inv.user_id,
+            inv.inv_agent,
+            inv.inv_reward,
+            inv.gmt_create,
+            ui.nickname,
+            ui.phone
+        from
+            (
+                select
+                    user_id,
+                    inv_uid,
+                    inv_agent,
+                    inv_reward,
+                    gmt_create
+                from
+                    user_invite_log
+                where
+                    inv_uid = #{condition.userId}
+                order by
+                    gmt_create desc
+                    limit
+                    #{offset},
+                    #{limit}
+            ) inv
+                left join user_info ui on inv.user_id = ui.id
+    </select>
+
+    <select id="countAgentInvitedUsers" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            user_invite_log
+        where
+            inv_uid = #{condition.userId}
+    </select>
+
+    <insert id="addAgentIncome" parameterType="com.prize.lottery.infrast.persist.po.AgentIncomePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert
+        ignore into agent_income(seq_no,
+                                        inv_uid,
+                                        user_id,
+                                        amount,
+                                        ratio,
+                                        channel,
+                                        gmt_create
+                                       )
+        values (
+        #{seqNo},
+        #{invUid},
+        #{userId},
+        #{amount},
+        #{ratio},
+        #{channel},
+        current_time
+        )
+    </insert>
+
+    <select id="getAgentIncomeList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="AgentIncomeMap">
+        select
+        id,
+        seq_no,
+        inv_uid,
+        user_id,
+        amount,
+        ratio,
+        channel,
+        gmt_create
+        from
+        agent_income
+        where
+        inv_uid = #{condition.userId}
+        <if test="condition.start!=null and condition.end!=null">
+            and gmt_create &gt;=#{condition.start}
+            and gmt_create &lt;#{condition.end}
+        </if>
+        order by
+        gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAgentIncomes" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from
+        agent_income
+        where
+        inv_uid = #{condition.userId}
+        <if test="condition.start!=null and condition.end!=null">
+            and gmt_create &gt;=#{condition.start}
+            and gmt_create &lt;#{condition.end}
+        </if>
+    </select>
+
+    <insert id="addAgentMetrics" parameterType="com.prize.lottery.infrast.persist.po.AgentMetricsPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert
+        ignore into agent_metrics(user_id,
+                                         day,
+                                         users,
+                                         amount,
+                                         invites,
+                                         gmt_create
+                                        )
+        values (
+        #{userId},
+        #{day},
+        #{users},
+        #{amount},
+        #{invites},
+        current_time
+        )
+    </insert>
+
+    <insert id="addAgentMetricsList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into agent_metrics(user_id,
+        day,
+        users,
+        amount,
+        invites,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId},
+            #{item.day},
+            #{item.users},
+            #{item.amount},
+            #{item.invites},
+            current_time
+            )
+        </foreach>
+    </insert>
+
+    <select id="getLatestMetrics" parameterType="java.lang.Long" resultMap="AgentMetricsMap">
+        select
+            id,
+            user_id, day, users, amount, invites, gmt_create
+        from
+            agent_metrics
+        where
+            user_id =
+            #{userId}
+        order by
+            day desc
+            limit 1
+    </select>
+
+    <select id="getTodayInviteMetrics" parameterType="java.lang.Long" resultMap="AgentMetricsMap">
+        select
+            inv_uid as id,
+            inv_uid as user_id,
+            current_date as day,
+            count(distinct user_id) as invites
+        from
+            user_invite_log
+        where
+            inv_uid =
+            #{userId}
+          and date (
+            gmt_create) = current_date
+    </select>
+
+    <select id="getTodayIncomeMetrics" parameterType="java.lang.Long" resultMap="AgentMetricsMap">
+        select
+            inv_uid as id,
+            inv_uid as user_id,
+            current_date as day,
+            ifnull(sum(amount), 0) as amount,
+            count(user_id)         as users
+        from
+            agent_income
+        where
+            inv_uid =
+            #{userId}
+          and date (
+            gmt_create) = current_date
+    </select>
+
+    <select id="getGroupedIncomeMetrics" resultMap="AgentMetricsMap">
+        select
+        inv_uid as id,
+        inv_uid as user_id,
+        date(gmt_create) as day,
+        ifnull(sum(amount), 0) as amount,
+        count(user_id) as users
+        from
+        agent_income
+        where
+        date(gmt_create) = #{date}
+        and inv_uid in
+        <foreach collection="userIds" item="userId" separator="," open="(" close=")">
+            #{userId}
+        </foreach>
+        group by
+        inv_uid
+    </select>
+
+    <select id="getGroupedInviteMetrics" resultMap="AgentMetricsMap">
+        select
+        inv_uid as id,
+        inv_uid as user_id,
+        date(gmt_create) as day,
+        count(distinct user_id) as invites
+        from user_invite_log
+        where
+        date(gmt_create) = #{date}
+        and inv_uid in
+        <foreach collection="userIds" item="userId" separator="," open="(" close=")">
+            #{userId}
+        </foreach>
+        group by
+        inv_uid
+    </select>
+
+    <select id="getAgentMetricsList" resultMap="AgentMetricsMap">
+        select
+            id,
+            user_id, day, users, amount, invites, gmt_create
+        from
+            agent_metrics
+        where
+            user_id =
+                        #{userId}
+          and day &gt;= #{startDay}
+          and day &lt;= #{endDay}
+    </select>
+
+    <insert id="addAgentWithdraw" parameterType="com.prize.lottery.infrast.persist.po.AgentWithdrawPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into agent_withdraw(seq_no,
+                                   user_id,
+                                   withdraw,
+                                   money,
+                                   channel,
+                                   state,
+                                   gmt_create,
+                                   gmt_modify
+                                  )
+        values (#{seqNo},
+                #{userId},
+                #{withdraw},
+                #{money},
+                #{channel},
+                #{state},
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editAgentWithdraw" parameterType="com.prize.lottery.infrast.persist.po.AgentWithdrawPo">
+        update user_withdraw
+        set
+        <if test="transNo!=null">
+            trans_no=#{transNo},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="message!=null">
+            message=#{message},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id}
+    </update>
+
+    <select id="getWithdrawById" parameterType="java.lang.Long" resultMap="AgentWithdrawMap">
+        select
+            id,
+            seq_no,
+            trans_no,
+            user_id,
+            withdraw,
+            money,
+            channel,
+            state,
+            message,
+            gmt_create,
+            gmt_modify
+        from
+            agent_withdraw
+        where
+            id = #{id}
+    </select>
+
+    <select id="getWithdrawBySeqNo" parameterType="java.lang.String" resultMap="AgentWithdrawMap">
+        select
+            id,
+            seq_no,
+            trans_no,
+            user_id,
+            withdraw,
+            money,
+            channel,
+            state,
+            message,
+            gmt_create,
+            gmt_modify
+        from
+            agent_withdraw
+        where
+            seq_no = #{seqNo}
+    </select>
+
+    <select id="latestWithdraw" parameterType="java.lang.Long" resultMap="AgentWithdrawMap">
+        select
+            id,
+            seq_no,
+            trans_no,
+            user_id,
+            withdraw,
+            money,
+            channel,
+            state,
+            message,
+            gmt_create
+        from
+            agent_withdraw
+        where
+            user_id = #{userId}
+        order by
+            gmt_create desc limit 1
+    </select>
+
+    <select id="getAgentWithdrawList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="AgentWithdrawMap">
+        select
+        id, seq_no, trans_no, user_id, withdraw, money, channel, state, message, gmt_create, gmt_modify
+        from
+        agent_withdraw
+        <where>
+            <if test="condition.seqNo!=null">
+                and seq_no=#{condition.seqNo}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countAgentWithdraws" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        agent_withdraw
+        <where>
+            <if test="condition.seqNo!=null">
+                and seq_no=#{condition.seqNo}
+            </if>
+            <if test="condition.userId!=null">
+                and user_id=#{condition.userId}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.start!=null and condition.end!=null">
+                and gmt_create &gt;=#{condition.start}
+                and gmt_create &lt;#{condition.end}
+            </if>
+        </where>
+    </select>
+
+</mapper>

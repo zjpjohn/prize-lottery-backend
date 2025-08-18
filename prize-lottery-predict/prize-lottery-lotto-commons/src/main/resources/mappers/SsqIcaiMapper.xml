@@ -1,0 +1,967 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.SsqIcaiMapper">
+
+    <resultMap id="SsqICaiDataMap" type="com.prize.lottery.po.ssq.SsqIcaiPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="master_id" property="masterId"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="red1" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r1" property="data"/>
+            <result column="hit_r1" property="hitData"/>
+            <result column="r1_hit" property="dataHit"/>
+        </association>
+        <association property="red2" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r2" property="data"/>
+            <result column="hit_r2" property="hitData"/>
+            <result column="r2_hit" property="dataHit"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r3" property="data"/>
+            <result column="hit_r3" property="hitData"/>
+            <result column="r3_hit" property="dataHit"/>
+        </association>
+        <association property="red12" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r12" property="data"/>
+            <result column="hit_r12" property="hitData"/>
+            <result column="r12_hit" property="dataHit"/>
+        </association>
+        <association property="red20" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r20" property="data"/>
+            <result column="hit_r20" property="hitData"/>
+            <result column="r20_hit" property="dataHit"/>
+        </association>
+        <association property="red25" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r25" property="data"/>
+            <result column="hit_r25" property="hitData"/>
+            <result column="r25_hit" property="dataHit"/>
+        </association>
+        <association property="redKill3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="rk3" property="data"/>
+            <result column="hit_rk3" property="hitData"/>
+            <result column="rk3_hit" property="dataHit"/>
+        </association>
+        <association property="redKill6" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="rk6" property="data"/>
+            <result column="hit_rk6" property="hitData"/>
+            <result column="rk6_hit" property="dataHit"/>
+        </association>
+        <association property="blue3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="b3" property="data"/>
+            <result column="hit_b3" property="hitData"/>
+            <result column="b3_hit" property="dataHit"/>
+        </association>
+        <association property="blue5" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="b5" property="data"/>
+            <result column="hit_b5" property="hitData"/>
+            <result column="b5_hit" property="dataHit"/>
+        </association>
+        <association property="blueKill" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="bk" property="data"/>
+            <result column="hit_bk" property="hitData"/>
+            <result column="bk_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqICaiHistoryMap" type="com.prize.lottery.vo.ssq.SsqIcaiHistoryVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="master_id" property="masterId"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="red" property="red"/>
+        <result column="blue" property="blue"/>
+        <association property="red1" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r1" property="data"/>
+            <result column="hit_r1" property="hitData"/>
+            <result column="r1_hit" property="dataHit"/>
+        </association>
+        <association property="red2" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r2" property="data"/>
+            <result column="hit_r2" property="hitData"/>
+            <result column="r2_hit" property="dataHit"/>
+        </association>
+        <association property="red3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r3" property="data"/>
+            <result column="hit_r3" property="hitData"/>
+            <result column="r3_hit" property="dataHit"/>
+        </association>
+        <association property="red12" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r12" property="data"/>
+            <result column="hit_r12" property="hitData"/>
+            <result column="r12_hit" property="dataHit"/>
+        </association>
+        <association property="red20" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r20" property="data"/>
+            <result column="hit_r20" property="hitData"/>
+            <result column="r20_hit" property="dataHit"/>
+        </association>
+        <association property="red25" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="r25" property="data"/>
+            <result column="hit_r25" property="hitData"/>
+            <result column="r25_hit" property="dataHit"/>
+        </association>
+        <association property="redKill3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="rk3" property="data"/>
+            <result column="hit_rk3" property="hitData"/>
+            <result column="rk3_hit" property="dataHit"/>
+        </association>
+        <association property="redKill6" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="rk6" property="data"/>
+            <result column="hit_rk6" property="hitData"/>
+            <result column="rk6_hit" property="dataHit"/>
+        </association>
+        <association property="blue3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="b3" property="data"/>
+            <result column="hit_b3" property="hitData"/>
+            <result column="b3_hit" property="dataHit"/>
+        </association>
+        <association property="blue5" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="b5" property="data"/>
+            <result column="hit_b5" property="hitData"/>
+            <result column="b5_hit" property="dataHit"/>
+        </association>
+        <association property="blueKill" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="bk" property="data"/>
+            <result column="hit_bk" property="hitData"/>
+            <result column="bk_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="IcaiRankedDataMap" type="com.prize.lottery.vo.ICaiRankedDataVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="rank" property="rank"/>
+        <result column="hot" property="hot"/>
+        <result column="is_vip" property="vip"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+        </association>
+        <association property="data" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="data" property="data"/>
+            <result column="data_hit" property="dataHit"/>
+            <result column="hit_data" property="hitData"/>
+        </association>
+        <association property="neRate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="ne_count" property="count"/>
+            <result column="ne_rate" property="rate"/>
+            <result column="ne_hit" property="series"/>
+        </association>
+        <association property="meRate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="me_count" property="count"/>
+            <result column="me_rate" property="rate"/>
+            <result column="me_hit" property="series"/>
+        </association>
+        <association property="hiRate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hi_count" property="count"/>
+            <result column="hi_rate" property="rate"/>
+            <result column="hi_hit" property="series"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqCensusMap" type="com.prize.lottery.po.ssq.SsqLottoCensusPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="level" property="level"/>
+        <result column="channel" property="channel"/>
+        <result column="census" property="census"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="SchemaRenewMasterMap" type="com.prize.lottery.vo.SchemaRenewMasterVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="name" property="name"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="SsqICaiHitVoMap" type="com.prize.lottery.vo.ssq.SsqICaiHitVo">
+        <id column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="r3_hit" property="red3"/>
+        <result column="r20_hit" property="red20"/>
+        <result column="r25_hit" property="red25"/>
+        <result column="rk3_hit" property="rk3"/>
+        <result column="b5_hit" property="blue5"/>
+        <result column="bk_hit" property="bk"/>
+    </resultMap>
+
+    <insert id="addSsqICai" parameterType="com.prize.lottery.po.ssq.SsqIcaiPo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert
+        ignore into ssq_icai(period,
+                                    master_id,
+                                    r1,
+                                    r2,
+                                    r3,
+                                    r12,
+                                    r20,
+                                    r25,
+                                    rk3,
+                                    rk6,
+                                    b3,
+                                    b5,
+                                    bk,
+                                    gmt_create
+                                   )
+        values (
+        #{period},
+        #{masterId},
+        #{red1.data},
+        #{red2.data},
+        #{red3.data},
+        #{red12.data},
+        #{red20.data},
+        #{red25.data},
+        #{redKill3.data},
+        #{redKill6.data},
+        #{blue3.data},
+        #{blue5.data},
+        #{blueKill.data},
+        current_time
+        )
+    </insert>
+
+    <update id="editSsqICaiList" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update ssq_icai
+            set
+            hit_r1=#{item.red1.hitData},
+            r1_hit=#{item.red1.dataHit},
+            hit_r2=#{item.red2.hitData},
+            r2_hit=#{item.red2.dataHit},
+            hit_r3=#{item.red3.hitData},
+            r3_hit=#{item.red3.dataHit},
+            hit_r12=#{item.red12.hitData},
+            r12_hit=#{item.red12.dataHit},
+            hit_r20=#{item.red20.hitData},
+            r20_hit=#{item.red20.dataHit},
+            hit_r25=#{item.red25.hitData},
+            r25_hit=#{item.red25.dataHit},
+            hit_rk3=#{item.redKill3.hitData},
+            rk3_hit=#{item.redKill3.dataHit},
+            hit_rk6=#{item.redKill6.hitData},
+            rk6_hit=#{item.redKill6.dataHit},
+            hit_b3=#{item.blue3.hitData},
+            b3_hit=#{item.blue3.dataHit},
+            hit_b5=#{item.blue5.hitData},
+            b5_hit=#{item.blue5.dataHit},
+            hit_bk=#{item.blueKill.hitData},
+            bk_hit=#{item.blueKill.dataHit},
+            calc_time=current_time
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <sql id="ssqICaiSql">
+        id
+        ,master_id,period,r1,r2,r3,r12,r20,r25,rk3,rk6,b3,b5,bk,gmt_create
+    </sql>
+
+    <sql id="ssqHitInfoSql">
+        id
+        ,master_id,period,
+       r1_hit,r2_hit,r3_hit,
+       r12_hit,r20_hit,r25_hit,
+       rk3_hit,rk6_hit,b3_hit,
+       b5_hit,bk_hit,calc_time
+    </sql>
+
+    <sql id="ssqHitDetailSql">
+        id
+        ,master_id,period,
+       r1_hit,hit_r1,
+       r2_hit,hit_r2,
+       r3_hit,hit_r3,
+       r12_hit,hit_r12,
+       r20_hit,hit_r20,
+       r25_hit,hit_r25,
+       rk3_hit,hit_rk3,
+       rk6_hit,hit_rk6,
+       b3_hit,hit_b3,
+       b5_hit,hit_b5,
+       bk_hit,hit_bk,
+       calc_time
+    </sql>
+
+    <select id="getSsqICaiDataById" parameterType="java.lang.Long" resultMap="SsqICaiDataMap">
+        select
+        <include refid="ssqICaiSql"/>
+        from ssq_icai
+        where id=#{id}
+    </select>
+
+    <select id="getSsqICaiData" resultMap="SsqICaiDataMap">
+        select
+        <include refid="ssqICaiSql"/>
+        from ssq_icai
+        where period=#{period}
+        and master_id=#{masterId}
+    </select>
+
+    <select id="getAllSsqICaiDatas" parameterType="java.lang.String" resultMap="SsqICaiDataMap">
+        select
+        <include refid="ssqICaiSql"/>
+        from ssq_icai
+        where period=#{period}
+    </select>
+
+    <select id="getAllUnCalcDatas" parameterType="java.lang.String" resultMap="SsqICaiDataMap">
+        select
+        <include refid="ssqICaiSql"/>
+        from ssq_icai
+        where period=#{period}
+        and calc_time is null
+    </select>
+
+    <select id="hasSsqICaiData" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            ssq_icai
+        where
+            period = #{period}
+    </select>
+
+    <select id="latestSsqICaiPeriod" resultType="com.prize.lottery.value.Period">
+        select
+            period,
+            if(calc_time is null, 0, 1) as calculated
+        from
+            ssq_icai
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+    <select id="latestSsqMasterPeriod" parameterType="java.lang.String"
+            resultType="com.prize.lottery.value.Period">
+        select
+            period,
+            if(calc_time is null, 0, 1) as calculated
+        from
+            ssq_icai
+        where
+            master_id = #{masterId}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getUnCalculatedPeriods" parameterType="java.lang.String" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            ssq_icai
+        where
+              period &lt;= #{before}
+          and calc_time is null
+        order by
+            period asc
+    </select>
+
+    <select id="getIncrUnCalculatedPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            ssq_icai
+        where
+            calc_time is null
+        order by
+            period asc
+    </select>
+
+
+    <select id="getIncrUnCalcRatePeriods" resultType="java.lang.String">
+        select distinct
+            si.period
+        from
+            ssq_icai si
+                left join ssq_master_rate srate on si.master_id = srate.master_id and si.period = srate.period
+        where
+              si.calc_time is not null
+          and srate.id is null
+    </select>
+
+    <select id="getIncrUnCalcRateMasters" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            si.master_id
+        from
+            ssq_icai si
+                left join ssq_master_rate srate on si.master_id = srate.master_id and si.period = srate.period
+        where
+              si.calc_time is not null
+          and si.period = #{period}
+          and srate.id is null
+    </select>
+
+    <select id="getUnCalcRatePeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            ssq_icai
+        where
+              calc_time is not null
+          and period not in (
+                                select distinct
+                                    period
+                                from
+                                    ssq_master_rate
+                                order by
+                                    period asc
+                            )
+        order by
+            period asc
+    </select>
+
+    <select id="hasSsqPeriodOpenCalc" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            ssq_icai
+                        where
+                              period = #{period}
+                          and calc_time is not null
+                        limit 1 ), 0)
+    </select>
+
+    <select id="hasSsqMasterOpenCalc" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            ssq_icai
+        where
+              period = #{period}
+          and master_id = #{masterId}
+          and calc_time is not null
+    </select>
+
+    <select id="getSsqMasterIdsByPeriod" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            master_id
+        from
+            ssq_icai
+        where
+            period = #{period}
+    </select>
+
+    <select id="getUnCalcDataPeriods" parameterType="java.lang.String" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            ssq_icai
+        where
+              period &lt;= #{period}
+          and calc_time is null
+        order by
+            period asc
+    </select>
+
+    <select id="getSsqHighRateDatas" resultMap="SsqICaiDataMap">
+        select
+            si.id,
+            si.master_id,
+            si.period,
+            si.${type}
+        from
+            ssq_icai si,
+            ssq_master_rate sm
+        where
+              si.period = #{period}
+          and si.master_id = sm.master_id
+          and sm.period = #{last}
+          and sm.${type}_me_rate &gt;= #{rate}
+    </select>
+
+    <select id="getSsqHotMasterDatas" resultMap="SsqICaiDataMap">
+        select
+        <include refid="ssqICaiSql"/>
+        from
+        ssq_icai
+        where
+        period=#{period}
+        and master_id in
+        (
+        select
+        sm.master_id
+        from ssq_master_rank sm
+        where
+        sm.period=#{last}
+        and sm.hot=1
+        order by `rank` desc
+        )
+    </select>
+
+    <select id="getSsqHotMasters" resultType="java.lang.String">
+        select
+            sm.master_id
+        from
+            ssq_master_rank sm,
+            (
+                select
+                    count(1) as amount,
+                    master_id
+                from
+                    ssq_master_rank
+                where
+                      is_vip = 1
+                  and period &lt;= #{last}
+                  and period &gt;= #{start}
+                group by
+                    master_id
+            ) lm
+        where
+              sm.period = #{period}
+          and sm.is_vip = 1
+          and lm.master_id = sm.master_id
+          and lm.amount &gt;= #{throttle}
+    </select>
+
+    <update id="extractSsqHotMasters">
+        update ssq_master_rank
+        set
+        hot=1
+        where
+        period=#{period}
+        and master_id in
+        <foreach collection="masterIds" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </update>
+
+    <select id="getSsqVipItemDatas" resultMap="SsqICaiDataMap">
+        select
+            si.id,
+            si.period,
+            si.master_id,
+            si.${type},
+            smr.${type}_rank `rank`
+        from
+            ssq_icai si,
+            ssq_master_rank smr
+        where
+              si.period = #{period}
+          and si.master_id = smr.master_id
+          and smr.period = #{last}
+          and smr.is_vip = 1
+        order by
+            `rank` asc
+    </select>
+
+    <select id="getSsqVipMasterDatas" resultMap="SsqICaiDataMap">
+        select
+            si.id,
+            si.period,
+            si.master_id,
+            si.r1,
+            si.r2,
+            si.r3,
+            si.r12,
+            si.r20,
+            si.r25,
+            si.rk3,
+            si.rk6,
+            si.b3,
+            si.b5,
+            si.bk
+        from
+            ssq_icai si,
+            ssq_master_rank smr
+        where
+              si.period = #{period}
+          and smr.period = #{last}
+          and si.master_id = smr.master_id
+          and smr.is_vip = 1
+        order by
+            smr.rank desc
+    </select>
+
+    <select id="getAllSsqRankedDatas" resultMap="IcaiRankedDataMap">
+        select
+            si.id,
+            si.period,
+            si.master_id,
+            si.${type}         data,
+            srank.${type}_rank `rank`
+        from
+            ssq_icai si,
+            ssq_master_rank srank
+        where
+              si.period = #{period}
+          and si.master_id = srank.master_id
+          and srank.period = #{last}
+        order by
+            `rank` asc
+    </select>
+
+    <select id="getLimitSsqRankedDatas" resultMap="IcaiRankedDataMap">
+        select
+            si.id,
+            si.period,
+            si.master_id,
+            si.${type}         data,
+            srank.${type}_rank `rank`
+        from
+            ssq_icai si,
+            ssq_master_rank srank
+        where
+              si.period = #{period}
+          and si.master_id = srank.master_id
+          and srank.period = #{last}
+        order by
+            `rank` asc
+            limit #{limit}
+    </select>
+
+    <select id="getSsqComparedDatas" resultMap="IcaiRankedDataMap">
+        select
+            si.id,
+            si.period,
+            si.master_id,
+            mi.name,
+            si.${type}             data,
+            si.hit_${type}         hit_data,
+            srate.${type}_ne_count ne_count,
+            srate.${type}_ne_hit   ne_hit,
+            srate.${type}_ne_rate  ne_rate,
+            srate.${type}_me_count me_count,
+            srate.${type}_me_hit   me_hit,
+            srate.${type}_me_rate  me_rate,
+            srate.${type}_hi_count hi_count,
+            srate.${type}_hi_hit   hi_hit,
+            srate.${type}_hi_rate  hi_rate,
+            srank.${type}_rank     `rank`
+        from
+            ssq_icai si,
+            master_info mi,
+            ssq_master_rate srate,
+            ssq_master_rank srank
+        where
+              si.period = #{period}
+          and si.master_id = srate.master_id
+          and si.master_id = srank.master_id
+          and srate.period = #{last}
+          and srank.period = #{last}
+          and si.master_id = mi.seq
+        order by
+            `rank` asc
+            limit #{limit}
+    </select>
+
+    <select id="getSsqRankedDatas" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="IcaiRankedDataMap">
+        select
+            si.id,
+            si.period,
+            si.master_id,
+            mi.name,
+            srank.is_vip,
+            srank.hot,
+            si.${condition.type}             data,
+            si.${condition.type}_hit         data_hit,
+            si.hit_${condition.type}         hit_data,
+            srate.${condition.type}_ne_count ne_count,
+            srate.${condition.type}_ne_hit   ne_hit,
+            srate.${condition.type}_ne_rate  ne_rate,
+            srate.${condition.type}_me_count me_count,
+            srate.${condition.type}_me_hit   me_hit,
+            srate.${condition.type}_me_rate  me_rate,
+            srate.${condition.type}_hi_count hi_count,
+            srate.${condition.type}_hi_hit   hi_hit,
+            srate.${condition.type}_hi_rate  hi_rate,
+            srank.${condition.type}_rank     `rank`
+        from
+            ssq_icai si,
+            master_info mi,
+            ssq_master_rate srate,
+            ssq_master_rank srank
+        where
+              si.period = #{condition.period}
+          and si.master_id = srate.master_id
+          and si.master_id = srank.master_id
+          and srate.period = #{condition.last}
+          and srank.period = #{condition.last}
+          and si.master_id = mi.seq
+        order by
+            `rank` asc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countSsqRankedDatas" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            ssq_icai si,
+            ssq_master_rate sm
+        where
+              si.period = #{condition.period}
+          and sm.period = #{condition.last}
+          and si.master_id = sm.master_id
+    </select>
+
+    <select id="getSsqICaiHitsBefore" resultMap="SsqICaiDataMap">
+        select
+        <include refid="ssqHitInfoSql"/>
+        from ssq_icai
+        where master_id=#{masterId}
+        and period &lt;=#{period}
+        order by period desc
+        limit #{limit}
+    </select>
+
+    <select id="getSsqICaiHitsByPeriod" parameterType="java.lang.String" resultMap="SsqICaiDataMap">
+        select
+        <include refid="ssqHitInfoSql"/>
+        from ssq_icai
+        where period=#{period}
+    </select>
+
+    <select id="getHistorySsqForecasts" resultMap="SsqICaiHistoryMap">
+        select icai.*,
+        li.red,
+        li.blue
+        from (
+        select
+        <include refid="ssqHitDetailSql"/>
+        from ssq_icai
+        where master_id=#{masterId}
+        and period &lt;=#{period}
+        order by period desc
+        limit #{limit}
+        ) icai
+        left join lottery_info li on li.period=icai.period and li.type='ssq'
+    </select>
+
+    <select id="getMasterSsqICaiDetail" resultMap="SsqICaiDataMap">
+        select
+        <include refid="ssqHitDetailSql"/>,
+        IF(calc_time is null,r1,'') as r1,
+        IF(calc_time is null,r2,'') as r2,
+        IF(calc_time is null,r3,'') as r3,
+        IF(calc_time is null,r12,'') as r12,
+        IF(calc_time is null,r20,'') as r20,
+        IF(calc_time is null,r25,'') as r25,
+        IF(calc_time is null,rk3,'') as rk3,
+        IF(calc_time is null,rk6,'') as rk6,
+        IF(calc_time is null,b3,'') as b3,
+        IF(calc_time is null,b5,'') as b5,
+        IF(calc_time is null,bk,'') as bk
+        from ssq_icai
+        where master_id=#{masterId}
+        and period=#{period}
+    </select>
+
+    <select id="getSsqICaiListByMasters" resultMap="SsqICaiDataMap">
+        select
+        <include refid="ssqHitDetailSql"/>,
+        IF(calc_time is null,r1,'') as r1,
+        IF(calc_time is null,r2,'') as r2,
+        IF(calc_time is null,r3,'') as r3,
+        IF(calc_time is null,r12,'') as r12,
+        IF(calc_time is null,r20,'') as r20,
+        IF(calc_time is null,r25,'') as r25,
+        IF(calc_time is null,rk3,'') as rk3,
+        IF(calc_time is null,rk6,'') as rk6,
+        IF(calc_time is null,b3,'') as b3,
+        IF(calc_time is null,b5,'') as b5,
+        IF(calc_time is null,bk,'') as bk
+        from
+        ssq_icai
+        where
+        period=#{period}
+        and master_id in
+        <foreach collection="masters" item="masterId" open="(" close=")" separator=",">
+            #{masterId}
+        </foreach>
+    </select>
+
+    <insert id="addSsqCensuses" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        ssq_census(period,`type`,channel,census,gmt_create,`level`)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},
+            #{item.type},
+            #{item.channel},
+            #{item.census},
+            current_time,
+            <choose>
+                <when test="item.level!=null">
+                    #{item.level}
+                </when>
+                <otherwise>
+                    0
+                </otherwise>
+            </choose>
+            )
+        </foreach>
+        on duplicate key update
+        census=values(census)
+    </insert>
+
+    <select id="getTypedSsqCensusList" resultMap="SsqCensusMap">
+        select
+            id,
+            period,
+            type,
+            level,
+            channel,
+            census,
+            gmt_create
+        from
+            ssq_census
+        where
+              period = #{period}
+          and type = #{type}
+        order by
+            channel,
+            level
+    </select>
+
+    <select id="getChannelSsqCensusList" resultMap="SsqCensusMap">
+        select
+            id,
+            period,
+            type,
+            level,
+            channel,
+            census,
+            gmt_create
+        from
+            ssq_census
+        where
+              period = #{period}
+          and type = #{type}
+          and channel = #{channel}
+        order by
+            level
+    </select>
+
+    <select id="getTypeLeveledCensusList" resultMap="SsqCensusMap">
+        select
+            id,
+            period,
+            type,
+            level,
+            channel,
+            census,
+            gmt_create
+        from
+            ssq_census
+        where
+              period = #{period}
+          and type = #{type}
+          and level = #{level}
+        order by
+            id
+    </select>
+
+    <select id="latestSsqCensusPeriod" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select
+            period
+        from
+            ssq_census
+        where
+            type = #{type}
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+    <select id="getSsqSchemaRenewMasters" resultMap="SchemaRenewMasterMap">
+        select
+            si.master_id,
+            mi.name,
+            mi.avatar,
+            si.period
+        from
+            ssq_icai si,
+            ssq_master_rank srank,
+            master_info mi
+        where
+              si.period = #{period}
+          and si.master_id = srank.master_id
+          and srank.period = #{last}
+          and mi.seq = si.master_id
+          and si.calc_time is null
+        order by
+            srank.rank asc
+            limit #{limit}
+    </select>
+
+    <select id="getSsqLast10HitList" resultMap="SsqICaiHitVoMap">
+        select
+            master_id,
+            period,
+            r3_hit,
+            r20_hit,
+            r25_hit,
+            rk3_hit,
+            b5_hit,
+            bk_hit
+        from
+            ssq_icai
+        where
+              master_id = #{masterId}
+          and period &lt;= #{period}
+        order by
+            period desc limit 10
+    </select>
+
+    <select id="getNoneDataMasters" parameterType="java.lang.String"
+            resultType="com.prize.lottery.po.master.MasterLotteryPo">
+        select
+            ml.id        as id,
+            ml.master_id as masterId,
+            ml.source_id as sourceId,
+            ml.source    as source,
+            ml.type      as type
+        from
+            master_lottery ml
+                left join ssq_icai si on si.master_id = ml.master_id and si.period = #{period}
+        where
+              ml.type = 'ssq'
+          and si.id is null
+        order by
+            ml.master_id asc limit 280
+    </select>
+
+    <select id="getAllNoneDataMasters" parameterType="java.lang.String"
+            resultType="com.prize.lottery.po.master.MasterLotteryPo">
+        select
+            ml.id        as id,
+            ml.master_id as masterId,
+            ml.source_id as sourceId,
+            ml.source    as source,
+            ml.type      as type
+        from
+            master_lottery ml
+                left join ssq_icai si on si.master_id = ml.master_id and si.period = #{period}
+        where
+              ml.type = 'ssq'
+          and si.id is null
+        order by
+            ml.master_id asc
+    </select>
+
+    <delete id="delDataList" parameterType="java.util.List">
+        delete
+        from ssq_icai
+        where master_id in
+        <foreach collection="list" item="masterId" separator="," open="(" close=")">
+            #{masterId}
+        </foreach>
+    </delete>
+
+</mapper>

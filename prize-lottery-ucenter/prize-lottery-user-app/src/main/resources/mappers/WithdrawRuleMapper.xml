@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.WithdrawRuleMapper">
+
+    <resultMap id="TransferRuleMap" type="com.prize.lottery.infrast.persist.po.WithdrawRulePo">
+        <id column="id" property="id"/>
+        <result column="scene" property="scene"/>
+        <result column="throttle" property="throttle"/>
+        <result column="maximum" property="maximum"/>
+        <result column="interval" property="interval"/>
+        <result column="state" property="state"/>
+        <result column="start_time" property="startTime"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="WithdrawLevelMap" type="com.prize.lottery.infrast.persist.po.WithdrawLevelPo">
+        <id column="id" property="id"/>
+        <result column="scene" property="scene"/>
+        <result column="levels" property="levels"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addWithdrawRule" parameterType="com.prize.lottery.infrast.persist.po.WithdrawRulePo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        withdraw_rule(
+        scene,
+        throttle,
+        maximum,
+        `interval`,
+        state,
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values
+        (#{scene},
+        #{throttle},
+        #{maximum},
+        #{interval},
+        #{state},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <update id="autoRevokeWithdrawRule" parameterType="com.prize.lottery.infrast.persist.po.WithdrawRulePo">
+        update withdraw_rule
+        set
+            state=1,
+            gmt_modify=current_time
+        where
+              state = #{state}
+          and scene = #{scene}
+    </update>
+
+    <update id="editWithdrawRule" parameterType="com.prize.lottery.infrast.persist.po.WithdrawRulePo">
+        update withdraw_rule
+        set
+        <if test="throttle!=null">
+            throttle=#{throttle},
+        </if>
+        <if test="maximum!=null">
+            maximum=#{maximum},
+        </if>
+        <if test="interval!=null">
+            `interval`=#{interval},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="startTime!=null">
+            start_time=#{startTime},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where
+        id=#{id};
+    </update>
+
+    <select id="getWithdrawRuleById" parameterType="java.lang.Long" resultMap="TransferRuleMap">
+        select
+            id,
+            scene,
+            throttle,
+            maximum,
+            `interval`,
+            state,
+            start_time,
+            remark,
+            gmt_create
+        from
+            withdraw_rule
+        where
+            id = #{id}
+    </select>
+
+    <select id="getWithdrawSceneRules" parameterType="java.lang.String" resultMap="TransferRuleMap">
+        select
+            id,
+            scene,
+            throttle,
+            maximum,
+            `interval`,
+            state,
+            start_time,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            withdraw_rule
+        where
+            scene = #{scene}
+    </select>
+
+    <select id="getAllWithdrawRules" resultMap="TransferRuleMap">
+        select
+            id,
+            scene,
+            throttle,
+            maximum,
+            `interval`,
+            remark,
+            state,
+            start_time,
+            gmt_create,
+            gmt_modify
+        from
+            withdraw_rule
+        order by
+            state desc,
+            gmt_create desc
+    </select>
+
+    <select id="getSceneUsingRule" parameterType="java.lang.String" resultMap="TransferRuleMap">
+        select
+            id,
+            scene,
+            throttle,
+            maximum,
+            `interval`,
+            state,
+            start_time,
+            gmt_create
+        from
+            withdraw_rule
+        where
+              scene = #{scene}
+          and state = 3
+    </select>
+
+    <insert id="addWithdrawLevel" parameterType="com.prize.lottery.infrast.persist.po.WithdrawLevelPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into withdraw_level(scene,
+        levels,
+        state,
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify
+        )
+        values (#{scene},
+        #{levels},
+        #{state},
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time
+        )
+    </insert>
+
+    <update id="editWithdrawLevel" parameterType="com.prize.lottery.infrast.persist.po.WithdrawLevelPo">
+        update withdraw_level
+        set
+        <if test="levels!=null">
+            levels=#{levels},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="remark!=null">
+            remark=#{remark},
+        </if>
+        gmt_modify=current_time
+        where
+        id = #{id}
+    </update>
+
+    <update id="revokeSceneLevel" parameterType="java.lang.String">
+        update withdraw_level
+        set
+            state=1
+        where
+              scene = #{scene}
+          and state = 2
+    </update>
+
+    <select id="getWithdrawLevel" parameterType="java.lang.Long" resultMap="WithdrawLevelMap">
+        select
+            id,
+            scene,
+            levels,
+            state,
+            remark,
+            gmt_create,
+            gmt_modify
+        from
+            withdraw_level
+        where
+            id = #{id}
+    </select>
+
+    <select id="getSceneUsingLevel" parameterType="java.lang.String" resultMap="WithdrawLevelMap">
+        select
+            id,
+            scene,
+            levels,
+            state,
+            remark,
+            gmt_create
+        from
+            withdraw_level
+        where
+              scene = #{scene}
+          and state = 2
+    </select>
+
+    <select id="getWithdrawLevelList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="WithdrawLevelMap">
+        select
+        id, scene, levels, state, remark, gmt_create, gmt_modify
+        from withdraw_level
+        <where>
+            <if test="condition.scene!=null">
+                scene = #{condition.scene}
+            </if>
+            <if test="condition.state!=null">
+                state=#{condition.state}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countWithdrawLevels" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from withdraw_level
+        <where>
+            <if test="condition.scene!=null">
+                scene = #{condition.scene}
+            </if>
+            <if test="condition.state!=null">
+                state=#{condition.state}
+            </if>
+        </where>
+    </select>
+
+</mapper>

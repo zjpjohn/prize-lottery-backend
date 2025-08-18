@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Num3LottoIndexMapper">
+
+    <resultMap id="Num3LottoIndexMap" type="com.prize.lottery.po.lottery.Num3LottoIndexPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="dan_index" property="danIndex"/>
+        <result column="kill_index" property="killIndex"/>
+        <result column="com_index" property="comIndex"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <insert id="addNum3LottoIndex" parameterType="com.prize.lottery.po.lottery.Num3LottoIndexPo">
+        insert into num3_lotto_index(id,
+                                     type,
+                                     period,
+                                     dan_index,
+                                     kill_index,
+                                     com_index,
+                                     gmt_create,
+                                     gmt_modify
+                                    )
+        values (#{id},
+                #{type},
+                #{period},
+                #{danIndex},
+                #{killIndex},
+                #{comIndex},
+                current_time,
+                current_time
+               ) on duplicate key
+        update
+            dan_index=
+        values (dan_index), kill_index=
+        values (kill_index), com_index=
+        values (com_index), gmt_modify= current_time
+    </insert>
+
+    <select id="getLottoIndexById" parameterType="java.lang.Long" resultMap="Num3LottoIndexMap">
+        select
+            id,
+            type,
+            period,
+            dan_index,
+            kill_index,
+            com_index,
+            gmt_create,
+            gmt_modify
+        from
+            num3_lotto_index
+        where
+            id = #{id}
+    </select>
+
+    <select id="getLottoIndexByUk" resultMap="Num3LottoIndexMap">
+        select
+            id,
+            type,
+            period,
+            dan_index,
+            kill_index,
+            com_index,
+            gmt_create,
+            gmt_modify
+        from
+            num3_lotto_index
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getLottoIndices" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Num3LottoIndexMap">
+        select
+        id,
+        type,
+        period,
+        dan_index,
+        kill_index,
+        com_index,
+        gmt_create,
+        gmt_modify
+        from
+        num3_lotto_index
+        where
+        type = #{condition.type}
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+        order by period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countLottoIndices" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        num3_lotto_index
+        where
+        type = #{condition.type}
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+    </select>
+
+    <select id="latestIndexPeriod" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            num3_lotto_index
+        where
+            type = #{type}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getIndexPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            num3_lotto_index
+        where
+            type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+</mapper>

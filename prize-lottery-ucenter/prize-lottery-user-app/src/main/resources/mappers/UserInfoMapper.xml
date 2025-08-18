@@ -1,0 +1,1208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.infrast.persist.mapper.UserInfoMapper">
+
+    <resultMap id="UserInfoMap" type="com.prize.lottery.infrast.persist.po.UserInfoPo">
+        <id column="id" property="id"/>
+        <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+        <result column="password" property="password"/>
+        <result column="wx_id" property="wxId"/>
+        <result column="ali_id" property="aliId"/>
+        <result column="email" property="email"/>
+        <result column="avatar" property="avatar"/>
+        <result column="expert" property="expert"/>
+        <result column="channel" property="channel"/>
+        <result column="state" property="state"/>
+        <result column="version" property="version"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserAccountMap" type="com.prize.lottery.dto.UserAccountRepo">
+        <id column="id" property="userId"/>
+        <result column="wx_id" property="wxId"/>
+        <result column="ali_id" property="aliId"/>
+        <result column="state" property="state"/>
+        <result column="balance" property="balance"/>
+    </resultMap>
+
+    <resultMap id="UserAdmInfoVoMap" type="com.prize.lottery.infrast.persist.vo.UserAdmInfoVo">
+        <id column="id" property="userId"/>
+        <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+        <result column="channel" property="channel"/>
+        <result column="state" property="state"/>
+        <result column="expert" property="expert"/>
+        <result column="create_time" property="createTime"/>
+        <result column="agent" property="level"/>
+        <result column="code" property="invCode"/>
+        <result column="inv_uri" property="invUri"/>
+        <result column="invites" property="invites"/>
+        <result column="rewards" property="rewards"/>
+        <result column="login_state" property="loginState"/>
+        <result column="login_ip" property="loginIp"/>
+        <result column="login_time" property="loginTime"/>
+        <result column="expire_at" property="expireAt"/>
+    </resultMap>
+
+    <resultMap id="UserBalanceMap" type="com.prize.lottery.infrast.persist.po.UserBalancePo">
+        <id column="user_id" property="userId"/>
+        <result column="invite" property="invite"/>
+        <result column="balance" property="balance"/>
+        <result column="coupon" property="coupon"/>
+        <result column="voucher" property="voucher"/>
+        <result column="withdraw" property="withdraw"/>
+        <result column="with_rmb" property="withRmb"/>
+        <result column="with_latest" property="withLatest"/>
+        <result column="can_with" property="canWith"/>
+        <result column="can_profit" property="canProfit"/>
+        <result column="version" property="version"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserBalanceLogMap" type="com.prize.lottery.infrast.persist.po.UserBalanceLogPo">
+        <id column="id" property="id"/>
+        <result column="seq" property="seq"/>
+        <result column="user_id" property="userId"/>
+        <result column="direct" property="direct"/>
+        <result column="balance" property="balance"/>
+        <result column="surplus" property="surplus"/>
+        <result column="voucher" property="voucher"/>
+        <result column="source" property="source"/>
+        <result column="action" property="action"/>
+        <result column="state" property="state"/>
+        <result column="remark" property="remark"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserSignMap" type="com.prize.lottery.infrast.persist.po.UserSignPo">
+        <id column="user_id" property="userId"/>
+        <result column="series" property="series"/>
+        <result column="times" property="times"/>
+        <result column="coupon" property="coupon"/>
+        <result column="last_date" property="lastDate"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserSignLogMap" type="com.prize.lottery.infrast.persist.po.UserSignLogPo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="type" property="type"/>
+        <result column="award" property="award"/>
+        <result column="sign_time" property="signTime"/>
+    </resultMap>
+
+    <resultMap id="UserLoginMap" type="com.prize.lottery.infrast.persist.po.UserLoginPo">
+        <id column="user_id" property="userId"/>
+        <result column="token_id" property="tokenId"/>
+        <result column="expire_at" property="expireAt"/>
+        <result column="login_ip" property="loginIp"/>
+        <result column="login_time" property="loginTime"/>
+        <result column="state" property="state"/>
+        <result column="last_ip" property="lastIp"/>
+        <result column="last_time" property="lastTime"/>
+    </resultMap>
+
+    <resultMap id="UserMemberMap" type="com.prize.lottery.infrast.persist.po.UserMemberPo">
+        <id column="user_id" property="userId"/>
+        <result column="times" property="times"/>
+        <result column="expire_at" property="expireAt"/>
+        <result column="last_expire" property="lastExpire"/>
+        <result column="state" property="state"/>
+        <result column="renew_time" property="renewTime"/>
+        <result column="version" property="version"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="UserMemberVoMap" type="com.prize.lottery.infrast.persist.vo.UserMemberVo" extends="UserMemberMap">
+        <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+    </resultMap>
+
+    <resultMap id="UserMemberLogMap" type="com.prize.lottery.infrast.persist.po.UserMemberLogPo">
+        <id column="id" property="id"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="user_id" property="userId"/>
+        <result column="pack_no" property="packNo"/>
+        <result column="pack_name" property="packName"/>
+        <result column="time_unit" property="timeUnit"/>
+        <result column="payed" property="payed"/>
+        <result column="channel" property="channel"/>
+        <result column="expire_start" property="expireStart"/>
+        <result column="expire_end" property="expireEnd"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="ActiveUserMap" type="com.prize.lottery.infrast.persist.vo.ActiveUserVo">
+        <id column="user_id" property="userId"/>
+        <result column="avatar" property="avatar"/>
+        <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+        <result column="launches" property="launches"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="app_version" property="appVersion"/>
+        <result column="gmt_create" property="launchTime"/>
+        <result column="launch_ip" property="launchIp"/>
+    </resultMap>
+
+    <insert id="saveUserInfo" parameterType="com.prize.lottery.infrast.persist.po.UserInfoPo">
+        insert
+            ignore
+        into user_info(id,
+                       nickname,
+                       phone,
+                       avatar,
+                       channel,
+                       state,
+                       version,
+                       gmt_create,
+                       gmt_modify
+                      )
+        values (#{id},
+                #{nickname},
+                #{phone},
+                #{avatar},
+                #{channel},
+                #{state},
+                1,
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editUserInfo" parameterType="com.prize.lottery.infrast.persist.po.UserInfoPo">
+        update user_info
+        set
+        <if test="password!=null">
+            password=#{password},
+        </if>
+        <if test="wxId!=null">
+            wx_id=#{wxId},
+        </if>
+        <if test="aliId!=null">
+            ali_id=#{aliId},
+        </if>
+        <if test="email!=null">
+            email=#{email},
+        </if>
+        <if test="avatar!=null">
+            avatar=#{avatar},
+        </if>
+        <if test="expert!=null">
+            expert=#{expert},
+        </if>
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        version=version+1,
+        gmt_modify=current_time
+        where id = #{id}
+    </update>
+
+    <select id="getUserInfoByName" parameterType="java.lang.String" resultMap="UserInfoMap">
+        select
+            id,
+            nickname,
+            phone,
+            password,
+            wx_id,
+            ali_id,
+            avatar,
+            expert,
+            channel,
+            state,
+            version,
+            gmt_create
+        from
+            user_info
+        where
+            nickname = #{name}
+    </select>
+
+    <select id="getUserInfoByPhone" parameterType="java.lang.String" resultMap="UserInfoMap">
+        select
+            id,
+            nickname,
+            phone,
+            password,
+            wx_id,
+            ali_id,
+            avatar,
+            expert,
+            channel,
+            state,
+            version,
+            gmt_create
+        from
+            user_info
+        where
+            phone = #{phone}
+    </select>
+
+    <select id="getUserInfoById" parameterType="java.lang.Long" resultMap="UserInfoMap">
+        select
+            id,
+            nickname,
+            phone,
+            password,
+            wx_id,
+            ali_id,
+            avatar,
+            expert,
+            channel,
+            state,
+            version,
+            gmt_create
+        from
+            user_info
+        where
+            id = #{userId}
+    </select>
+
+    <select id="getUserInfoByIdList" parameterType="java.util.List" resultMap="UserInfoMap">
+        select
+        id,
+        nickname,
+        phone,
+        wx_id,
+        ali_id,
+        email,
+        avatar,
+        expert,
+        channel,
+        state,
+        gmt_create
+        from
+        user_info
+        where id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="getUserAccount" parameterType="java.lang.Long" resultMap="UserAccountMap">
+        select
+            ui.id,
+            ui.wx_id,
+            ui.ali_id,
+            ui.state,
+            ub.balance
+        from
+            user_info ui,
+            user_balance ub
+        where
+              ui.id = #{id}
+          and ui.id = ub.user_id
+    </select>
+
+    <select id="getUserAccounts" parameterType="java.util.List" resultMap="UserAccountMap">
+        select
+        ui.id,
+        ui.wx_id,
+        ui.ali_id,
+        ui.state,
+        ub.balance
+        from
+        user_info ui,
+        user_balance ub
+        where
+        ui.id=ub.user_id
+        and ui.id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="getUserAdmInfo" parameterType="java.lang.Long" resultMap="UserAdmInfoVoMap">
+        select
+            ui.id,
+            ui.nickname,
+            ui.phone,
+            ui.expert,
+            ui.channel,
+            ui.state,
+            inv.agent,
+            inv.code,
+            inv.inv_uri,
+            inv.invites,
+            inv.rewards,
+            login.expire_at,
+            login.login_time,
+            ui.gmt_create             as create_time,
+            inet_ntoa(login.login_ip) as login_ip,
+            login.state               as login_state
+        from
+            user_info ui,
+            user_invite inv,
+            user_login_info login
+        where
+              ui.id = #{id}
+          and ui.id = inv.user_id
+          and ui.id = login.user_id
+    </select>
+
+    <select id="getUserInfoList" parameterType="com.cloud.arch.page.PageCondition" resultMap="UserInfoMap">
+        select
+        id,nickname,phone,avatar,expert,channel,state,gmt_create,gmt_modify
+        from
+        user_info
+        <where>
+            <if test="condition.phone!=null">
+                and phone like concat(#{condition.phone},'%')
+            </if>
+            <if test="condition.expert!=null">
+                and expert=#{condition.expert}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.startTime!=null and condition.endTime!=null">
+                and gmt_create &gt;#{condition.startTime}
+                and gmt_create &lt;#{condition.endTime}
+            </if>
+        </where>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countUserInfo" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        user_info
+        <where>
+            <if test="condition.phone!=null">
+                and phone like concat(#{condition.phone},'%')
+            </if>
+            <if test="condition.expert!=null">
+                and expert=#{condition.expert}
+            </if>
+            <if test="condition.channel!=null">
+                and `channel`=#{condition.channel}
+            </if>
+            <if test="condition.state!=null">
+                and state=#{condition.state}
+            </if>
+            <if test="condition.startTime!=null and condition.endTime!=null">
+                and gmt_create &gt;#{condition.startTime}
+                and gmt_create &lt;#{condition.endTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="getInviteUserList" parameterType="com.cloud.arch.page.PageCondition" resultMap="UserInfoMap">
+        select
+            ui.id,
+            ui.nickname,
+            ui.phone,
+            ui.avatar,
+            ui.channel,
+            uil.gmt_create
+        from
+            user_info ui,
+            user_invite_log uil
+        where
+              ui.id = uil.user_id
+          and uil.inv_uid = #{condition.userId}
+        order by
+            uil.gmt_create desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="countInviteUsers" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            user_invite_log
+        where
+            inv_uid = #{condition.userId}
+    </select>
+
+    <insert id="addUserBalance" parameterType="com.prize.lottery.infrast.persist.po.UserBalancePo">
+        insert into user_balance(user_id,
+                                 version,
+                                 gmt_create,
+                                 gmt_modify
+                                )
+        values (#{userId},
+                1,
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editUserBalance" parameterType="com.prize.lottery.infrast.persist.po.UserBalancePo">
+        update user_balance
+        set
+        <if test="balance!=null">
+            balance=balance+#{balance},
+        </if>
+        <if test="surplus!=null">
+            surplus=surplus+#{surplus},
+        </if>
+        <if test="invite!=null">
+            invite=invite+#{invite},
+        </if>
+        <if test="coupon!=null">
+            coupon=coupon+#{coupon},
+        </if>
+        <if test="voucher!=null">
+            voucher=voucher+#{voucher},
+        </if>
+        <if test="canWith!=null">
+            can_with=#{canWith},
+        </if>
+        <if test="canProfit!=null">
+            can_profit=#{canProfit},
+        </if>
+        <if test="withdraw!=null and withRmb!=null and withLatest!=null">
+            withdraw=withdraw+#{withdraw},
+            with_rmb=with_rmb+#{withRmb},
+            with_latest=#{withLatest},
+        </if>
+        version=version+1,
+        gmt_modify=current_time
+        where user_id=#{userId}
+    </update>
+
+    <update id="editBalanceList" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update user_balance
+            set
+            <if test="item.balance!=null">
+                balance=balance+#{item.balance},
+            </if>
+            <if test="item.surplus!=null">
+                surplus=surplus+#{item.surplus},
+            </if>
+            <if test="item.invite!=null">
+                invite=invite+#{item.invite},
+            </if>
+            <if test="item.coupon!=null">
+                coupon=coupon+#{item.coupon},
+            </if>
+            <if test="item.voucher!=null">
+                voucher=voucher+#{item.voucher},
+            </if>
+            version=version+1,
+            gmt_modify=current_time
+            where user_id=#{item.userId}
+        </foreach>
+    </update>
+
+    <select id="getUserBalance" parameterType="java.lang.Long" resultMap="UserBalanceMap">
+        select
+            user_id,
+            invite,
+            balance,
+            surplus,
+            coupon,
+            voucher,
+            withdraw,
+            with_rmb,
+            with_latest,
+            can_with,
+            can_profit,
+            version,
+            gmt_create
+        from
+            user_balance
+        where
+            user_id = #{userId}
+    </select>
+
+    <select id="getBalanceByUsers" parameterType="java.util.List" resultMap="UserBalanceMap">
+        select
+        user_id,
+        balance,
+        surplus,
+        invite,
+        coupon,
+        voucher,
+        withdraw,
+        with_rmb,
+        with_latest,
+        can_with,
+        can_profit,
+        version,
+        gmt_create
+        from
+        user_balance
+        where user_id in
+        <foreach collection="userIds" item="userId" separator="," open="(" close=")">
+            #{userId}
+        </foreach>
+    </select>
+
+    <insert id="addUserBalanceLog" parameterType="com.prize.lottery.infrast.persist.po.UserBalanceLogPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        user_balance_log(seq,
+        user_id,
+        direct,
+        `action`,
+        state,
+        <if test="balance!=null">
+            balance,
+        </if>
+        <if test="surplus!=null">
+            surplus,
+        </if>
+        <if test="voucher!=null">
+            voucher,
+        </if>
+        <if test="source!=null">
+            source,
+        </if>
+        <if test="remark!=null">
+            remark,
+        </if>
+        gmt_create,
+        gmt_modify)
+        values (#{seq},
+        #{userId},
+        #{direct},
+        #{action},
+        #{state},
+        <if test="balance!=null">
+            #{balance},
+        </if>
+        <if test="surplus!=null">
+            #{surplus},
+        </if>
+        <if test="voucher!=null">
+            #{voucher},
+        </if>
+        <if test="source!=null">
+            #{source},
+        </if>
+        <if test="remark!=null">
+            #{remark},
+        </if>
+        current_time,
+        current_time)
+    </insert>
+
+    <insert id="addBalanceLogList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        user_balance_log(seq,
+        user_id,
+        direct,
+        action,
+        state,
+        balance,
+        surplus,
+        voucher,
+        source,
+        remark,
+        gmt_create,
+        gmt_modify)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.seq},
+            #{item.userId},
+            #{item.direct},
+            #{item.action},
+            #{item.state},
+            <if test="item.balance!=null">
+                #{item.balance},
+            </if>
+            <if test="item.balance==null">
+                0,
+            </if>
+            <if test="item.surplus!=null">
+                #{item.surplus},
+            </if>
+            <if test="item.surplus==null">
+                0,
+            </if>
+            <if test="item.voucher!=null">
+                #{item.voucher},
+            </if>
+            <if test="item.voucher==null">
+                0,
+            </if>
+            <if test="item.source!=null">
+                #{item.source},
+            </if>
+            <if test="item.source==null">
+                0,
+            </if>
+            <if test="item.remark!=null">
+                #{item.remark},
+            </if>
+            <if test="item.remark==null">
+                '',
+            </if>
+            current_time,
+            current_time)
+        </foreach>
+    </insert>
+
+    <sql id="balanceLogSql">
+        id,seq,user_id,direct,balance,surplus,voucher,`source`,`action`,state,remark,gmt_create,gmt_modify
+    </sql>
+
+    <select id="getLatestBalanceLog" parameterType="java.lang.Long" resultMap="UserBalanceLogMap">
+        select
+        <include refid="balanceLogSql"/>
+        from
+        user_balance_log
+        where
+        user_id=#{userId}
+        order by gmt_create desc
+        limit 1
+    </select>
+
+    <select id="getUserBalanceLogs" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="UserBalanceLogMap">
+        select
+        <include refid="balanceLogSql"/>
+        from
+        user_balance_log
+        where
+        user_id=#{condition.userId}
+        <if test="condition.direct!=null">
+            and direct=#{condition.direct}
+        </if>
+        <if test="condition.action!=null">
+            and action=#{condition.action}
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+        <if test="condition.balance!=null">
+            and balance &gt;0
+        </if>
+        <if test="condition.surplus!=null">
+            and surplus &gt;0
+        </if>
+        order by gmt_create desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countUserBalanceLogs" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        user_balance_log
+        where
+        user_id=#{condition.userId}
+        <if test="condition.direct!=null">
+            and direct=#{condition.direct}
+        </if>
+        <if test="condition.action!=null">
+            and action=#{condition.action}
+        </if>
+        <if test="condition.state!=null">
+            and state=#{condition.state}
+        </if>
+        <if test="condition.balance!=null">
+            and balance &gt;0
+        </if>
+        <if test="condition.surplus!=null">
+            and surplus &gt;0
+        </if>
+    </select>
+
+    <insert id="saveUserSign" parameterType="com.prize.lottery.infrast.persist.po.UserSignPo">
+        insert into user_sign(user_id,
+                              series,
+                              times,
+                              coupon,
+                              last_date,
+                              gmt_create,
+                              gmt_modify
+                             )
+        values (#{userId},
+                #{series},
+                #{times},
+                #{coupon},
+                #{lastDate},
+                current_time,
+                current_time
+               )
+        on duplicate key
+            update
+                series=
+                    values(series),
+                times=
+                    values(times),
+                coupon=
+                    values(coupon),
+                last_date=
+                    values(last_date),
+                gmt_modify=
+                    values(gmt_modify)
+    </insert>
+
+    <select id="getUserSign" parameterType="java.lang.Long" resultMap="UserSignMap">
+        select
+            user_id,
+            series,
+            times,
+            coupon,
+            last_date,
+            gmt_create,
+            gmt_modify
+        from
+            user_sign
+        where
+            user_id = #{userId}
+    </select>
+
+    <insert id="addUserSignLog" parameterType="com.prize.lottery.infrast.persist.po.UserSignLogPo"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into user_sign_log(user_id,
+                                  `type`,
+                                  award,
+                                  sign_time
+                                 )
+        values (#{userId},
+                #{type},
+                #{award},
+                current_time
+               )
+    </insert>
+
+    <sql id="signLogSql">
+        id,user_id,`type`,award,sign_time
+    </sql>
+
+    <select id="getLatestUserSignLog" parameterType="java.lang.Long" resultMap="UserSignLogMap">
+        select
+        <include refid="signLogSql"/>
+        from
+        user_sign_log
+        where
+        user_id=#{userId}
+        order by sign_time desc
+        limit 1
+    </select>
+
+    <select id="getUserSignLogs" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="UserSignLogMap">
+        select
+        <include refid="signLogSql"/>
+        from
+        user_sign_log
+        where
+        user_id=#{condition.userId}
+        order by sign_time desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countUserSignLogs" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            user_sign_log
+        where
+            user_id = #{condition.userId}
+    </select>
+
+    <insert id="addUserLogin" parameterType="com.prize.lottery.infrast.persist.po.UserLoginPo">
+        insert into user_login_info(user_id,
+                                    token_id,
+                                    expire_at,
+                                    login_ip,
+                                    login_time,
+                                    state
+                                   )
+        values (#{userId},
+                #{tokenId},
+                #{expireAt},
+                inet_aton(#{loginIp}),
+                #{loginTime},
+                #{state}
+               )
+        on duplicate key
+            update
+                last_ip=login_ip,
+                last_time=login_time,
+                login_time=
+                    values(login_time),
+                login_ip=
+                    values(login_ip),
+                token_id=
+                    values(token_id),
+                expire_at=
+                    values(expire_at),
+                state =
+                    values(state)
+    </insert>
+
+    <select id="getUserLogin" parameterType="java.lang.Long" resultMap="UserLoginMap">
+        select
+            user_id,
+            token_id,
+            expire_at,
+            inet_ntoa(login_ip) as login_ip,
+            login_time,
+            inet_ntoa(last_ip)  as last_ip,
+            last_time
+        from
+            user_login_info
+        where
+            user_id = #{userId}
+    </select>
+
+    <insert id="addUserLoginLog" parameterType="com.prize.lottery.infrast.persist.po.UserLoginLogPo"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into user_login_log(user_id,
+                                   login_time,
+                                   login_ip,
+                                   ip_region,
+                                   expire_at,
+                                   gmt_create
+                                  )
+        values (#{userId},
+                #{loginTime},
+                inet_aton(#{loginIp}),
+                #{ipRegion},
+                #{expireAt},
+                current_time
+               )
+    </insert>
+
+    <insert id="addUserMember" parameterType="com.prize.lottery.infrast.persist.po.UserMemberPo">
+        insert into user_member(user_id,
+                                times,
+                                expire_at,
+                                state,
+                                renew_time,
+                                version,
+                                gmt_create,
+                                gmt_modify
+                               )
+        values (#{userId},
+                #{times},
+                #{expireAt},
+                1,
+                #{renewTime},
+                1,
+                current_time,
+                current_time
+               )
+    </insert>
+
+    <update id="editUserMember" parameterType="com.prize.lottery.infrast.persist.po.UserMemberPo">
+        update user_member
+        set
+        <if test="state!=null">
+            state=#{state},
+        </if>
+        <if test="times!=null">
+            times=#{times},
+        </if>
+        <if test="expireAt!=null">
+            expire_at=#{expireAt},
+        </if>
+        <if test="lastExpire!=null">
+            last_expire=#{lastExpire},
+        </if>
+        <if test="renewTime!=null">
+            renew_time=#{renewTime},
+        </if>
+        version=version+1,
+        gmt_modify=current_time
+        where
+        user_id = #{userId}
+    </update>
+
+    <update id="expireUserMembers" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update user_member
+            set
+            state=2,
+            gmt_modify=current_time
+            where user_id=#{item.userId}
+        </foreach>
+    </update>
+
+    <select id="getUserMember" parameterType="java.lang.Long" resultMap="UserMemberMap">
+        select
+            user_id,
+            times,
+            expire_at,
+            last_expire,
+            state,
+            renew_time,
+            version,
+            gmt_create,
+            gmt_modify
+        from
+            user_member
+        where
+            user_id = #{userId}
+    </select>
+
+    <select id="getExpiredMembers" parameterType="java.lang.Integer" resultMap="UserMemberMap">
+        select
+            user_id,
+            times,
+            expire_at,
+            last_expire,
+            state,
+            renew_time,
+            version,
+            gmt_create,
+            gmt_modify
+        from
+            user_member
+        where
+              state = 1
+          and expire_at &lt; current_time
+        order by
+            expire_at asc
+        limit #{limit}
+    </select>
+
+    <select id="getUserMemberVo" parameterType="java.lang.Long" resultMap="UserMemberVoMap">
+        select
+            um.user_id,
+            um.times,
+            um.expire_at,
+            um.last_expire,
+            um.state,
+            um.renew_time,
+            um.version,
+            um.gmt_create,
+            um.gmt_modify,
+            ui.nickname,
+            ui.phone
+        from
+            user_member um,
+            user_info ui
+        where
+              um.user_id = #{userId}
+          and um.user_id = ui.id
+    </select>
+
+    <select id="getUserMemberList" parameterType="com.cloud.arch.page.PageCondition" resultMap="UserMemberVoMap">
+        select
+        um.user_id,
+        um.times,
+        um.expire_at,
+        um.last_expire,
+        um.state,
+        um.renew_time,
+        um.version,
+        um.gmt_create,
+        um.gmt_modify,
+        ui.nickname,
+        ui.phone
+        from
+        user_member um,
+        user_info ui
+        where ui.id=um.user_id
+        <if test="condition.state!=null">
+            and um.state=#{condition.state}
+        </if>
+        <if test="condition.phone!=null">
+            and ui.phone=#{condition.phone}
+        </if>
+        <if test="condition.expireStart!=null and condition.expireEnd">
+            and um.expire_at &gt;=#{condition.expireStart}
+            and um.expire_at &lt;#{condition.expireStart}
+        </if>
+        <if test="condition.renewStart!=null and condition.renewEnd">
+            and um.renew_time &gt;=#{condition.renewStart}
+            and um.renew_time &lt;#{condition.renewEnd}
+        </if>
+        order by um.gmt_modify desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countUserMembers" parameterType="com.cloud.arch.page.PageCondition" resultType="java.lang.Integer">
+        select count(1)
+        from
+        user_member um,
+        user_info ui
+        where ui.id=um.user_id
+        <if test="condition.state!=null">
+            and um.state=#{condition.state}
+        </if>
+        <if test="condition.phone!=null">
+            and ui.phone=#{condition.phone}
+        </if>
+        <if test="condition.expireStart!=null and condition.expireEnd">
+            and um.expire_at &gt;=#{condition.expireStart}
+            and um.expire_at &lt;#{condition.expireStart}
+        </if>
+        <if test="condition.renewStart!=null and condition.renewEnd">
+            and um.renew_time &gt;=#{condition.renewStart}
+            and um.renew_time &lt;#{condition.renewEnd}
+        </if>
+    </select>
+
+    <insert id="addUserMemberLog" parameterType="com.prize.lottery.infrast.persist.po.UserMemberLogPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore
+        into user_member_log(order_no,
+        user_id,
+        pack_no,
+        pack_name,
+        time_unit,
+        payed,
+        type,
+        channel,
+        expire_start,
+        expire_end,
+        gmt_create
+        )
+        values (#{orderNo},
+        #{userId},
+        #{packNo},
+        #{packName},
+        #{timeUnit},
+        #{payed},
+        #{type},
+        <choose>
+            <when test="channel!=null">
+                #{channel},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+        #{expireStart},
+        #{expireEnd},
+        current_time
+        )
+    </insert>
+
+    <select id="getUserMemberLogs" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="UserMemberLogMap">
+        select
+            id,
+            order_no,
+            user_id,
+            pack_no,
+            pack_name,
+            time_unit,
+            type,
+            payed,
+            channel,
+            expire_start,
+            expire_end,
+            gmt_create
+        from
+            user_member_log
+        where
+            user_id = #{condition.userId}
+        order by
+            gmt_create desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="countUserMemberLogs" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            user_member_log
+        where
+            user_id = #{condition.userId}
+    </select>
+
+    <select id="getTotalMemberMetrics" resultType="com.prize.lottery.infrast.persist.vo.MemberTotalMetricsVo">
+        select
+            (
+                select
+                    count(distinct user_id)
+                from
+                    user_member
+            ) as totalUser,
+            (
+                select
+                    ifnull(sum(payed), 0)
+                from
+                    user_member_log
+            ) as totalPayed,
+            (
+                select
+                    count(distinct user_id)
+                from
+                    user_member
+                where
+                      date(gmt_create) &gt;= #{startDay}
+                  and date(gmt_create) &lt; #{endDay}
+            ) as timeUser,
+            (
+                select
+                    ifnull(sum(payed), 0)
+                from
+                    user_member_log
+                where
+                      date(gmt_create) &gt;= #{startDay}
+                  and date(gmt_create) &lt; #{endDay}
+            ) as timePayed
+    </select>
+
+    <select id="getActiveUserList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="ActiveUserMap">
+        select
+            launch.user_id,
+            ui.nickname,
+            ui.avatar,
+            ui.phone,
+            launch.launches,
+            launch.device_id,
+            launch.app_version,
+            launch.gmt_create,
+            launch.launch_ip
+        from
+            (
+                select
+                    ud.user_id,
+                    alog.device_id,
+                    count(alog.device_id)          as launches,
+                    max(alog.gmt_create)           as gmt_create,
+                    inet_ntoa(max(alog.launch_ip)) as launch_ip,
+                    max(alog.launch_version)       as app_version
+                from
+                    app_launcher_log alog,
+                    user_device ud
+                where
+                      alog.gmt_create &gt;= #{condition.start}
+                  and alog.gmt_create &lt;= #{condition.end}
+                  and alog.device_id = ud.device_id
+                group by
+                    device_id,
+                    user_id
+                order by
+                    gmt_create desc
+                limit #{offset}, #{limit}
+            ) launch
+                left join user_info ui on
+                launch.user_id = ui.id
+    </select>
+
+    <select id="countActiveUsers" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(distinct alog.device_id)
+        from
+            app_launcher_log alog,
+            user_device ud
+        where
+              alog.launch_date &gt;= #{condition.start}
+          and alog.launch_date &lt;= #{condition.end}
+          and alog.device_id = ud.device_id
+    </select>
+
+</mapper>

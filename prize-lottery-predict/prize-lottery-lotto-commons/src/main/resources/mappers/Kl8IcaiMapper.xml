@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.Kl8IcaiMapper">
+
+    <resultMap id="Kl8IcaiMap" type="com.prize.lottery.po.kl8.Kl8IcaiInfoPo">
+        <id column="id" property="id"/>
+        <result column="master_id" property="masterId"/>
+        <result column="period" property="period"/>
+        <result column="calc_time" property="calcTime"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="xd1" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d1" property="data"/>
+            <result column="hit_d1" property="hitData"/>
+            <result column="d1_hit" property="dataHit"/>
+        </association>
+        <association property="xd2" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d2" property="data"/>
+            <result column="hit_d2" property="hitData"/>
+            <result column="d2_hit" property="dataHit"/>
+        </association>
+        <association property="xd3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d3" property="data"/>
+            <result column="hit_d3" property="hitData"/>
+            <result column="d3_hit" property="dataHit"/>
+        </association>
+        <association property="xd4" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d4" property="data"/>
+            <result column="hit_d4" property="hitData"/>
+            <result column="d4_hit" property="dataHit"/>
+        </association>
+        <association property="xd5" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d5" property="data"/>
+            <result column="hit_d5" property="hitData"/>
+            <result column="d5_hit" property="dataHit"/>
+        </association>
+        <association property="xd6" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d6" property="data"/>
+            <result column="hit_d6" property="hitData"/>
+            <result column="d6_hit" property="dataHit"/>
+        </association>
+        <association property="xd7" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d7" property="data"/>
+            <result column="hit_d7" property="hitData"/>
+            <result column="d7_hit" property="dataHit"/>
+        </association>
+        <association property="xd8" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d8" property="data"/>
+            <result column="hit_d8" property="hitData"/>
+            <result column="d8_hit" property="dataHit"/>
+        </association>
+        <association property="xd9" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d9" property="data"/>
+            <result column="hit_d9" property="hitData"/>
+            <result column="d9_hit" property="dataHit"/>
+        </association>
+        <association property="xd10" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d10" property="data"/>
+            <result column="hit_d10" property="hitData"/>
+            <result column="d10_hit" property="dataHit"/>
+        </association>
+        <association property="xd11" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d11" property="data"/>
+            <result column="hit_d11" property="hitData"/>
+            <result column="d11_hit" property="dataHit"/>
+        </association>
+        <association property="xd12" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d12" property="data"/>
+            <result column="hit_d12" property="hitData"/>
+            <result column="d12_hit" property="dataHit"/>
+        </association>
+        <association property="xd13" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d13" property="data"/>
+            <result column="hit_d13" property="hitData"/>
+            <result column="d13_hit" property="dataHit"/>
+        </association>
+        <association property="xd14" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d14" property="data"/>
+            <result column="hit_d14" property="hitData"/>
+            <result column="d14_hit" property="dataHit"/>
+        </association>
+        <association property="xd15" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d15" property="data"/>
+            <result column="hit_d15" property="hitData"/>
+            <result column="d15_hit" property="dataHit"/>
+        </association>
+        <association property="xd20" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="d20" property="data"/>
+            <result column="hit_d20" property="hitData"/>
+            <result column="d20_hit" property="dataHit"/>
+        </association>
+        <association property="sk1" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k1" property="data"/>
+            <result column="hit_k1" property="hitData"/>
+            <result column="k1_hit" property="dataHit"/>
+        </association>
+        <association property="sk2" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k2" property="data"/>
+            <result column="hit_k2" property="hitData"/>
+            <result column="k2_hit" property="dataHit"/>
+        </association>
+        <association property="sk3" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k3" property="data"/>
+            <result column="hit_k3" property="hitData"/>
+            <result column="k3_hit" property="dataHit"/>
+        </association>
+        <association property="sk4" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k4" property="data"/>
+            <result column="hit_k4" property="hitData"/>
+            <result column="k4_hit" property="dataHit"/>
+        </association>
+        <association property="sk5" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="k5" property="data"/>
+            <result column="hit_k5" property="hitData"/>
+            <result column="k5_hit" property="dataHit"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Kl8RankedDataMap" type="com.prize.lottery.vo.ICaiRankedDataVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="rank" property="rank"/>
+        <association property="master" javaType="com.prize.lottery.value.MasterValue">
+            <result column="master_id" property="masterId"/>
+            <result column="name" property="name"/>
+            <result column="logo" property="avatar"/>
+        </association>
+        <association property="data" javaType="com.prize.lottery.value.ForecastValue">
+            <result column="data" property="data"/>
+            <result column="hit_data" property="hitData"/>
+        </association>
+        <association property="neRate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="ne_count" property="count"/>
+            <result column="ne_rate" property="rate"/>
+            <result column="ne_hit" property="series"/>
+        </association>
+        <association property="meRate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="me_count" property="count"/>
+            <result column="me_rate" property="rate"/>
+            <result column="me_hit" property="series"/>
+        </association>
+        <association property="hiRate" javaType="com.prize.lottery.value.StatHitValue">
+            <result column="hi_count" property="count"/>
+            <result column="hi_rate" property="rate"/>
+            <result column="hi_hit" property="series"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="Kl8CensusMap" type="com.prize.lottery.po.kl8.Kl8LottoCensusPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="level" property="level"/>
+        <result column="channel" property="channel"/>
+        <result column="census" property="census"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="addKl8IcaiData" parameterType="com.prize.lottery.po.kl8.Kl8IcaiInfoPo" useGeneratedKeys="true"
+            keyColumn="id">
+        insert
+        ignore into
+            web_icai_kl8_info(
+                             master_id,
+                             period,
+                             d1,
+                             d2,
+                             d3,
+                             d4,
+                             d5,
+                             d6,
+                             d7,
+                             d8,
+                             d9,
+                             d10,
+                             d11,
+                             d12,
+                             d13,
+                             d14,
+                             d15,
+                             d20,
+                             k1,
+                             k2,
+                             k3,
+                             k4,
+                             k5,
+                             gmt_create)
+        values
+            (
+        #{masterId},
+        #{period},
+        #{xd1.data},
+        #{xd2.data},
+        #{xd3.data},
+        #{xd4.data},
+        #{xd5.data},
+        #{xd6.data},
+        #{xd7.data},
+        #{xd8.data},
+        #{xd9.data},
+        #{xd10.data},
+        #{xd11.data},
+        #{xd12.data},
+        #{xd13.data},
+        #{xd14.data},
+        #{xd15.data},
+        #{xd20.data},
+        #{sk1.data},
+        #{sk2.data},
+        #{sk3.data},
+        #{sk4.data},
+        #{sk5.data},
+        current_time
+        )
+    </insert>
+
+    <update id="editKl8IcaiList" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update web_icai_kl8_info
+            set
+            hit_d1=#{item.xd1.hitData},d1_hit=#{item.xd1.dataHit},
+            hit_d2=#{item.xd2.hitData},d2_hit=#{item.xd2.dataHit},
+            hit_d3=#{item.xd3.hitData},d3_hit=#{item.xd3.dataHit},
+            hit_d4=#{item.xd4.hitData},d4_hit=#{item.xd4.dataHit},
+            hit_d5=#{item.xd5.hitData},d5_hit=#{item.xd5.dataHit},
+            hit_d6=#{item.xd6.hitData},d6_hit=#{item.xd6.dataHit},
+            hit_d7=#{item.xd7.hitData},d7_hit=#{item.xd7.dataHit},
+            hit_d8=#{item.xd8.hitData},d8_hit=#{item.xd8.dataHit},
+            hit_d9=#{item.xd9.hitData},d9_hit=#{item.xd9.dataHit},
+            hit_d10=#{item.xd10.hitData},d10_hit=#{item.xd10.dataHit},
+            hit_d11=#{item.xd11.hitData},d11_hit=#{item.xd11.dataHit},
+            hit_d12=#{item.xd12.hitData},d12_hit=#{item.xd12.dataHit},
+            hit_d13=#{item.xd13.hitData},d13_hit=#{item.xd13.dataHit},
+            hit_d14=#{item.xd14.hitData},d14_hit=#{item.xd14.dataHit},
+            hit_d15=#{item.xd15.hitData},d15_hit=#{item.xd15.dataHit},
+            hit_d20=#{item.xd20.hitData},d20_hit=#{item.xd20.dataHit},
+            hit_k1=#{item.sk1.hitData},k1_hit=#{item.sk1.dataHit},
+            hit_k2=#{item.sk2.hitData},k2_hit=#{item.sk2.dataHit},
+            hit_k3=#{item.sk3.hitData},k3_hit=#{item.sk3.dataHit},
+            hit_k4=#{item.sk4.hitData},k4_hit=#{item.sk4.dataHit},
+            hit_k5=#{item.sk5.hitData},k5_hit=#{item.sk5.dataHit},
+            calc_time=current_time
+            where master_id=#{item.masterId}
+            and period=#{item.period}
+        </foreach>
+    </update>
+
+    <sql id="kl8IcaiSql">
+        id
+        ,master_id,period,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,
+        d11,d12,d13,d14,d15,d20,k1,k2,k3,k4,k5,gmt_create
+    </sql>
+
+    <sql id="kl8HitSql">
+        id
+        ,master_id,`period`,
+        d1_hit,d2_hit,d3_hit,d4_hit,d5_hit,
+        d6_hit,d7_hit,d8_hit,d9_hit,d10_hit,
+        d11_hit,d12_hit,d13_hit,d14_hit,d15_hit,d20_hit,
+        k1_hit,k2_hit,k3_hit,k4_hit,k5_hit,calc_time
+    </sql>
+
+    <sql id="kl8HitDetailSql">
+        id
+        ,master_id,`period`,
+        d1_hit,hit_d1,
+        d2_hit,hit_d2,
+        d3_hit,hit_d3,
+        d4_hit,hit_d4,
+        d5_hit,hit_d5,
+        d6_hit,hit_d6,
+        d7_hit,hit_d7,
+        d8_hit,hit_d8,
+        d9_hit,hit_d9,
+        d10_hit,hit_d10,
+        d11_hit,hit_d11,
+        d12_hit,hit_d12,
+        d13_hit,hit_d13,
+        d14_hit,hit_d14,
+        d15_hit,hit_d15,
+        d20_hit,hit_d20,
+        k1_hit,hit_k1,
+        k2_hit,hit_k2,
+        k3_hit,hit_k3,
+        k4_hit,hit_k4,
+        k5_hit,hit_k5,
+        calc_time
+    </sql>
+
+    <select id="getKl8IcaiDataById" parameterType="java.lang.Long" resultMap="Kl8IcaiMap">
+        select
+        <include refid="kl8IcaiSql"/>
+        from
+        web_icai_kl8_info
+        where
+        id=#{id}
+    </select>
+
+    <select id="getKl8IcaiData" resultMap="Kl8IcaiMap">
+        select
+        <include refid="kl8IcaiSql"/>
+        from
+        web_icai_kl8_info
+        where
+        master_id=#{masterId}
+        and
+        period=#{period}
+    </select>
+
+    <select id="getAllKl8IcaiDatas" parameterType="java.lang.String" resultMap="Kl8IcaiMap">
+        select
+        <include refid="kl8IcaiSql"/>
+        from web_icai_kl8_info
+        where period=#{period}
+    </select>
+
+    <select id="hasKl8IcaiData" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            web_icai_kl8_info
+        where
+            period = #{period}
+    </select>
+
+    <select id="latestKl8IcaiPeriod" resultType="com.prize.lottery.value.Period">
+        select
+            period,
+            if(calc_time is null, 0, 1) as calculated
+        from
+            web_icai_kl8_info
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+    <select id="latestKl8MasterPeriod" parameterType="java.lang.String"
+            resultType="com.prize.lottery.value.Period">
+        select
+            period,
+            if(calc_time is null, 0, 1) as calculated
+        from
+            web_icai_kl8_info
+        where
+            master_id = #{masterId}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="hasKl8PeriodOpenCalc" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            ifnull(
+                    (
+                        select
+                            1
+                        from
+                            web_icai_kl8_info
+                        where
+                              period = #{period}
+                          and calc_time is not null
+                        limit 1 ),0)
+    </select>
+
+    <select id="getUnCalculatedPeriods" parameterType="java.lang.String" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            web_icai_kl8_info
+        where
+              period &lt;= #{period}
+          and calc_time is null
+        order by
+            period
+    </select>
+
+    <select id="getUnCalcRatedPeriod" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            web_icai_kl8_info
+        where
+              calc_time is not null
+          and period not in (
+                                select distinct
+                                    period
+                                from
+                                    web_kl8_master_rate
+                                order by
+                                    period
+                            )
+        order by
+            period
+    </select>
+
+    <select id="hasKl8MasterOpenCalc" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            web_icai_kl8_info
+        where
+              period = #{period}
+          and master_id = #{masterId}
+          and calc_time is not null
+    </select>
+
+    <select id="getKl8MasterIdsByPeriod" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            master_id
+        from
+            web_icai_kl8_info
+        where
+            period = #{period}
+    </select>
+
+    <select id="getHighRateKl8Datas" resultMap="Kl8IcaiMap">
+        select
+            kli.id,
+            kli.master_id,
+            kli.period,
+            kli.${type}
+        from
+            web_icai_kl8_info kli,
+            web_kl8_master_rate klr
+        where
+              kli.period = #{period}
+          and kli.master_id = klr.master_id
+          and klr.period = #{last}
+          and klr.${type}_me_rate &gt;= #{rate}
+    </select>
+
+    <select id="getKl8ComparedDatas" resultMap="Kl8RankedDataMap">
+        select
+            ki.id,
+            ki.master_id,
+            ki.period,
+            kmi.name,
+            kmi.logo,
+            ki.${type}             `data`,
+            ki.hit_${type}         hit_data,
+            krate.${type}_ne_hit   ne_hit,
+            krate.${type}_ne_rate  ne_rate,
+            krate.${type}_ne_count ne_count,
+            krate.${type}_me_hit   me_hit,
+            krate.${type}_me_rate  me_rate,
+            krate.${type}_me_count me_count,
+            krate.${type}_hi_hit   hi_hit,
+            krate.${type}_hi_rate  hi_rate,
+            krate.${type}_hi_count hi_count,
+            krank.${type}_rank     `rank`
+        from
+            web_icai_kl8_info ki,
+            web_kl8_master_info kmi,
+            web_kl8_master_rate krate,
+            web_kl8_master_rank krank
+        where
+              ki.period = #{period}
+          and ki.master_id = kmi.master_id
+          and ki.master_id = krate.master_id
+          and ki.master_id = krank.master_id
+          and krate.period = #{last}
+          and krank.period = #{last}
+        order by
+            `rank`
+            limit #{limit}
+    </select>
+
+    <select id="getAllKl8RankedDatas" resultMap="Kl8RankedDataMap">
+        select
+            kli.id,
+            kli.master_id,
+            kli.period,
+            kli.${type}      data,
+            klr.${type}_rank `rank`
+        from
+            web_icai_kl8_info kli,
+            web_kl8_master_rank klr
+        where
+              kli.period = #{period}
+          and kli.master_id = klr.master_id
+          and klr.period = #{last}
+        order by
+            klr.${type}_rank
+    </select>
+
+    <select id="getKl8RankedDatas" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="Kl8RankedDataMap">
+        select
+            kli.id,
+            kli.master_id,
+            kli.period,
+            kmi.name,
+            kli.${condition.type}            data,
+            kli.hit_${condition.type}        hit_data,
+            krate.${condition.type}_ne_count ne_count,
+            krate.${condition.type}_ne_hit   ne_hit,
+            krate.${condition.type}_ne_rate  ne_rate,
+            krate.${condition.type}_me_count me_count,
+            krate.${condition.type}_me_hit   me_hit,
+            krate.${condition.type}_me_rate  me_rate,
+            krate.${condition.type}_hi_count hi_count,
+            krate.${condition.type}_hi_hit   hi_hit,
+            krate.${condition.type}_hi_rate  hi_rate,
+            krank.${condition.type}_rank     `rank`
+        from
+            web_icai_kl8_info kli,
+            web_kl8_master_rate krate,
+            web_kl8_master_rank krank,
+            web_kl8_master_info kmi
+        where
+              kli.period = #{condition.period}
+          and kli.master_id = krate.master_id
+          and kli.master_id = krank.master_id
+          and krate.period = #{condition.last}
+          and krank.period = #{condition.last}
+          and kli.master_id = kmi.master_id
+        order by
+            `rank`
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countKl8RankedDatas" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            web_icai_kl8_info kli,
+            web_kl8_master_rate krate
+        where
+              kli.period = #{condition.period}
+          and kli.master_id = krate.master_id
+          and krate.period = #{condition.last}
+    </select>
+
+    <select id="getKl8IcaiHitsBefore" resultMap="Kl8IcaiMap">
+        select
+        <include refid="kl8HitSql"/>
+        from
+        web_icai_kl8_info
+        where
+        master_id=#{masterId}
+        and period &lt;=#{period}
+        order by
+        period desc
+        limit #{limit}
+    </select>
+
+    <select id="getKl8IcaiHitsByPeriod" parameterType="java.lang.String" resultMap="Kl8IcaiMap">
+        select
+        <include refid="kl8HitSql"/>
+        from
+        web_icai_kl8_info
+        where
+        period=#{period}
+    </select>
+
+    <select id="getKl8HistoryForecasts" resultMap="Kl8IcaiMap">
+        select
+        <include refid="kl8HitDetailSql"/>
+        from
+        web_icai_kl8_info
+        where
+        master_id=#{masterId}
+        and period &lt;=#{period}
+        order by
+        period desc
+        limit #{limit}
+    </select>
+
+    <select id="getMasterKl8IcaiDetail" resultMap="Kl8IcaiMap">
+        select
+        <include refid="kl8HitDetailSql"/>,
+        IF(calc_time is null, d1,'') as d1,
+        IF(calc_time is null, d2,'') as d2,
+        IF(calc_time is null, d3,'') as d3,
+        IF(calc_time is null, d4,'') as d4,
+        IF(calc_time is null, d5,'') as d5,
+        IF(calc_time is null, d6,'') as d6,
+        IF(calc_time is null, d7,'') as d7,
+        IF(calc_time is null, d8,'') as d8,
+        IF(calc_time is null, d9,'') as d9,
+        IF(calc_time is null, d10,'') as d10,
+        IF(calc_time is null, d11,'') as d11,
+        IF(calc_time is null, d12,'') as d12,
+        IF(calc_time is null, d13,'') as d13,
+        IF(calc_time is null, d14,'') as d14,
+        IF(calc_time is null, d15,'') as d15,
+        IF(calc_time is null, d20,'') as d20,
+        IF(calc_time is null, k1,'') as k1,
+        IF(calc_time is null, k2,'') as k2,
+        IF(calc_time is null, k3,'') as k3,
+        IF(calc_time is null, k4,'') as k4,
+        IF(calc_time is null, k5,'') as k5
+        from
+        web_icai_kl8_info
+        where
+        master_id=#{masterId}
+        and period=#{period}
+    </select>
+
+    <insert id="addKl8Censuses" parameterType="java.util.List" useGeneratedKeys="true" keyColumn="id">
+        insert into
+        web_kl8_census (period, type,`level`, channel, census, gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},
+            #{item.type},
+            #{item.level},
+            #{item.channel},
+            #{item.census},
+            current_time)
+        </foreach>
+    </insert>
+
+    <select id="getTypedKl8CensusList" resultMap="Kl8CensusMap">
+        select
+            id,
+            period,
+            type,
+            `level`,
+            channel,
+            census,
+            gmt_create
+        from
+            web_kl8_census
+        where
+              period = #{period}
+          and type = #{type}
+    </select>
+
+    <select id="latestKl8CensusPeriod" parameterType="integer" resultType="java.lang.String">
+        select
+            period
+        from
+            web_kl8_census
+        where
+            type = #{type}
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+</mapper>

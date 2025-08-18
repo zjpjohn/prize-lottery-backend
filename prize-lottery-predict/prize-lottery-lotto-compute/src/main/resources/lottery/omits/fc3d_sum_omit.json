@@ -1,0 +1,240 @@
+{
+  "type" : "fc3d" ,
+  "period" : "2023202" ,
+  "baseOmit" : {
+    "values" : [
+      {
+        "key" : "0" ,
+        "value" : 1234
+      } ,
+      {
+        "key" : "1" ,
+        "value" : 139
+      } ,
+      {
+        "key" : "2" ,
+        "value" : 278
+      } ,
+      {
+        "key" : "3" ,
+        "value" : 24
+      } ,
+      {
+        "key" : "4" ,
+        "value" : 40
+      } ,
+      {
+        "key" : "5" ,
+        "value" : 10
+      } ,
+      {
+        "key" : "6" ,
+        "value" : 7
+      } ,
+      {
+        "key" : "7" ,
+        "value" : 39
+      } ,
+      {
+        "key" : "8" ,
+        "value" : 2
+      } ,
+      {
+        "key" : "9" ,
+        "value" : 15
+      } ,
+      {
+        "key" : "10" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "11" ,
+        "value" : 25
+      } ,
+      {
+        "key" : "12" ,
+        "value" : 13
+      } ,
+      {
+        "key" : "13" ,
+        "value" : 3
+      } ,
+      {
+        "key" : "14" ,
+        "value" : 12
+      } ,
+      {
+        "key" : "15" ,
+        "value" : 8
+      } ,
+      {
+        "key" : "16" ,
+        "value" : 55
+      } ,
+      {
+        "key" : "17" ,
+        "value" : 23
+      } ,
+      {
+        "key" : "18" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "19" ,
+        "value" : 5
+      } ,
+      {
+        "key" : "20" ,
+        "value" : 97
+      } ,
+      {
+        "key" : "21" ,
+        "value" : 4
+      } ,
+      {
+        "key" : "22" ,
+        "value" : 6
+      } ,
+      {
+        "key" : "23" ,
+        "value" : 46
+      } ,
+      {
+        "key" : "24" ,
+        "value" : 26
+      } ,
+      {
+        "key" : "25" ,
+        "value" : 134
+      } ,
+      {
+        "key" : "26" ,
+        "value" : 486
+      } ,
+      {
+        "key" : "27" ,
+        "value" : 1303
+      }
+    ]
+  } ,
+  "tailOmit" : {
+    "values" : [
+      {
+        "key" : "0" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "1" ,
+        "value" : 4
+      } ,
+      {
+        "key" : "2" ,
+        "value" : 6
+      } ,
+      {
+        "key" : "3" ,
+        "value" : 3
+      } ,
+      {
+        "key" : "4" ,
+        "value" : 12
+      } ,
+      {
+        "key" : "5" ,
+        "value" : 8
+      } ,
+      {
+        "key" : "6" ,
+        "value" : 7
+      } ,
+      {
+        "key" : "7" ,
+        "value" : 23
+      } ,
+      {
+        "key" : "8" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "9" ,
+        "value" : 5
+      }
+    ]
+  } ,
+  "tailAmp" : {
+    "values" : [
+      {
+        "key" : "0" ,
+        "value" : 31
+      } ,
+      {
+        "key" : "1" ,
+        "value" : 7
+      } ,
+      {
+        "key" : "2" ,
+        "value" : 3
+      } ,
+      {
+        "key" : "3" ,
+        "value" : 11
+      } ,
+      {
+        "key" : "4" ,
+        "value" : 6
+      } ,
+      {
+        "key" : "5" ,
+        "value" : 2
+      } ,
+      {
+        "key" : "6" ,
+        "value" : 60
+      } ,
+      {
+        "key" : "7" ,
+        "value" : 5
+      } ,
+      {
+        "key" : "8" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "9" ,
+        "value" : 14
+      }
+    ]
+  } ,
+  "bmsOmit" : {
+    "values" : [
+      {
+        "key" : "小" ,
+        "value" : 2
+      } ,
+      {
+        "key" : "中" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "大" ,
+        "value" : 0
+      }
+    ]
+  } ,
+  "ottOmit" : {
+    "values" : [
+      {
+        "key" : "0" ,
+        "value" : 0
+      } ,
+      {
+        "key" : "1" ,
+        "value" : 1
+      } ,
+      {
+        "key" : "2" ,
+        "value" : 2
+      }
+    ]
+  }
+}

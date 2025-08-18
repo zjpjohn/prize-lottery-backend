@@ -1,0 +1,2347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prize.lottery.mapper.LotteryInfoMapper">
+
+    <resultMap id="LotteryInfoMap" type="com.prize.lottery.po.lottery.LotteryInfoPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="red" property="red"/>
+        <result column="com" property="com"/>
+        <result column="last" property="last"/>
+        <result column="blue" property="blue"/>
+        <result column="shi" property="shi"/>
+        <result column="kai" property="kai"/>
+        <result column="trial_time" property="trialTime"/>
+        <result column="lot_date" property="lotDate"/>
+    </resultMap>
+
+    <resultMap id="LotteryAwardMap" type="com.prize.lottery.po.lottery.LotteryAwardPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="sales" property="sales"/>
+        <result column="award" property="award"/>
+        <result column="pool" property="pool"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="LotteryLevelMap" type="com.prize.lottery.po.lottery.LotteryLevelPo">
+        <id column="l_id" property="id"/>
+        <result column="l_type" property="type"/>
+        <result column="l_period" property="period"/>
+        <result column="l_level" property="level"/>
+        <result column="quantity" property="quantity"/>
+        <result column="bonus" property="bonus"/>
+        <result column="amount" property="amount"/>
+    </resultMap>
+
+    <resultMap id="LotteryOmitMap" type="com.prize.lottery.po.lottery.LotteryOmitPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="red" property="red"/>
+        <result column="blue" property="blue"/>
+        <result column="cb1" property="cb1"/>
+        <result column="cb2" property="cb2"/>
+        <result column="cb3" property="cb3"/>
+        <result column="cb4" property="cb4"/>
+        <result column="cb5" property="cb5"/>
+        <result column="extra" property="extra"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="LotterySumOmitMap" type="com.prize.lottery.po.lottery.LotterySumOmitPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="base_omit" property="baseOmit"/>
+        <result column="ott_omit" property="ottOmit"/>
+        <result column="tail_omit" property="tailOmit"/>
+        <result column="tail_amp" property="tailAmp"/>
+        <result column="bms_omit" property="bmsOmit"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="LotteryKuaOmitMap" type="com.prize.lottery.po.lottery.LotteryKuaOmitPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="base_omit" property="baseOmit"/>
+        <result column="amp_omit" property="ampOmit"/>
+        <result column="amp_amp" property="ampAmp"/>
+        <result column="ott_omit" property="ottOmit"/>
+        <result column="bms_omit" property="bmsOmit"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="LotteryKl8OmitMap" type="com.prize.lottery.po.lottery.LotteryKl8OmitPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="ball_omit" property="ballOmit"/>
+        <result column="bs_omit" property="bsOmit"/>
+        <result column="oe_omit" property="oeOmit"/>
+        <result column="kua_omit" property="kuaOmit"/>
+        <result column="sum_omit" property="sumOmit"/>
+        <result column="tail_omit" property="tailOmit"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="LotteryCodeMap" type="com.prize.lottery.po.lottery.LotteryCodePo">
+        <id column="id" property="id"/>
+        <result column="lotto" property="lotto"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="position" property="position"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="LotteryOttMap" type="com.prize.lottery.po.lottery.LotteryOttPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="bott" property="bott"/>
+        <result column="sott" property="sott"/>
+        <result column="gott" property="gott"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="LotteryDanMap" type="com.prize.lottery.po.lottery.LotteryDanPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="type" property="type"/>
+        <result column="index1" property="index1"/>
+        <result column="index2" property="index2"/>
+        <result column="index3" property="index3"/>
+        <result column="index4" property="index4"/>
+        <result column="index5" property="index5"/>
+        <result column="index6" property="index6"/>
+        <result column="index7" property="index7"/>
+        <result column="index8" property="index8"/>
+        <result column="index9" property="index9"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modify" property="gmtModify"/>
+    </resultMap>
+
+    <resultMap id="LottoPianOmitMap" type="com.prize.lottery.po.lottery.LottoPianOmitPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="level" property="level"/>
+        <result column="omit" property="omit"/>
+        <result column="cb1" property="cb1"/>
+        <result column="cb2" property="cb2"/>
+        <result column="cb3" property="cb3"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="FairTrialMap" type="com.prize.lottery.po.lottery.LotteryFairTrialPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="ball" property="ball"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="Num3ComCountMap" type="com.prize.lottery.vo.Num3ComCountVo">
+        <id column="com" property="com"/>
+        <result column="amount" property="amount"/>
+    </resultMap>
+
+    <resultMap id="Num3LottoFollowMap" type="com.prize.lottery.vo.Num3LottoFollowVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="lot_date" property="lotDate"/>
+        <result column="red" property="red"/>
+        <result column="com" property="com"/>
+        <result column="last1" property="last1"/>
+        <result column="last2" property="last2"/>
+        <result column="next1" property="next1"/>
+        <result column="next2" property="next2"/>
+    </resultMap>
+
+    <resultMap id="LotteryMatchOmitMap" type="com.prize.lottery.po.lottery.LotteryMatchOmitPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="code_omit" property="codeOmit"/>
+        <result column="all_omit" property="allOmit"/>
+        <result column="com_omit" property="comOmit"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="LotteryTrendOmitMap" type="com.prize.lottery.po.lottery.LotteryTrendOmitPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="form_omit" property="formOmit"/>
+        <result column="ott_omit" property="ottOmit"/>
+        <result column="mode_omit" property="modeOmit"/>
+        <result column="bs_omit" property="bsOmit"/>
+        <result column="oe_omit" property="oeOmit"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <resultMap id="LotteryItemOmitMap" type="com.prize.lottery.po.lottery.LotteryItemOmitPo">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="period" property="period"/>
+        <result column="balls" property="balls"/>
+        <result column="cb1" property="cb1"/>
+        <result column="cb1_amp" property="cb1Amp"/>
+        <result column="cb1_aod" property="cb1Aod"/>
+        <result column="cb1_bos" property="cb1Bos"/>
+        <result column="cb1_oe" property="cb1Oe"/>
+        <result column="cb2" property="cb2"/>
+        <result column="cb2_amp" property="cb2Amp"/>
+        <result column="cb2_aod" property="cb2Aod"/>
+        <result column="cb2_bos" property="cb2Bos"/>
+        <result column="cb2_oe" property="cb2Oe"/>
+        <result column="cb3" property="cb3"/>
+        <result column="cb3_amp" property="cb3Amp"/>
+        <result column="cb3_aod" property="cb3Aod"/>
+        <result column="cb3_bos" property="cb3Bos"/>
+        <result column="cb3_oe" property="cb3Oe"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+
+    <resultMap id="Pl5ItemOmitMap" type="com.prize.lottery.vo.pl5.Pl5ItemOmitVo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="balls" property="balls"/>
+        <result column="cb" property="cb"/>
+        <result column="cb_amp" property="cbAmp"/>
+        <result column="cb_aod" property="cbAod"/>
+        <result column="cb_bos" property="cbBos"/>
+        <result column="cb_oe" property="cbOe"/>
+    </resultMap>
+
+    <resultMap id="LotteryPl5OmitMap" type="com.prize.lottery.po.lottery.LotteryPl5OmitPo">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="balls" property="balls"/>
+        <result column="cb1" property="cb1"/>
+        <result column="cb1_amp" property="cb1Amp"/>
+        <result column="cb1_aod" property="cb1Aod"/>
+        <result column="cb1_bos" property="cb1Bos"/>
+        <result column="cb1_oe" property="cb1Oe"/>
+        <result column="cb2" property="cb2"/>
+        <result column="cb2_amp" property="cb2Amp"/>
+        <result column="cb2_aod" property="cb2Aod"/>
+        <result column="cb2_bos" property="cb2Bos"/>
+        <result column="cb2_oe" property="cb2Oe"/>
+        <result column="cb3" property="cb3"/>
+        <result column="cb3_amp" property="cb3Amp"/>
+        <result column="cb3_aod" property="cb3Aod"/>
+        <result column="cb3_bos" property="cb3Bos"/>
+        <result column="cb3_oe" property="cb3Oe"/>
+        <result column="cb4" property="cb4"/>
+        <result column="cb4_amp" property="cb4Amp"/>
+        <result column="cb4_aod" property="cb4Aod"/>
+        <result column="cb4_bos" property="cb4Bos"/>
+        <result column="cb4_oe" property="cb4Oe"/>
+        <result column="cb5" property="cb5"/>
+        <result column="cb5_amp" property="cb5Amp"/>
+        <result column="cb5_aod" property="cb5Aod"/>
+        <result column="cb5_bos" property="cb5Bos"/>
+        <result column="cb5_oe" property="cb5Oe"/>
+        <result column="gmt_create" property="gmtCreate"/>
+    </resultMap>
+
+    <insert id="addLotteryInfos" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        lottery_info(`type`,period,red,blue,lot_date,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.type},
+            #{item.period},
+            #{item.red},
+            <choose>
+                <when test="item.blue!=null">
+                    #{item.blue},
+                </when>
+                <otherwise>
+                    '',
+                </otherwise>
+            </choose>
+            #{item.lotDate},
+            current_time
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        red=values(red),
+        blue=values(blue),
+        lot_date=values(lot_date)
+    </insert>
+
+    <update id="editN3Lotteries" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update lottery_info
+            <set>
+                <if test="item.com!=null">
+                    com=#{item.com},
+                </if>
+                <if test="item.last!=null">
+                    `last`=#{item.last},
+                </if>
+            </set>
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+    <insert id="addLotteryAwards" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        lottery_award(`type`,period,sales,award,pool,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            <if test="item.sales!=null">
+                #{item.sales},
+            </if>
+            <if test="item.sales==null">
+                0,
+            </if>
+            <if test="item.award!=null">
+                #{item.award},
+            </if>
+            <if test="item.award==null">
+                0,
+            </if>
+            <if test="item.pool!=null">
+                #{item.pool},
+            </if>
+            <if test="item.pool==null">
+                0,
+            </if>
+            current_time)
+        </foreach>
+        on duplicate key update
+        sales=values(sales),
+        award=values(award),
+        pool=values(pool)
+    </insert>
+
+    <insert id="addLotteryLevels" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        lottery_level(`type`,period,`level`,quantity,bonus,amount,gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            #{item.level},
+            #{item.quantity},
+            #{item.bonus},
+            #{item.amount},
+            current_time)
+        </foreach>
+        on duplicate key update
+        quantity=values(quantity),
+        bonus=values(bonus),
+        amount=values(amount)
+    </insert>
+
+    <insert id="addLotteryTrial" parameterType="com.prize.lottery.po.lottery.LotteryInfoPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into
+        lottery_info(`type`,
+        period,
+        <if test="kai!=null">
+            kai,
+        </if>
+        <if test="shi!=null">
+            shi,
+        </if>
+        <if test="trialTime!=null">
+            trial_time,
+        </if>
+        gmt_create)
+        values (#{type},
+        #{period},
+        <if test="kai!=null">
+            #{kai},
+        </if>
+        <if test="shi!=null">
+            #{shi},
+        </if>
+        <if test="trialTime!=null">
+            #{trialTime},
+        </if>
+        current_time)
+        on duplicate key update
+        kai=values(kai),
+        shi=values(shi)
+    </insert>
+
+    <insert id="addLotteryTrials" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        lottery_info(`type`,
+        period,
+        kai,
+        shi,
+        trial_time,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            <choose>
+                <when test="item.kai!=null">
+                    #{item.kai},
+                </when>
+                <otherwise>
+                    '',
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="item.shi!=null">
+                    #{item.shi},
+                </when>
+                <otherwise>
+                    '',
+                </otherwise>
+            </choose>
+            #{item.trialTime},
+            current_time)
+        </foreach>
+        on duplicate key update
+        kai=values(kai),
+        shi=values(shi),
+        trial_time=values(trial_time)
+    </insert>
+
+    <sql id="lotterySql">
+        l
+        .
+        id
+        ,l.type,l.period,l.red,l.blue,l.shi,l.kai,l.com,l.last,l.trial_time,l.lot_date
+    </sql>
+
+    <sql id="levelSql">
+        ll
+        .
+        id
+        l_id,ll.type l_type,ll.period l_period,ll.level l_level,ll.quantity quantity,ll.bonus bonus,ll.amount amount
+    </sql>
+
+    <select id="getLotteryInfoById" parameterType="java.lang.Long" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        where l.id=#{id}
+    </select>
+
+    <select id="existLottery" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select
+                           1
+                       from
+                           lottery_info
+                       where
+                             type = #{type}
+                         and period = #{period}
+                         and lot_date is not null
+                       limit 1 ), 0)
+    </select>
+
+    <select id="getLotteryByUk" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        where l.type=#{type}
+        and l.period=#{period}
+    </select>
+
+    <select id="getLotteryInfo" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        where l.type=#{type}
+        and l.period=#{period}
+        and lot_date is not null
+    </select>
+
+    <select id="num3LatestPeriod" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_info
+        where
+            type = #{type}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="num3LotteryPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_info
+        where
+              type = #{type}
+          and shi != ''
+        order by
+            period desc
+            limit
+            #{limit}
+    </select>
+
+    <select id="getLotteryPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_info
+        where
+              type = #{type}
+          and lot_date is not null
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <select id="getLotteriesByPeriods" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        where l.type=#{type}
+        and l.period in
+        <foreach collection="periods" item="period" separator="," open="(" close=")">
+            #{period}
+        </foreach>
+    </select>
+
+    <select id="getLotteriesBetweenPeriods" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        where l.type=#{type}
+        and l.period between #{start} and #{end}
+    </select>
+
+    <select id="latestPeriod" parameterType="java.lang.String" resultType="java.lang.String">
+        select
+            period
+        from
+            lottery_info
+        where
+              type = #{type}
+          and lot_date is not null
+        order by
+            period desc,
+            id desc limit 1
+    </select>
+
+    <select id="getNewestLottery" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        where l.type=#{type}
+        and l.lot_date is not null
+        order by l.period desc
+        limit 1
+    </select>
+
+    <select id="getBeforeLimitLotteries" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from
+        lottery_info l
+        where
+        l.type = #{type}
+        and l.period &lt;=#{period}
+        <choose>
+            <when test="type=='fc3d' or type=='pl3' ">
+                and l.shi!=''
+            </when>
+            <otherwise>
+                and l.lot_date is not null
+            </otherwise>
+        </choose>
+        order by
+        l.period desc
+        limit #{limit}
+    </select>
+
+    <select id="getLatestLimitLotteries" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from
+        lottery_info l
+        where
+        l.type = #{type}
+        <choose>
+            <when test="type=='fc3d' or type=='pl3' ">
+                and l.shi!=''
+            </when>
+            <otherwise>
+                and l.lot_date is not null
+            </otherwise>
+        </choose>
+        order by
+        l.period desc
+        limit #{limit}
+    </select>
+
+    <select id="getLotteryList" parameterType="com.cloud.arch.page.PageCondition" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        where
+        l.type=#{condition.type}
+        <if test="condition.period!=null">
+            and l.period &lt;=#{condition.period}
+        </if>
+        <if test="condition.shiNotNull">
+            and l.shi!=''
+        </if>
+        <if test="condition.noneNull==1">
+            and l.lot_date is not null
+        </if>
+        <if test="condition.week!=null">
+            and l.lot_date is not null
+            and dayofweek(l.lot_date)=#{condition.week}
+        </if>
+        order by l.period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countLotteryList" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from lottery_info l
+        where
+        l.type=#{condition.type}
+        <if test="condition.period!=null">
+            and l.period &lt;=#{condition.period}
+        </if>
+        <if test="condition.shiNotNull">
+            and l.shi!=''
+        </if>
+        <if test="condition.noneNull!=null">
+            and l.lot_date is not null
+        </if>
+        <if test="condition.week!=null">
+            and l.lot_date is not null
+            and dayofweek(l.lot_date)=#{condition.week}
+        </if>
+    </select>
+
+    <select id="getLotteryAwardByUk" resultMap="LotteryAwardMap">
+        select
+            id,
+            type,
+            period,
+            sales,
+            award,
+            pool,
+            gmt_create
+        from
+            lottery_award
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getLotteryLevelById" parameterType="java.lang.Long" resultMap="LotteryLevelMap">
+        select
+        <include refid="levelSql"/>
+        from lottery_level ll
+        where ll.id=#{id}
+    </select>
+
+    <select id="getLotteryLevels" resultMap="LotteryLevelMap">
+        select
+        <include refid="levelSql"/>
+        from lottery_level ll
+        where ll.type=#{type}
+        and ll.period=#{period}
+    </select>
+
+    <select id="getNewestGroupLotteries" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        inner join
+        (
+        select
+        max(period) period,
+        type
+        from lottery_info
+        where lot_date is not null
+        group by type
+        )lm on l.period=lm.period and l.type=lm.type
+    </select>
+
+    <select id="getLimitLotteryList" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from
+        lottery_info l
+        where l.type=#{type}
+        order by l.period desc
+        limit #{limit}
+    </select>
+
+    <select id="getLotteryInfoGtPeriod" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        where l.type=#{type}
+        and l.period &gt; #{period}
+        and l.lot_date is not null
+        and l.red!=''
+        order by l.period asc
+    </select>
+
+    <select id="getLotteryGtePeriodLimit2" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        where l.type=#{type}
+        and l.period &gt;= #{period}
+        order by l.period asc
+        limit 2
+    </select>
+
+    <select id="getNewestLotteriesByTypes" parameterType="java.util.List" resultMap="LotteryInfoMap">
+        select
+        <include refid="lotterySql"/>
+        from lottery_info l
+        inner join
+        (
+        select
+        max(period) period,
+        type
+        from lottery_info
+        where type in
+        <foreach collection="types" item="type" separator="," open="(" close=")">
+            #{type}
+        </foreach>
+        and lot_date is not null
+        group by type
+        )lm on l.period=lm.period and l.type=lm.type
+    </select>
+
+    <select id="getN3LastSameLottery" resultMap="LotteryInfoMap">
+        select
+            id,
+            type,
+            period,
+            red,
+            blue,
+            com, last, shi, kai, trial_time, lot_date, gmt_create
+        from
+            lottery_info
+        where
+            type =
+                    #{type}
+          and com = #{com}
+          and period
+         &lt;       #{period}
+        order by
+            period desc
+            limit 1
+    </select>
+
+    <insert id="addLotteryOmits" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into lottery_omit(type,
+        period,
+        red,
+        blue,
+        cb1,
+        cb2,
+        cb3,
+        cb4,
+        cb5,
+        extra,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            <if test="item.red!=null">
+                #{item.red},
+            </if>
+            <if test="item.red==null">
+                null,
+            </if>
+            <if test="item.blue!=null">
+                #{item.blue},
+            </if>
+            <if test="item.blue==null">
+                null,
+            </if>
+            <if test="item.cb1!=null">
+                #{item.cb1},
+            </if>
+            <if test="item.cb1==null">
+                null,
+            </if>
+            <if test="item.cb2!=null">
+                #{item.cb2},
+            </if>
+            <if test="item.cb2==null">
+                null,
+            </if>
+            <if test="item.cb3!=null">
+                #{item.cb3},
+            </if>
+            <if test="item.cb3==null">
+                null,
+            </if>
+            <if test="item.cb4!=null">
+                #{item.cb4},
+            </if>
+            <if test="item.cb4==null">
+                null,
+            </if>
+            <if test="item.cb5!=null">
+                #{item.cb5},
+            </if>
+            <if test="item.cb5==null">
+                null,
+            </if>
+            <if test="item.extra!=null">
+                #{item.extra},
+            </if>
+            <if test="item.extra==null">
+                null,
+            </if>
+            current_time)
+        </foreach>
+    </insert>
+
+    <insert id="addLotteryOmitInfo" parameterType="com.prize.lottery.po.lottery.LotteryOmitPo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert ignore into
+        lottery_omit(
+        type,
+        period,
+        <if test="red!=null">
+            red,
+        </if>
+        <if test="blue!=null">
+            blue,
+        </if>
+        <if test="cb1!=null">
+            cb1,
+        </if>
+        <if test="cb2!=null">
+            cb2,
+        </if>
+        <if test="cb3!=null">
+            cb3,
+        </if>
+        <if test="cb4!=null">
+            cb4,
+        </if>
+        <if test="cb5!=null">
+            cb5,
+        </if>
+        <if test="extra!=null">
+            extra,
+        </if>
+        gmt_create)
+        values
+        (#{type},
+        #{period},
+        <if test="red!=null">
+            #{red},
+        </if>
+        <if test="blue!=null">
+            #{blue},
+        </if>
+        <if test="cb1!=null">
+            #{cb1},
+        </if>
+        <if test="cb2!=null">
+            #{cb2},
+        </if>
+        <if test="cb3!=null">
+            #{cb3},
+        </if>
+        <if test="cb4!=null">
+            #{cb4},
+        </if>
+        <if test="cb5!=null">
+            #{cb5},
+        </if>
+        <if test="extra!=null">
+            #{extra},
+        </if>
+        current_time
+        )
+    </insert>
+
+    <select id="hasLotteryOmit" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select
+                           1
+                       from
+                           lottery_omit limit 1 ), 0)
+    </select>
+
+    <select id="getLatestLotteryOmit" parameterType="java.lang.String" resultMap="LotteryOmitMap">
+        select
+            id,
+            type,
+            period,
+            red,
+            blue,
+            cb1,
+            cb2,
+            cb3,
+            cb4,
+            cb5,
+            extra,
+            gmt_create
+        from
+            lottery_omit
+        where
+            type = #{type}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getInitLotteryOmit" parameterType="java.lang.String" resultMap="LotteryOmitMap">
+        select
+            id,
+            type,
+            period,
+            red,
+            blue,
+            cb1,
+            cb2,
+            cb3,
+            cb4,
+            cb5,
+            extra,
+            gmt_create
+        from
+            lottery_omit
+        where
+            type = #{type}
+        order by
+            period asc limit 1
+    </select>
+
+    <select id="getLotteryOmitInfo" resultMap="LotteryOmitMap">
+        select
+            id,
+            type,
+            period,
+            red,
+            blue,
+            cb1,
+            cb2,
+            cb3,
+            cb4,
+            cb5,
+            extra,
+            gmt_create
+        from
+            lottery_omit
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getLotteryOmitList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LotteryOmitMap">
+        select
+            id,
+            type,
+            period,
+            red,
+            blue,
+            cb1,
+            cb2,
+            cb3,
+            cb4,
+            cb5,
+            extra,
+            gmt_create
+        from
+            lottery_omit
+        where
+            type = #{condition.type}
+        order by
+            period desc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="getLotteryOmits" resultMap="LotteryOmitMap">
+        select
+            id,
+            type,
+            period,
+            red,
+            blue,
+            cb1,
+            cb2,
+            cb3,
+            cb4,
+            cb5,
+            extra,
+            gmt_create
+        from
+            lottery_omit
+        where
+            type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <select id="getLotteryOmitsLtPeriod" resultMap="LotteryOmitMap">
+        select
+            id,
+            type,
+            period,
+            red,
+            blue,
+            cb1,
+            cb2,
+            cb3,
+            cb4,
+            cb5,
+            extra,
+            gmt_create
+        from
+            lottery_omit
+        where
+              type = #{type}
+          and period &lt;= ${period}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <select id="countLotteryOmits" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            lottery_omit
+        where
+            type = #{condition.type}
+    </select>
+
+    <insert id="addKl8Omits" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into lottery_kl8_omit(period,
+        ball_omit,
+        bs_omit,
+        oe_omit,
+        kua_omit,
+        sum_omit,
+        tail_omit,
+        gmt_create)
+        value
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},#{item.ballOmit},#{item.bsOmit},#{item.oeOmit},#{item.kuaOmit},#{item.sumOmit},#{item.tailOmit},current_time)
+        </foreach>
+    </insert>
+
+    <select id="getLatestKl8Omit" resultMap="LotteryKl8OmitMap">
+        select
+            id,
+            period,
+            ball_omit,
+            bs_omit,
+            oe_omit,
+            kua_omit,
+            sum_omit,
+            tail_omit,
+            gmt_create
+        from
+            lottery_kl8_omit
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getKl8InitOmit" resultMap="LotteryKl8OmitMap">
+        select
+            id,
+            period,
+            ball_omit,
+            bs_omit,
+            oe_omit,
+            kua_omit,
+            sum_omit,
+            tail_omit,
+            gmt_create
+        from
+            lottery_kl8_omit
+        order by
+            period asc limit 1
+    </select>
+
+    <select id="getLottoKl8Omit" parameterType="java.lang.String" resultMap="LotteryKl8OmitMap">
+        select
+            id,
+            period,
+            ball_omit,
+            bs_omit,
+            oe_omit,
+            kua_omit,
+            sum_omit,
+            tail_omit,
+            gmt_create
+        from
+            lottery_kl8_omit
+        where
+            period = #{period}
+    </select>
+
+    <select id="getKl8BaseOmitList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LotteryKl8OmitMap">
+        select
+            id,
+            period,
+            ball_omit,
+            gmt_create
+        from
+            lottery_kl8_omit
+        order by
+            period desc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countKl8Omits" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            lottery_kl8_omit
+    </select>
+
+    <select id="getKl8OmitList" resultMap="LotteryKl8OmitMap">
+        select
+            id,
+            period,
+            ball_omit,
+            bs_omit,
+            oe_omit,
+            kua_omit,
+            sum_omit,
+            tail_omit,
+            gmt_create
+        from
+            lottery_kl8_omit
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <select id="getKl8TailOmits" resultType="java.lang.Integer" resultMap="LotteryKl8OmitMap">
+        select
+            id,
+            period,
+            tail_omit,
+            gmt_create
+        from
+            lottery_kl8_omit
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <insert id="addSumOmits" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into lottery_sum_omit(type,
+        period,
+        base_omit,
+        ott_omit,
+        tail_omit,
+        tail_amp,
+        bms_omit,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            #{item.baseOmit},
+            #{item.ottOmit},
+            #{item.tailOmit},
+            #{item.tailAmp},
+            #{item.bmsOmit},
+            current_time)
+        </foreach>
+    </insert>
+
+    <select id="getSumOmitList" resultMap="LotterySumOmitMap">
+        select
+            id,
+            type,
+            period,
+            base_omit,
+            ott_omit,
+            tail_omit,
+            tail_amp,
+            bms_omit,
+            gmt_create
+        from
+            lottery_sum_omit
+        where
+            type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <select id="getLottoSumOmit" resultMap="LotterySumOmitMap">
+        select
+            id,
+            type,
+            period,
+            base_omit,
+            ott_omit,
+            tail_omit,
+            tail_amp,
+            bms_omit,
+            gmt_create
+        from
+            lottery_sum_omit
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <insert id="addKuaOmits" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into lottery_kua_omit(type,
+        period,
+        base_omit,
+        amp_omit,
+        amp_amp,
+        ott_omit,
+        bms_omit,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            #{item.baseOmit},
+            #{item.ampOmit},
+            #{item.ampAmp},
+            #{item.ottOmit},
+            #{item.bmsOmit},
+            current_time
+            )
+        </foreach>
+    </insert>
+
+    <select id="getLottoKuaOmit" resultMap="LotteryKuaOmitMap">
+        select
+            id,
+            type,
+            period,
+            base_omit,
+            amp_omit,
+            amp_amp,
+            ott_omit,
+            bms_omit,
+            gmt_create
+        from
+            lottery_kua_omit
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getKuaOmitList" resultMap="LotteryKuaOmitMap">
+        select
+            id,
+            type,
+            period,
+            base_omit,
+            amp_omit,
+            amp_amp,
+            ott_omit,
+            bms_omit,
+            gmt_create
+        from
+            lottery_kua_omit
+        where
+            type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <insert id="addLotteryCodes" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert ignore into lottery_code(lotto, period, type, position, gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.lotto},#{item.period},#{item.type},#{item.position},current_time)
+        </foreach>
+    </insert>
+
+    <select id="getLottoCodesByType" resultMap="LotteryCodeMap">
+        select
+            id,
+            lotto,
+            period,
+            type,
+            position,
+            gmt_create
+        from
+            lottery_code
+        where
+              lotto = #{lotto}
+          and type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <select id="getLottoCodeByUk" resultMap="LotteryCodeMap">
+        select
+            id,
+            lotto,
+            period,
+            type,
+            position,
+            gmt_create
+        from
+            lottery_code
+        where
+              lotto = #{lotto}
+          and period = #{period}
+          and type = #{type}
+    </select>
+
+    <select id="getLotteryCodeList" parameterType="com.cloud.arch.page.PageCondition"
+            resultMap="LotteryCodeMap">
+        select
+        id, lotto, period, type, position, gmt_create
+        from
+        lottery_code
+        where
+        lotto = #{condition.lotto}
+        and type = #{condition.type}
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+        order by period desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countLotteryCodes" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select count(1)
+        from
+        lottery_code
+        where
+        lotto = #{condition.lotto}
+        and type = #{condition.type}
+        <if test="condition.period!=null">
+            and period=#{condition.period}
+        </if>
+    </select>
+
+    <insert id="addLotteryDan" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_dan(type,
+        period,
+        index1,
+        index2,
+        index3,
+        index4,
+        index5,
+        index6,
+        index7,
+        index8,
+        index9,
+        gmt_create,
+        gmt_modify
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            #{item.index1},
+            #{item.index2},
+            #{item.index3},
+            #{item.index4},
+            #{item.index5},
+            #{item.index6},
+            #{item.index7},
+            #{item.index8},
+            #{item.index9},
+            current_time,
+            current_time)
+        </foreach>
+        on duplicate key update
+        index1=values(index1),
+        index2=values(index2),
+        index3=values(index3),
+        index4=values(index4),
+        index5=values(index5),
+        index6=values(index6),
+        index7=values(index7),
+        index8=values(index8),
+        index9=values(index9),
+        gmt_modify=current_time
+    </insert>
+
+    <select id="getLotteryDan" resultMap="LotteryDanMap">
+        select
+            id,
+            type,
+            period,
+            index1,
+            index2,
+            index3,
+            index4,
+            index5,
+            index6,
+            index7,
+            index8,
+            index9,
+            gmt_create
+        from
+            lottery_dan
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getLatestLotteryDan" resultMap="LotteryDanMap">
+        select
+            id,
+            type,
+            period,
+            index1,
+            index2,
+            index3,
+            index4,
+            index5,
+            index6,
+            index7,
+            index8,
+            index9,
+            gmt_create
+        from
+            lottery_dan
+        where
+            type = #{type}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getLotteryDanList" resultMap="LotteryDanMap">
+        select
+            id,
+            type,
+            period,
+            index1,
+            index2,
+            index3,
+            index4,
+            index5,
+            index6,
+            index7,
+            index8,
+            index9,
+            gmt_create
+        from
+            lottery_dan
+        where
+            type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <insert id="addLotteryOtt" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert lottery_ott(type,
+        period,
+        bott,
+        sott,
+        gott,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},#{item.period},#{item.bott},#{item.sott},#{item.gott},current_time)
+        </foreach>
+        on duplicate key update
+        bott=values(bott),
+        sott=values(sott),
+        gott=values(gott)
+    </insert>
+
+    <select id="getLotteryOtt" resultMap="LotteryOmitMap">
+        select
+            id,
+            type,
+            period,
+            bott,
+            sott,
+            gott,
+            gmt_create
+        from
+            lottery_ott
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getLotteryOttList" resultMap="LotteryOttMap">
+        select
+            id,
+            type,
+            period,
+            bott,
+            sott,
+            gott,
+            gmt_create
+        from
+            lottery_ott
+        where
+            type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <insert id="addPianOmits" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_pian_omit(type,
+        period,
+        level,
+        omit,
+        cb1,
+        cb2,
+        cb3,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            #{item.level},
+            <if test="item.omit!=null">
+                #{item.omit},
+            </if>
+            <if test="item.omit==null">
+                null,
+            </if>
+            <if test="item.cb1!=null">
+                #{item.cb1},
+            </if>
+            <if test="item.cb1==null">
+                null,
+            </if>
+            <if test="item.cb2!=null">
+                #{item.cb2},
+            </if>
+            <if test="item.cb2==null">
+                null,
+            </if>
+            <if test="item.cb3!=null">
+                #{item.cb3},
+            </if>
+            <if test="item.cb3==null">
+                null,
+            </if>
+            current_time)
+        </foreach>
+        on duplicate key update
+        omit=values(omit),
+        cb1=values(cb1),
+        cb2=values(cb2),
+        cb3=values(cb3)
+    </insert>
+
+    <select id="getLottoPianList" resultMap="LottoPianOmitMap">
+        select
+        lpo.id,
+        lpo.type,
+        lpo.period,
+        lpo.level,
+        lpo.omit,
+        lpo.cb1,
+        lpo.cb2,
+        lpo.cb3,
+        lpo.gmt_create
+        from (
+        SELECT
+        distinct period
+        FROM
+        lottery_pian_omit
+        WHERE
+        type = #{type}
+        ORDER BY
+        period DESC
+        LIMIT #{limit}
+        ) lp
+        inner join lottery_pian_omit lpo on lpo.type=#{type} and lpo.period=lp.period
+        <if test="level!=null">
+            lpo.level=#{level}
+        </if>
+    </select>
+
+    <select id="hasExistPianOmit" resultType="java.lang.Integer">
+        select
+            ifnull((
+                       select
+                           1
+                       from
+                           lottery_pian_omit
+                       where
+                           type = #{type}
+                       limit 1 ), 0)
+    </select>
+
+    <insert id="addLottoFairTrials" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_fair_trial(type,
+        period,
+        ball,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},#{item.period},#{item.ball},current_time)
+        </foreach>
+        on duplicate key update
+        ball=values(ball)
+    </insert>
+
+    <select id="getLottoFailTrial" parameterType="java.lang.Long" resultMap="FairTrialMap">
+        select
+            id,
+            type,
+            period,
+            ball,
+            gmt_create
+        from
+            lottery_fair_trial
+        where
+            id = #{id}
+    </select>
+
+    <select id="getLottoFairTrialByUk" resultMap="FairTrialMap">
+        select
+            id,
+            type,
+            period,
+            ball,
+            gmt_create
+        from
+            lottery_fair_trial
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getFairTrialPeriods" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_fair_trial
+        where
+            type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <select id="getFairTrialList" parameterType="com.cloud.arch.page.PageCondition" resultMap="FairTrialMap">
+        select
+            id,
+            type,
+            period,
+            ball,
+            gmt_create
+        from
+            lottery_fair_trial
+        where
+            type = #{condition.type}
+        order by
+            period desc
+            limit
+            #{offset},
+            #{limit}
+    </select>
+
+    <select id="countFairTrials" parameterType="com.cloud.arch.page.PageCondition"
+            resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            lottery_fair_trial
+        where
+            type = #{condition.type}
+    </select>
+
+    <select id="getFairTrialLtePeriod" resultMap="FairTrialMap">
+        select
+            id,
+            type,
+            period,
+            ball,
+            gmt_create
+        from
+            lottery_fair_trial
+        where
+              type = #{type}
+          and period &lt;= #{period}
+    </select>
+
+    <select id="getTrialLatestPeriod" resultType="java.lang.String">
+        select distinct
+            period
+        from
+            lottery_fair_trial
+        where
+            type = #{type}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getNum3ComCounts" resultMap="Num3ComCountMap">
+        SELECT
+            cc.com        AS com,
+            COUNT(cc.com) AS amount
+        FROM
+            (
+                SELECT
+                    com
+                FROM
+                    lottery_info
+                WHERE
+                      type = #{type}
+                  and lot_date is not null
+                ORDER BY
+                    period DESC
+                    LIMIT #{limit}
+            ) cc
+        GROUP BY
+            cc.com
+        ORDER BY
+            amount DESC
+    </select>
+
+
+    <select id="getFilterNum3Follows" resultMap="Num3LottoFollowMap">
+        SELECT
+            id,
+            period,
+            lot_date,
+            red,
+            com,
+            LAG(red, 2) OVER (ORDER BY period asc )  AS last2, LAG(red, 1) OVER (ORDER BY period asc )  AS last1, LEAD(red, 1) OVER (ORDER BY period asc ) AS next1, LEAD(red, 2) OVER (ORDER BY period asc)  AS next2
+        FROM
+            lottery_info
+        WHERE
+            type = #{type}
+        ORDER BY
+            period DESC
+            limit #{limit}
+    </select>
+
+    <select id="getNum3FollowList" resultMap="Num3LottoFollowMap">
+        SELECT
+        lv.id,
+        lv.period,
+        lv.lot_date,
+        lv.red,
+        lv.com,
+        lv.last2,
+        lv.last1,
+        lv.next1,
+        lv.next2
+        FROM
+        (
+        SELECT
+        id,
+        period,
+        lot_date,
+        red,
+        com,
+        LAG (red, 2) OVER (ORDER BY period) AS last2,
+        LAG (red, 1) OVER (ORDER BY period) AS last1,
+        LEAD (red, 1) OVER (ORDER BY period) AS next1,
+        LEAD (red, 2) OVER (ORDER BY period) AS next2
+        FROM
+        lottery_info
+        WHERE
+        type = #{type}
+        ORDER BY
+        period DESC
+        ) lv
+        WHERE
+        lv.com = #{com}
+        <if test="period!=null">
+            and lv.period &lt;= #{period}
+        </if>
+    </select>
+
+    <insert id="addLotteryTrendOmits" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_trend_omit(type,
+        period,
+        form_omit,
+        ott_omit,
+        mode_omit,
+        bs_omit,
+        oe_omit,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            #{item.formOmit},
+            #{item.ottOmit},
+            #{item.modeOmit},
+            #{item.bsOmit},
+            #{item.oeOmit},
+            current_time)
+        </foreach>
+        on duplicate key update
+        form_omit=values(form_omit),
+        ott_omit=values(ott_omit),
+        mode_omit=values(mode_omit),
+        bs_omit=values(bs_omit),
+        oe_omit=values(oe_omit)
+    </insert>
+
+    <select id="getLatestTrendOmit" resultMap="LotteryTrendOmitMap">
+        select
+            id,
+            type,
+            period,
+            form_omit,
+            ott_omit,
+            mode_omit,
+            bs_omit,
+            oe_omit,
+            gmt_create
+        from
+            lottery_trend_omit
+        where
+            type = #{type}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getLotteryTrendOmit" resultMap="LotteryTrendOmitMap">
+        select
+            id,
+            type,
+            period,
+            form_omit,
+            ott_omit,
+            mode_omit,
+            bs_omit,
+            oe_omit,
+            gmt_create
+        from
+            lottery_trend_omit
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getLotteryTrendOmits" resultMap="LotteryTrendOmitMap">
+        select
+            id,
+            type,
+            period,
+            form_omit,
+            ott_omit,
+            mode_omit,
+            bs_omit,
+            oe_omit,
+            gmt_create
+        from
+            lottery_trend_omit
+        where
+            type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <insert id="addLotteryMatchOmits" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_match_omit(type,
+        period,
+        code_omit,
+        all_omit,
+        com_omit,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            #{item.codeOmit},
+            #{item.allOmit},
+            #{item.comOmit},
+            current_time)
+        </foreach>
+        on duplicate key update
+        code_omit=values(code_omit),
+        all_omit=values(all_omit),
+        com_omit=values(com_omit)
+    </insert>
+
+    <select id="getLatestMatchOmit" resultMap="LotteryMatchOmitMap">
+        select
+            id,
+            type,
+            period,
+            code_omit,
+            all_omit,
+            com_omit,
+            gmt_create
+        from
+            lottery_match_omit
+        where
+            type = #{type}
+        order by
+            period desc limit 1
+    </select>
+
+    <select id="getLotteryMatchOmit" resultMap="LotteryMatchOmitMap">
+        select
+            id,
+            type,
+            period,
+            code_omit,
+            all_omit,
+            com_omit,
+            gmt_create
+        from
+            lottery_match_omit
+        where
+              type = #{type}
+          and period = #{period}
+    </select>
+
+    <select id="getLotteryMatchOmits" resultMap="LotteryMatchOmitMap">
+        select
+            id,
+            type,
+            period,
+            code_omit,
+            all_omit,
+            com_omit,
+            gmt_create
+        from
+            lottery_match_omit
+        where
+            type = #{type}
+        order by
+            period desc
+            limit #{limit}
+    </select>
+
+    <insert id="addLotteryItemOmits" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_item_omit(type,
+        period,
+        cb1_amp,
+        cb1_aod,
+        cb1_bos,
+        cb1_oe,
+        cb2_amp,
+        cb2_aod,
+        cb2_bos,
+        cb2_oe,
+        cb3_amp,
+        cb3_aod,
+        cb3_bos,
+        cb3_oe,
+        gmt_create)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.type},
+            #{item.period},
+            #{item.cb1Amp},
+            #{item.cb1Aod},
+            #{item.cb1Bos},
+            #{item.cb1Oe},
+            #{item.cb2Amp},
+            #{item.cb2Aod},
+            #{item.cb2Bos},
+            #{item.cb2Oe},
+            #{item.cb3Amp},
+            #{item.cb3Aod},
+            #{item.cb3Bos},
+            #{item.cb3Oe},
+            current_time)
+        </foreach>
+        on duplicate key update
+        cb1_amp=values(cb1_amp),
+        cb1_aod=values(cb1_aod),
+        cb1_bos=values(cb1_bos),
+        cb1_oe=values(cb1_oe),
+        cb2_amp=values(cb2_amp),
+        cb2_aod=values(cb2_aod),
+        cb2_bos=values(cb2_bos),
+        cb2_oe=values(cb2_oe),
+        cb3_amp=values(cb3_amp),
+        cb3_aod=values(cb3_aod),
+        cb3_bos=values(cb3_bos),
+        cb3_oe=values(cb3_oe)
+    </insert>
+
+    <select id="getLatestLotteryItemOmit" resultMap="LotteryItemOmitMap">
+        select
+            lio.id,
+            lio.type,
+            lio.period,
+            lio.cb1_amp,
+            lio.cb1_aod,
+            lio.cb1_bos,
+            lio.cb1_oe,
+            lio.cb2_amp,
+            lio.cb2_aod,
+            lio.cb2_bos,
+            lio.cb2_oe,
+            lio.cb3_amp,
+            lio.cb3_aod,
+            lio.cb3_bos,
+            lio.cb3_oe,
+            li.red as balls,
+            lio.gmt_create
+        from
+            (
+                select
+                    id,
+                    type,
+                    period,
+                    cb1_amp,
+                    cb1_aod,
+                    cb1_bos,
+                    cb1_oe,
+                    cb2_amp,
+                    cb2_aod,
+                    cb2_bos,
+                    cb2_oe,
+                    cb3_amp,
+                    cb3_aod,
+                    cb3_bos,
+                    cb3_oe,
+                    gmt_create
+                from
+                    lottery_item_omit
+                where
+                    type = #{type}
+                order by
+                    period desc limit 1
+            ) lio
+                inner join lottery_info li on li.type = lio.type and li.period = lio.period
+    </select>
+
+    <select id="getLotteryItemOmit" resultMap="LotteryItemOmitMap">
+        select
+            lio.id,
+            lio.type,
+            lio.period,
+            lio.cb1_amp,
+            lio.cb1_aod,
+            lio.cb1_bos,
+            lio.cb1_oe,
+            lio.cb2_amp,
+            lio.cb2_aod,
+            lio.cb2_bos,
+            lio.cb2_oe,
+            lio.cb3_amp,
+            lio.cb3_aod,
+            lio.cb3_bos,
+            lio.cb3_oe,
+            li.red as balls,
+            lio.gmt_create
+        from
+            lottery_item_omit lio,
+            lottery_info li
+        where
+              lio.type = #{type}
+          and lio.period = #{period}
+          and li.type = #{type}
+          and li.period = #{period}
+    </select>
+
+    <select id="getLotteryItemOmits" resultMap="LotteryItemOmitMap">
+        select
+            lio.id,
+            lio.type,
+            lio.period,
+            lo.cb1,
+            lio.cb1_amp,
+            lio.cb1_aod,
+            lio.cb1_bos,
+            lio.cb1_oe,
+            lo.cb2,
+            lio.cb2_amp,
+            lio.cb2_aod,
+            lio.cb2_bos,
+            lio.cb2_oe,
+            lo.cb3,
+            lio.cb3_amp,
+            lio.cb3_aod,
+            lio.cb3_bos,
+            lio.cb3_oe,
+            li.red as balls,
+            lio.gmt_create
+        from
+            lottery_item_omit lio,
+            lottery_info li,
+            lottery_omit lo
+        where
+              lio.type = #{type}
+          and li.type = #{type}
+          and lo.type = #{type}
+          and lio.period = li.period
+          and lo.period = li.period
+        order by
+            lio.period desc
+            limit #{limit}
+    </select>
+
+    <insert id="addLotteryPl5Omits" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into lottery_pl5_omit(period,
+        cb1_amp,
+        cb1_aod,
+        cb1_bos,
+        cb1_oe,
+        cb2_amp,
+        cb2_aod,
+        cb2_bos,
+        cb2_oe,
+        cb3_amp,
+        cb3_aod,
+        cb3_bos,
+        cb3_oe,
+        cb4_amp,
+        cb4_aod,
+        cb4_bos,
+        cb4_oe,
+        cb5_amp,
+        cb5_aod,
+        cb5_bos,
+        cb5_oe,
+        gmt_create
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.period},
+            #{item.cb1Amp},
+            #{item.cb1Aod},
+            #{item.cb1Bos},
+            #{item.cb1Oe},
+            #{item.cb2Amp},
+            #{item.cb2Aod},
+            #{item.cb2Bos},
+            #{item.cb2Oe},
+            #{item.cb3Amp},
+            #{item.cb3Aod},
+            #{item.cb3Bos},
+            #{item.cb3Oe},
+            #{item.cb4Amp},
+            #{item.cb4Aod},
+            #{item.cb4Bos},
+            #{item.cb4Oe},
+            #{item.cb5Amp},
+            #{item.cb5Aod},
+            #{item.cb5Bos},
+            #{item.cb5Oe},
+            current_time
+            )
+        </foreach>
+        on duplicate key update
+        cb1_amp=values(cb1_amp),
+        cb1_aod=values(cb1_aod),
+        cb1_bos=values(cb1_bos),
+        cb1_oe=values(cb1_oe),
+        cb2_amp=values(cb2_amp),
+        cb2_aod=values(cb2_aod),
+        cb2_bos=values(cb2_bos),
+        cb2_oe=values(cb2_oe),
+        cb3_amp=values(cb3_amp),
+        cb3_aod=values(cb3_aod),
+        cb3_bos=values(cb3_bos),
+        cb3_oe=values(cb3_oe),
+        cb4_amp=values(cb4_amp),
+        cb4_aod=values(cb4_aod),
+        cb4_bos=values(cb4_bos),
+        cb4_oe=values(cb4_oe),
+        cb5_amp=values(cb5_amp),
+        cb5_aod=values(cb5_aod),
+        cb5_bos=values(cb5_bos),
+        cb5_oe=values(cb5_oe)
+    </insert>
+
+    <select id="getLatestLotteryPl5Omit" resultMap="LotteryPl5OmitMap">
+        select
+            lio.id,
+            lio.period,
+            lio.cb1_amp,
+            lio.cb1_aod,
+            lio.cb1_bos,
+            lio.cb1_oe,
+            lio.cb2_amp,
+            lio.cb2_aod,
+            lio.cb2_bos,
+            lio.cb2_oe,
+            lio.cb3_amp,
+            lio.cb3_aod,
+            lio.cb3_bos,
+            lio.cb3_oe,
+            lio.cb4_amp,
+            lio.cb4_aod,
+            lio.cb4_bos,
+            lio.cb4_oe,
+            lio.cb5_amp,
+            lio.cb5_aod,
+            lio.cb5_bos,
+            lio.cb5_oe,
+            li.red as balls,
+            lio.gmt_create
+        from
+            (
+                select
+                    id,
+                    period,
+                    cb1_amp,
+                    cb1_aod,
+                    cb1_bos,
+                    cb1_oe,
+                    cb2_amp,
+                    cb2_aod,
+                    cb2_bos,
+                    cb2_oe,
+                    cb3_amp,
+                    cb3_aod,
+                    cb3_bos,
+                    cb3_oe,
+                    cb4_amp,
+                    cb4_aod,
+                    cb4_bos,
+                    cb4_oe,
+                    cb5_amp,
+                    cb5_aod,
+                    cb5_bos,
+                    cb5_oe,
+                    gmt_create
+                from
+                    lottery_pl5_omit
+                order by
+                    period desc limit 1
+            ) lio
+                inner join lottery_info li on li.type = 'pl5' and li.period = lio.period
+    </select>
+
+    <select id="getLotteryPl5Omits" parameterType="java.lang.Integer" resultMap="LotteryPl5OmitMap">
+        select
+            lio.id,
+            lio.period,
+            lo.cb1,
+            lio.cb1_amp,
+            lio.cb1_aod,
+            lio.cb1_bos,
+            lio.cb1_oe,
+            lo.cb2,
+            lio.cb2_amp,
+            lio.cb2_aod,
+            lio.cb2_bos,
+            lio.cb2_oe,
+            lo.cb3,
+            lio.cb3_amp,
+            lio.cb3_aod,
+            lio.cb3_bos,
+            lio.cb3_oe,
+            lo.cb4,
+            lio.cb4_amp,
+            lio.cb4_aod,
+            lio.cb4_bos,
+            lio.cb4_oe,
+            lo.cb5,
+            lio.cb5_amp,
+            lio.cb5_aod,
+            lio.cb5_bos,
+            lio.cb5_oe,
+            li.red as balls,
+            lio.gmt_create
+        from
+            lottery_pl5_omit lio,
+            lottery_info li,
+            lottery_omit lo
+        where
+              li.type = 'pl5'
+          and lo.type = 'pl5'
+          and lio.period = li.period
+          and lo.period = li.period
+        order by
+            lio.period desc
+            limit #{limit}
+    </select>
+
+    <select id="getLotteryPl5Omit" parameterType="java.lang.String" resultMap="LotteryPl5OmitMap">
+        select
+            lio.id,
+            lio.period,
+            lio.cb1_amp,
+            lio.cb1_aod,
+            lio.cb1_bos,
+            lio.cb1_oe,
+            lio.cb2_amp,
+            lio.cb2_aod,
+            lio.cb2_bos,
+            lio.cb2_oe,
+            lio.cb3_amp,
+            lio.cb3_aod,
+            lio.cb3_bos,
+            lio.cb3_oe,
+            lio.cb4_amp,
+            lio.cb4_aod,
+            lio.cb4_bos,
+            lio.cb4_oe,
+            lio.cb5_amp,
+            lio.cb5_aod,
+            lio.cb5_bos,
+            lio.cb5_oe,
+            li.red as balls,
+            lio.gmt_create
+        from
+            lottery_pl5_omit lio,
+            lottery_info li
+        where
+              lio.period = #{period}
+          and li.type = 'pl5'
+          and li.period = #{period}
+    </select>
+
+    <select id="getPl5ItemOmits" resultMap="Pl5ItemOmitMap">
+        select
+            lio.id,
+            lio.period,
+            li.red           balls,
+            lo.${field}      cb,
+            lio.${field}_amp cb_amp,
+            lio.${field}_aod cb_aod,
+            lio.${field}_bos cb_bos,
+            lio.${field}_oe  cb_oe
+        from
+            lottery_pl5_omit lio,
+            lottery_info li,
+            lottery_omit lo
+        where
+              li.type = 'pl5'
+          and lo.type = 'pl5'
+          and lio.period = li.period
+          and lo.period = li.period
+        order by
+            lio.period desc
+            limit #{limit}
+    </select>
+
+</mapper>
