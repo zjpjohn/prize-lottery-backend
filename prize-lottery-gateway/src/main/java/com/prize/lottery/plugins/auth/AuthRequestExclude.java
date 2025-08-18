@@ -15,7 +15,6 @@ public class AuthRequestExclude implements IAuthRequestExclude {
 
     @Override
     public boolean isExclude(String uri, String method) {
-        log.info("request[{}]---->method:[{}]", uri, method);
         return requestAccessService.whiteAccess(uri, method);
     }
 
