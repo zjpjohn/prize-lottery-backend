@@ -3,7 +3,7 @@
 > 彩票服务端基于jdk21，技术栈采用springboot3.3.2、spring cloud
 > alibaba2023.0.3.2、nacos2.5、dubbo3.2.17、mybatis、mysql8.0、redis等等
 >
-> 本项目采用DDD领域驱动CQE模式开发，整洁架构代码规范清晰，欢迎下载学习交流
+> 本项目采用DDD领域驱动CQE模式开发，整洁架构代码规范清晰，欢迎star、fork源码学习交流
 >
 > app端新版仓库:https://github.com/zjpjohn/prize_lottery_app
 >
