@@ -4,7 +4,7 @@ spring:
       on-profile:
         - prod
     import:
-      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
   cloud:
     nacos:
       username:

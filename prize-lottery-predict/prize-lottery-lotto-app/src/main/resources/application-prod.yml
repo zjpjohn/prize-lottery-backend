@@ -4,9 +4,9 @@ spring:
       on-profile:
         - prod
     import:
-      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml
-      - optional:nacos:lottery-forecast-rule-${spring.profiles.active}.yml
-      - optional:nacos:lottery-share-period-${spring.profiles.active}.yml
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.yml?refreshEnabled=true
+      - optional:nacos:lottery-forecast-rule-${spring.profiles.active}.yml?refreshEnabled=true
+      - optional:nacos:lottery-share-period-${spring.profiles.active}.yml?refreshEnabled=true
   cloud:
     nacos:
       username:

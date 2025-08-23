@@ -4,8 +4,8 @@ spring:
       on-profile:
         - prod
     import:
-      - nacos:lottery-web-token-${spring.profiles.active}.yml
-      - nacos:lottery-auth-source-${spring.profiles.active}.yml
+      - nacos:lottery-web-token-${spring.profiles.active}.yml?refreshEnabled=true
+      - nacos:lottery-auth-source-${spring.profiles.active}.yml?refreshEnabled=true
   cloud:
     nacos:
       config:

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/prize-lottery-operate/src/main/resources/mappers/AppInfoMapper.xml" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-app/src/main/resources/mappers/OrderInfoMapper.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-app/src/main/resources/mappers/PackInfoMapper.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/prize-lottery-user-app/src/main/resources/mappers/PackInfoMapper.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/prize-lottery-user-app/src/main/resources/mappers/UserInfoMapper.xml" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/prize-lottery-user-app/src/main/resources/mappers/UserInviteMapper.xml" dialect="MySQL" />
+    <file url="PROJECT" dialect="MySQL" />
+  </component>
+</project>

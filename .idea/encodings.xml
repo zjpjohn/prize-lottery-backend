@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/prize-lottery-advertise/prize-lottery-advertise-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-advertise/prize-lottery-advertise-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-advertise/prize-lottery-advertise-commons/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-advertise/prize-lottery-advertise-commons/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-advertise/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-advertise/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-mobile/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-mobile/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-operate/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-operate/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-channel/prize-lottery-payment-alipay/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-channel/prize-lottery-payment-alipay/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-channel/prize-lottery-payment-weixin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-channel/prize-lottery-payment-weixin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-channel/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-channel/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-commons/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/prize-lottery-payment-commons/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-payment/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-predict/prize-lottery-lotto-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-predict/prize-lottery-lotto-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-predict/prize-lottery-lotto-commons/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-predict/prize-lottery-lotto-commons/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-predict/prize-lottery-lotto-compute/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-predict/prize-lottery-lotto-compute/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-predict/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-predict/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-push/prize-lottery-push-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-push/prize-lottery-push-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-push/prize-lottery-push-commons/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-push/prize-lottery-push-commons/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-push/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-push/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/prize-lottery-user-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/prize-lottery-user-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/prize-lottery-user-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/prize-lottery-user-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/prize-lottery-user-third/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/prize-lottery-user-third/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-ucenter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-utilize/prize-lottery-async/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-utilize/prize-lottery-async/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-utilize/prize-lottery-auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-utilize/prize-lottery-auth/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-utilize/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/prize-lottery-utilize/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
