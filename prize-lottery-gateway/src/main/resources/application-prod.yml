@@ -9,12 +9,12 @@ spring:
   cloud:
     nacos:
       config:
-        namespace: 941459b5-782d-4513-a865-6536ff27ba67
+        namespace:
       discovery:
-        namespace: 941459b5-782d-4513-a865-6536ff27ba67
-      server-addr: 120.27.121.45:8878
-      username: nacos
-      password: nacos
+        namespace:
+      server-addr:
+      username:
+      password:
 
 springdoc:
   api-docs:
@@ -26,6 +26,6 @@ com:
   cloud:
     redis:
       standalone:
-        address: 172.17.238.188:6973
-        password: Zap+{&5ad3avd?$#
-        user-name: default
+        address:
+        password:
+        user-name:
