@@ -10,6 +10,9 @@
 > 管理端前端仓库:https://github.com/zjpjohn/prize-lottery-front
 >
 > 如有私有化部署需求或指导请联系(添加微信-zjpcomeon 备注-lottery-app部署)
+> 本人拥有多年开发经验技术能力过硬，手头形成一整套可靠稳定且高效的快速开发框架，有需要外包或者有开发需求的，可以联系我(
+> 我的微信-zjpcomeon)
+>
 >
 > 项目结构说明：
 >
