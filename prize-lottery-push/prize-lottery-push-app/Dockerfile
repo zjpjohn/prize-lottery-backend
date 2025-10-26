@@ -1,5 +1,5 @@
 #java8基础镜像
-FROM openjdk:21
+FROM openjdk:25
 
 #维护者
 MAINTAINER zhoujiaqi
