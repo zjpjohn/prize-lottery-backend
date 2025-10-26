@@ -1,7 +1,7 @@
 # prize-lottery-backend
 
-> 彩票服务端基于jdk21，技术栈采用springboot3.3.2、spring cloud
-> alibaba2023.0.3.2、nacos2.5、dubbo3.2.17、mybatis、mysql8.0、redis等等
+> 彩票服务端基于jdk21，技术栈采用springboot3.5.5、spring cloud
+> alibaba2025.0.0.0、nacos3.0、dubbo3.2.18、mybatis、mysql8.0、redis等等
 >
 > 本项目采用DDD领域驱动CQE模式开发，整洁架构代码规范清晰，欢迎star、fork源码学习交流
 >
@@ -38,7 +38,7 @@
 
 ``` bash
   # 安装必要依赖 
-  nacos2.5、jdk21、mysql8.0、redis
+  nacos3.0、jdk25、mysql8.0、redis
   # 创建数据导
   导入dicuments中sql脚本
   # 启动网关
