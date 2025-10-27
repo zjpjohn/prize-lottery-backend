@@ -52,4 +52,4 @@
   prize-lottery-push-app、prize-lottery-push-app、prize-lottery-payment-app等服务
 ```
 
-#### 注：后端项目依赖封装的凯苏开发中间件，目前暂未开源，后续计划开源
+#### 注：后端项目依赖封装的快速开发中间件，目前暂未开源，后续计划开源
